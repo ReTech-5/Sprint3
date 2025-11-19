@@ -1,0 +1,99 @@
+.simulador {
+  background-color: rgb(241, 241, 241);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 740px;
+}
+
+.card_simulador {
+  width: 700px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.card_simulador_header {
+  background-color: var(--bg-title-color);
+  color: #fff;
+  text-align: center;
+  padding: 16px 0;
+  font-size: 1.25rem;
+  font-weight: bold;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.card_simulador_body {
+  padding: 80px 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.simulador_label {
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.simulador_input {
+  height: 55px;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border-ipt-color);
+  border-radius: 8px;
+  text-align: center;
+  font-size: medium;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.simulador_input:focus {
+  border-color: #2f5643;
+  box-shadow: 0 0 4px rgba(47, 86, 67, 0.4);
+}
+
+.simulador_button {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  width: 180px;
+  background: linear-gradient(
+    90deg,
+    var(--card-gradient-claro),
+    var(--card-gradient-escuro)
+  );
+  color: var(--bt-text-color);
+  border: none;
+  padding: 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+
+.simulador_button:hover {
+  background: linear-gradient(90deg, #0fdc9c, #064d2a);
+  transform: scale(1.03);
+  box-shadow: 0 4px 10px rgba(16, 183, 127, 0.4);
+}
+
+.card_resultado {
+  display: none;
+  width: 380px;
+  height: 450px;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow-y: auto;
+}
+
+.card_resultado_body {
+  padding: 25px 20px;
+  display: flex;
+  flex-direction: column;
+  text-align:center;
+}
