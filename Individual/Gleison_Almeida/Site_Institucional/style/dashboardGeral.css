@@ -1,0 +1,249 @@
+ html, body {
+
+    width: 100%;
+    height: 100%;
+
+}
+
+/* Define o fundo do body com gradiente — cria uma transição suave do cinza para branco */
+body {
+
+    background: linear-gradient(248deg, var(--bg-cinza) 0%, #FFF 100% );
+
+}
+
+/* Container principal do dashboard: organiza como fila e alinha itens ao topo */
+.dashboard_geral {
+
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    width: 100%;
+    height: 100%;
+
+}
+
+/* Estilo base para containers de cards: cor do fundo e sombra para "elevar" o card */
+.container{
+
+    background-color: var(--bg-card);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+}
+
+/* Título de card centralizado, com altura fixa e cor de fundo específica para títulos */
+.card_title {
+
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: var(--bg-title-color);
+    color: var(--text-bg-escuro-color);
+    margin-bottom: 10%;
+    height: 45px;
+
+}
+
+/* Container lateral de sensores: define largura relativa e empilha itens em coluna */
+.container_sensor{
+    
+    width: 35%;
+    height: 113%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+/* Ajuste do tamanho das imagens dentro do container_sensor e espaçamento lateral */
+.container_sensor img {
+
+    width: 15%;
+    margin: 0 5%;
+
+}
+
+/* Lista dentro do container_sensor: organiza verticalmente e destaca com negrito */
+.container_sensor ul {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-weight: bold;
+
+}
+
+/* Itens da lista: alinham conteúdo em linha e adicionam espaçamento inferior */
+.container_sensor li {
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 10%;
+
+}
+
+/* Container principal do conteúdo do dashboard — coluna com margens internas */
+.container_dash {
+
+    display: flex;
+    flex-direction: column;
+    margin: 2%;
+    width: 100%;
+    height: 100%;
+
+}
+
+/* Área que agrupa KPIs: centraliza verticalmente e define altura percentual */
+.container_kpi {
+    
+    display: flex;
+    align-items: center;
+    width: 70%;
+    height: 8%;
+
+}
+
+/* Estilo padrão para cada KPi: espaçamento, largura, borda arredondada e fonte maior */
+.kpi {
+
+    display: flex;
+    align-items: center;
+    margin-right: 1%;
+    padding: 1%;
+    width: 38%;
+    height: 100%;
+    border-radius: 3px;
+    font-weight: 500;
+    font-size: larger;
+
+}
+
+/* ID para elemento inativo dentro do KPI — cor vermelha para destaque de erro/alerta */
+.kpi #inativo {
+
+    color: #BB271A;
+
+}
+
+/* ID para elemento ativo dentro do KPI — cor verde para estado positivo */
+.kpi #ativo {
+
+    color: #9DC284;
+
+}
+
+/* Imagens em container_kpi: tamanho e espaçamento à direita */
+.container_kpi img {
+
+    width: 15%;
+    margin-right: 5%;
+
+}
+
+/* Área das barras (gráficos): distribui itens horizontalmente e define altura */
+.barras {
+
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    height: 40%;
+    margin: 3% 0;
+
+}
+
+/* Blocos de reciclável e orgânico: centralizam conteúdo e ocupam metade do espaço cada */
+#reciclavel, #organico{
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 47%;
+    height: 100%;
+
+}
+
+/* Container flex para alinhamentos entre elementos (por exemplo gráfico + legenda) */
+.container_flex {
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 50%;
+
+}
+
+/* Área do gráfico tipo “pizza”: centraliza e ajusta padding inferior */
+.pizza {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 1%;
+    width: 70%;
+    height: 100%;
+    
+}
+
+/* Caixa de alerta: coluna, centralizada e com largura menor para ficar como sidebar */
+.alerta {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 25%;
+    height: 100%;
+
+}
+
+/* Título dentro do alerta: alinha ao centro/embaixo e adiciona padding interno */
+.alerta h4{
+
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    padding-left: 10%;
+    width: 70%;
+
+}
+
+/* Link dentro do bloco de alerta: largura reduzida (provavelmente ícone) */
+.alerta a{
+
+    width: 10%;
+
+}
+
+/* Imagens dentro da área de alerta ocupam toda a largura do bloco */
+.alerta img{
+
+    width: 100%;
+
+}
+
+/* Caixa de notificação: centraliza texto, define background neutro e padding */
+.notificacao {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: small;
+    background-color: var(--bg-cinza);
+    padding: 2%;
+    margin-bottom: 5%;
+    width: 90%;
+    height: 20%;
+
+
+}
+
+/* Ícone dentro da notificação: define proporção em relação ao bloco */
+.notificacao img {
+
+    width: 15%;
+
+}

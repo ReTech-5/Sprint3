@@ -1,0 +1,88 @@
+/* Add a fonte e a cor de texto padrão da div */
+.navbar {
+  font-family: "Inter", sans-serif;
+  color: var(--text-navbar-color);
+  background-color: var(--bg-card);
+}
+
+/* Tornando o conteudo da div modular e adicionando sombra a navbar */
+.container_nav {
+  display: flex;
+  flex-direction: row;
+  z-index: 1000; /*Serve para determinar a camada em que a navbar se encontra*/
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /*configura a sombra da navbar*/
+}
+
+/* adiciona margim a logo para ela ficar na posição correta */
+#logo_nav {
+  margin: 1rem 2rem;
+}
+
+/* determina o tamanho da imagem da logo*/
+#logo_nav img {
+  width: 11%;
+}
+
+/* Determina o tamanho da div em relação a div pai e ajusta o conteudo dentro dela */
+.nav {
+  display: flex;
+  width: 70%;
+  align-items: center;
+  justify-content: space-around;
+}
+
+/* determina o tamanho da div em relação a div pai e ajusta o conteudo dentro dela */
+.ul_nav {
+  display: flex;
+  width: 70%;
+  justify-content: space-between;
+}
+
+/* configura o hover da navbar */
+.ul_nav li:hover {
+  color: var(--text-destaque-color);
+}
+
+/* deixa o button da pagina atual em destaque */
+#page_atual {
+  color: var(--text-destaque-color);
+  font-weight: bold;
+}
+
+/* ajusta o tamanho e o conteudo dos botões presentes na navbar */
+.bt_nav {
+  display: flex;
+  height: 50%;
+  width: 20%;
+  justify-content: center;
+}
+
+/* ajusta o tamanho do botão de login e o texto dentro dele */
+#bt_login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  width: 80%;
+  height: 100%;
+}
+
+/* configura o posicionamento do conteudo da div e determina o tamanho do texto */
+.user {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+}
+
+/* configura o posicionamento do icone de usuario */
+.user a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ajusta o tamanho do icone do usuario */
+.user img {
+  width: 70%;
+}

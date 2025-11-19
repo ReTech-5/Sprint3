@@ -1,0 +1,102 @@
+/* Inicio das imortações de conteudos do projeto */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+/* Fim das importações de conteudos do projeto */
+
+/* --Inicio do reset CSS-- */
+
+/*  O reset CSS serve para retirar algumas configurações padrão presente nas tags HTML */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+li {
+  list-style: none;
+}
+
+/* --Fim do reser CSS-- */
+
+/* --Inicio das configurações padrões do nosso site-- */
+
+/* Criando as variaveis de cores */
+:root {
+  /* cores do background */
+  --bg-verde-escuro: #04200d;
+  --bg-verde-claro: #e1f8f2;
+  --bg-cinza: #f9f9f9;
+
+  /* cores dos cards */
+  --bg-card: #ffffff;
+  --bg-title-color: #20604a;
+  --card-gradient-claro: #10b77f;
+  --card-gradient-escuro: #04200d;
+
+  /* cores dos inputs / buttons */
+  --bg-ipt-color: #fcffff;
+  --border-ipt-color: #37b594;
+  --bg-bt-gradiend-claro: #10b77f;
+  --bg-bt-gradiend-medio: #20604a;
+  --bg-bt-gradiend-escuro: #04200d;
+  --bt-text-color: #ffffff;
+
+  /* cores dos textos */
+  --text-padrao-color: #000000;
+  --text-navbar-color: #2d2e2e;
+  --text-bg-escuro-color: #ffffff;
+  --text-destaque-color: #10b77f;
+
+  /* cores dos icones */
+  --icon-lixeira-verde: #9dc284;
+  --icon-lixeira-amarela: #eae855;
+  --icon-lixeira-laranja: #f29d38;
+  --icon-lixeira-vermelha: #be4a31;
+  --icon-alerta: #fffd54;
+  --icon-erro: #eb3223;
+}
+
+/* html, body {
+
+    width: 100%;
+    height: 100%;
+
+} */
+
+/* Fonte padrão do site*/
+body {
+  font-family: "Roboto", sans-serif;
+}
+
+/* Fonte padrão dos titulos */
+.title {
+  font-family: "Inter", sans-serif;
+}
+
+/* Formatação padrão dos botões da pagina */
+.button {
+  border: none;
+  border-radius: 5px;
+  background: linear-gradient(
+    90deg,
+    var(--bg-bt-gradiend-claro) 0%,
+    var(--bg-bt-gradiend-medio) 100%
+  );
+  color: var(--bt-text-color);
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: linear-gradient(90deg, #0fdc9c, #064d2a);
+  transform: scale(1.03);
+  box-shadow: 0 4px 10px rgba(16, 183, 127, 0.4);
+}
+
+/* Fim das configurações padrão do nosso site*/

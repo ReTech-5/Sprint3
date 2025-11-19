@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../style/global.css">
+    <link rel="stylesheet" href="../style/navbar.css">
+    <link rel="stylesheet" href="../style/dashboardGeral.css ">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Dashboard Geral</title>
+</head>
+<body>
+
+    <!-- Inicio da Navbar -->
+
+    <header class="navbar">
+        <div class="container_nav">
+            
+            <div id="logo_nav">
+                <a href=""><img src="../assets/Logo.svg" alt=""></a>
+            </div>
+
+            <nav class="nav">
+                
+                <ul class="ul_nav">
+
+                    <li><a href="">Landing Page</a></li>
+                    <li><a id="page_atual" href="">Dashboard</a></li>
+                    <li><a href="">Calculadora</a></li>
+                    <li><a href="">Contato</a></li>
+                    <li><a href="">Configurações</a></li>
+
+                </ul>
+
+                <div class="user">
+
+                    <a href=""><img src="../assets/Avatar.svg" alt=""></a>
+                    <span id="msg_user"></span>
+
+                </div>
+
+            </nav>
+            
+        </div>
+    </header>
+
+    <!-- Fim da Navbar -->
+
+    <!-- Inicio da Tela de Dashboard Geral -->
+    <div class="dashboard_geral">
+
+        <div class="container container_sensor">
+
+            <div class="title card_title">
+                <h4>Lista de sensores</h4>
+            </div>
+
+            <ul>
+                
+                <li><img src="../assets/LixeiraEstavelIcon.svg" alt=""> <a href="">Rua Haddock Lobo, 595</a></li>
+                <li><img src="../assets/LixeiraEstavelIcon.svg" alt=""> <a href="">Av. Paulista, 1106</a></li>
+                <li><img src="../assets/LixeiraCriticaIcon.svg" alt=""> <a href="">Av. Lins de Vasconcelos</a></li>
+                <li><img src="../assets/LixeiraAlertaIcon.svg" alt=""> <a href="">Av Francisco Matarazzo</a></li>
+                <li><img src="../assets/LixeiraModeradaIcon.svg" alt=""> <a href="">Rua Lomas Valentinas, 44</a></li>
+
+            </ul>
+
+
+        </div>
+
+            <div class="container_dash">
+
+            <div class="container_kpi">
+                <div class="container kpi">
+                    <img src="../assets/InativoIcon.svg" alt="">
+                    <span>Sensores Inativos: <span id="inativo">7</span></span>
+            
+                </div>
+
+                <div class="container kpi">
+                    <img src="../assets/AtivoIcon.svg" alt="">
+                    <span>Sensores Ativos: <span id="ativo">63</span></span>
+
+                </div>
+            </div>
+            
+            <div class="container barras">
+
+                <div id="reciclavel">
+                    <canvas id="cvs_grafico_reciclavel"></canvas>
+                </div>
+                
+                <div id="organico">
+                    <canvas id="cvs_grafico_organico"></canvas>
+                </div>
+            
+            </div>
+
+            <div class="container_flex">
+                <div class="container pizza">
+
+                    <canvas id="cvs_grafico_pizza"></canvas>
+
+                </div>
+
+                <div class="container alerta">
+                    
+                    <div class="title card_title">
+                        <h4>Alerta</h4>
+                        <a href=""><img src="../assets/ConfigIcon.svg" alt=""></a>
+
+                    </div>
+
+                    <div class="notificacao container">
+                    <img src="../assets/ErroIcon.svg" alt="">
+                    <span>Erro 404 - sensor A2315 se encontra inativo </span>
+                    </div>
+
+                    <div class="notificacao container">
+                    <img src="../assets/AlertaIcon.svg" alt="">
+                    <span>Alerta - Lixeira B4915 se encontra em estado critico</span>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- Fim da Dashboard-->
+     
+</body>
+</html>
+
+<script>
+
+    // Mensagem para o usuario na navbar
+    var usuario = 'Gleison'
+
+    msg_user.innerHTML = `Olá ${usuario} 👋`
+
+    const PizzaLixeiras = document.getElementById("cvs_grafico_pizza");
+    const BarrasReciclavel = document.getElementById("cvs_grafico_reciclavel");
+    const BarrasOrganico = document.getElementById("cvs_grafico_organico");
+    
+    
+    
+    // Gráfico de Barras das Lixeiras Reciclaveis
+    new Chart(BarrasReciclavel, {
+        type: "bar",
+        data: {
+            labels: [""],
+            datasets: [
+                {
+                    label: "Estável",
+                    data: [3],
+                    borderColor: ['rgb(0, 128, 0)'],
+                    borderWidth: .5,
+                    backgroundColor: ['rgb(186, 255, 201)'],
+                },
+                {
+                    label: "Moderado",
+                    data: [18],
+                    borderColor: ['rgb(204, 204, 0)'],
+                    borderWidth: .5,
+                    backgroundColor: ['rgb(255, 255, 186)'],
+                },
+                {
+                    label: "Alerta",
+                    data: [7],
+                    borderColor: ['rgb(255, 140, 0)'],
+                    borderWidth: .5,
+                    backgroundColor: ['rgb(255, 223, 186)'],
+                },
+                {
+                    label: "Crítico",
+                    data: [3],
+                    borderColor: ['rgb(255, 0, 0)'],
+                    borderWidth: .5,
+                    backgroundColor: ['rgb(255, 179, 186)'],
+                }
+            ],
+        },
+        options: {
+            responsive: true, // Faz o gráfico redimensionar automaticamente com o container
+            plugins: { // Configurações para plugins nativos (legend, title, tooltip, etc.)
+                legend: { display: true }, // Mostra a legenda (nome do dataset)
+                title: { 
+                    display: true, 
+                    text: "Lixeiras Recicláveis por Status de Preenchimento",
+                    color: "black",
+                    font: {size: 15, weight: "bold", family: "Arial"},
+                }, // Título do gráfico
+                tooltip: { // Personaliza o conteúdo do tooltip (o balão que aparece ao passar o mouse)
+                    callbacks: {
+                        label: function(context) { // "label" recebe o contexto do ponto e retorna a string que aparecerá no tooltip
+                            return context.dataset.label + ": " + context.parsed.y;
+                            // context.dataset.label = nome do dataset
+                            // context.parsed = valor do data do eixo y
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    title: { // Título do eixo Y
+                        display: true,
+                        text: "Quantidade de Lixeiras",
+                        color: "rgb(4, 32, 13)",
+                        font: { size: 13, weight: "bold" }
+                    },
+                    beginAtZero: true,
+                },
+                x: {
+                    title: { // Título do eixo X
+                        display: true,
+                        text: "Status",
+                        color: "rgb(4, 32, 13)",
+                        font: { size: 13, weight: "bold" }
+                    }
+                }
+            },
+        },
+    });
+    
+    // Gráfico de Barras das Lixeiras Orgânicas
+    new Chart(BarrasOrganico, {
+        type: "bar",
+        data: {
+            labels: [""],
+            datasets: [
+                {
+                    label: "Estável",
+                    data: [8],
+                    borderColor: ['rgb(0, 128, 0)'],
+                    borderWidth: .5,
+                    backgroundColor: ['rgb(186, 255, 201)'],
+                },
+                {
+                    label: "Moderado",
+                    data: [13],
+                    borderColor: ['rgb(204, 204, 0)'],
+                    borderWidth: .5,
+                    backgroundColor: ['rgb(255, 255, 186)'],
+                },
+                {
+                    label: "Alerta",
+                    data: [4],
+                    borderColor: ['rgb(255, 140, 0)'],
+                    borderWidth: .5,
+                    backgroundColor: ['rgb(255, 223, 186)'],
+                },
+                {
+                    label: "Crítico",
+                    data: [6],
+                    borderColor: ['rgb(255, 0, 0)'],
+                    borderWidth: .5,
+                    backgroundColor: ['rgb(255, 179, 186)'],
+                }
+            ],
+        },
+        options: {
+            responsive: true, // Faz o gráfico redimensionar automaticamente com o container
+            plugins: { // Configurações para plugins nativos (legend, title, tooltip, etc.)
+                legend: { display: true }, // Mostra a legenda (nome do dataset)
+                title: { 
+                    display: true, 
+                    text: "Lixeiras Orgânicas por Status de Preenchimento",
+                    color: "black",
+                    font: {size: 15, weight: "bold", family: "Arial"},
+                }, // Título do gráfico
+                tooltip: { // Personaliza o conteúdo do tooltip (o balão que aparece ao passar o mouse)
+                    callbacks: {
+                        label: function(context) { // "label" recebe o contexto do ponto e retorna a string que aparecerá no tooltip
+                            return context.dataset.label + ": " + context.parsed.y;
+                            // context.dataset.label = nome do dataset
+                            // context.parsed = valor do data do eixo y
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    title: { // Título do eixo Y
+                        display: true,
+                        text: "Quantidade de Lixeiras",
+                        color: "rgb(4, 32, 13)",
+                        font: { size: 13, weight: "bold" }
+                    },
+                    beginAtZero: true,
+                },
+                x: {
+                    title: { // Título do eixo X
+                        display: true,
+                        text: "Status",
+                        color: "rgb(4, 32, 13)",
+                        font: { size: 13, weight: "bold" }
+                    }
+                }
+            },
+        },
+    });
+
+    // Gráfico de Pizza dos Status das Lixeiras
+        new Chart(PizzaLixeiras, {
+            type: 'pie',
+            data: {
+                labels: [
+                    'Estável',
+                    'Moderado',
+                    'Alerta',
+                    'Crítico'
+                ],
+                datasets: [{
+                    label: 'Lixeiras',
+                    data: [14, 34, 7, 7],
+                    borderColor: [
+                        'rgb(0, 128, 0)',
+                        'rgb(204, 204, 0)',
+                        'rgb(255, 140, 0)',
+                        'rgb(255, 0, 0)'
+                        ],
+                    borderWidth: .5,
+                    backgroundColor: [
+                    'rgb(186, 255, 201)',
+                    'rgb(255, 255, 186)',
+                    'rgb(255, 223, 186)',
+                    'rgb(255, 179, 186)'
+                    ],
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true, // Faz o gráfico redimensionar automaticamente com o container
+                plugins: { // Configurações para plugins nativos (legend, title, tooltip, etc.)
+                    legend: { display: true }, // Mostra a legenda (nome do dataset)
+                    title: { 
+                        display: true, 
+                        text: "Lixeiras por Status de Preenchimento",
+                        color: "black",
+                        font: {size: 15, weight: "bold", family: "Arial"},
+                    }, // Título do gráfico
+                    tooltip: { // Personaliza o conteúdo do tooltip (o balão que aparece ao passar o mouse)
+                        callbacks: {
+                            label: function(context) { // "label" recebe o contexto do ponto e retorna a string que aparecerá no tooltip
+                                return context.dataset.label + ": " + context.parsed;
+                                // context.dataset.label = nome do dataset
+                                // context.parsed = valor do data da fatia
+                            }
+                        }
+                    }
+                },
+            }
+        });
+
+</script>

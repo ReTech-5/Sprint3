@@ -1,0 +1,250 @@
+/*
+ ===== RESET ===== 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+ ===== Navbar ===== 
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 1rem 2rem;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .logo {
+  font-weight: 700;
+  color: #20604a;
+  font-size: 1.3rem;
+}
+
+.navbar nav a {
+  margin: 0 0.8rem;
+  text-decoration: none;
+  color: #334155;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.navbar nav a:hover,
+.navbar nav a.ativo {
+  color: #16a34a;
+}
+
+.usuario span {
+  color: #1e293b;
+  font-weight: 500;
+}
+*/
+
+/* ===== Conteúdo principal ===== */
+body {
+  background-color: #f5f6f8;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2rem;
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 1000px;
+  padding-bottom: 2rem;
+  overflow-x: auto;
+}
+
+/* ===== Cabeçalho do card ===== */
+.card h2 {
+  background-color: #20604a;
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 10px 10px 0 0;
+  font-size: 1.3rem;
+}
+
+/* ===== Botões ===== */
+.acoes {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+}
+
+.btn {
+  background: linear-gradient(
+    90deg,
+    var(--bg-bt-gradiend-claro) 0%,
+    var(--bg-bt-gradiend-escuro) 100%
+  );
+  color: var(--bt-text-color);
+  font-weight: bold;
+  border: 2px solid #20604a;
+  border-radius: 6px;
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-novo {
+  background: linear-gradient(90deg, #28be83, #20614b);
+  border-radius: 6px;
+  color: white;
+  border: none;
+  padding: 0.5rem 3rem;
+}
+
+.btn-novo:hover {
+  background-color: #20604a;
+}
+
+/* ===== Dropdown Filtro ===== */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+/* ===== Botão Filtro ===== */
+.btn-filtro {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: white;
+  color: #000000;
+  padding: 0.4rem 1.2rem;
+  border: 2px solid #20614b;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-filtro:hover {
+  background-color: #f0fdf4;
+  color: #15803d;
+  border-color: #15803d;
+}
+
+.btn-filtro .icon {
+  width: 17px;
+  height: 17px;
+  transition: filter 0.2s;
+}
+
+.btn-filtro .icontriangulo {
+  width: 7px;
+  height: 6px;
+  transition: filter 0.2s;
+}
+
+.btn-filtro:hover .icon {
+  filter: brightness(0) saturate(100%) invert(45%) sepia(70%) saturate(356%)
+    hue-rotate(90deg) brightness(92%) contrast(90%);
+}
+
+/* ===== Menu Filtro ===== */
+.menu-filtro {
+  display: none;
+  position: absolute;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: white;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  min-width: 150px;
+  z-index: 1;
+}
+
+.menu-filtro button {
+  background: none;
+  border: none;
+  text-align: center;
+  width: 100%;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.menu-filtro button:hover {
+  background-color: #f0fdf4;
+  color: #15803d;
+}
+
+.menu-filtro.mostrar {
+  display: block;
+}
+
+/* ===== Botão Editar ===== */
+.btn-editar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: white;
+  color: #000000;
+  padding: 0.4rem 1.2rem;
+  border: 2px solid #20614b;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-editar:hover {
+  background-color: #f0fdf4;
+  color: #15803d;
+  border-color: #15803d;
+}
+
+.btn-editar .icon {
+  width: 17px;
+  height: 17px;
+  transition: filter 0.2s;
+}
+
+.btn-editar:hover .icon {
+  filter: brightness(0) saturate(100%) invert(45%) sepia(70%) saturate(356%)
+    hue-rotate(90deg) brightness(92%) contrast(90%);
+}
+
+/* ===== Tabela ===== */
+table {
+  width: 95%;
+  margin: auto;
+  border-collapse: collapse;
+}
+
+thead {
+  background-color: #20604a;
+  color: white;
+}
+
+th,
+td {
+  border: 1px solid #14532d;
+  padding: 0.8rem;
+  text-align: left;
+}
+
+tbody tr:hover {
+  background-color: #f0fdf4;
+}
+
+/* ===== Responsividade ===== */
+@media (max-width: 768px) {
+  .acoes {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}

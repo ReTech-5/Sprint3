@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style/global.css">
+    <link rel="stylesheet" href="../style/navbar.css">
+    <link rel="stylesheet" href="../style/cadastroB.css">
+    <title>Document</title>
+</head>
+<body>
+
+  <!-- Inicio da Navbar -->
+
+  <header class="navbar">
+    <div class="container_nav">
+      <div id="logo_nav">
+        <a href="home.html"><img src="../asset/Logo.svg" /></a>
+      </div>
+
+      <nav class="nav">
+        <ul class="ul_nav">
+
+          <li><a href="dashbordGeral.html">Dashboard</a></li>
+          <li><a id="page_atual" href="#">Calculadora</a></li>
+          <li><a href="cadastro.html">Cadastro</a></li>
+          <li><a href="#">Contato</a></li>
+
+        </ul>
+
+        <div class="user">
+          <a href=""><img src="../asset//Avatar.svg" /></a>
+          <span id="msg_user"></span>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Fim da Navbar -->
+
+  <!-- Inicio Card Cadastro -->
+
+  <section class="cadastro">
+
+    <div class="card_cadastro">
+        <div class="card_title">
+            Cadastro de Usuario
+        </div>
+
+        <p>Preencha os campos com as credenciais do usuario</p>
+
+        <div class="div_cadastro">
+            <label for="">Informe seu tokem</label>
+            <input placeholder="Tokem" type="text" name="" id="ipt_tokem" class="ipt">
+        </div>
+        <div class="div_cadastro">
+            <label for="">Informe seu nome</label>
+            <input placeholder="Nome" type="text" name="" id="ipt_nome" class="ipt">
+        </div>
+        <div class="div_cadastro">
+            <label for="">Informe seu email</label>
+            <input placeholder="Email" type="text" name="" id="ipt_email" class="ipt">
+        </div>
+        <div class="div_cadastro">
+            <label for="">Informe sua senha</label>
+            <input placeholder="Senha" type="password" name="" id="ipt_senha" class="ipt">
+        </div>
+
+        <button onclick="Conexao" class="button">Cadastrar</button>
+
+    </div>
+
+    <div class="card_cadastro">
+        <div class="card_title">
+            Usuarios Ativos
+        </div>
+
+        <p>Lista de usuarios da empresa cadastrado</p>
+
+        <ul>
+            <li>Gleison Almeida de Freitas</li>
+        </ul>
+
+    </div>
+
+  </section>
+
+  <!-- Fim Card Cadastro -->
+    
+</body>
+</html>

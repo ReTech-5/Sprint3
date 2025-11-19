@@ -1,0 +1,119 @@
+body{
+
+  background-color: var(--bg-cinza);
+
+}
+
+.container-login {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  min-height: 100vh;
+  padding: 60px;
+}
+
+.cabecalho-login {
+  align-self: center;
+  margin-bottom: 40px;
+}
+
+.container-conteudo {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+}
+.formulario-login {
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  border: 2px;
+  border-radius: 8px;
+  border-left: 10px;
+  border-right: 10px;
+  padding: 30px;
+  height: 450px;
+  width: 380px;
+}
+
+.grupo-campo {
+  margin-bottom: 15px;
+}
+
+.label-campo {
+  display: flex;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.input-campo {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.mensagem-erro {
+  font-size: 0.9em;
+  margin-top: 5px;
+}
+
+.link-recuperar {
+  text-align: center;
+  margin-top: 15px;
+}
+
+#link_esqueci_senha {
+  color: green;
+  text-decoration: none;
+}
+
+#link_esqueci_senha:hover {
+  text-decoration: underline;
+}
+
+.logo-retech {
+  height: 400px;
+  margin-right: 0px;
+  width: 400px;
+  align-items: center;
+  padding: 40px;
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.campo-senha {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.campo-senha .input-campo {
+  width: 100%;
+  padding-right: 40px;
+}
+
+#icone_olho {
+  position: absolute;
+  top: 349px;
+  right: 235px;
+  color: #888;
+  font-size: 18px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+#icone_olho:hover {
+  color: #333;
+  transform: scale(1.1);
+}
+
+#btn_entrar {
+
+  padding: 5px 5px;
+
+
+}

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Geral</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div>
+        <!-- Canvas: Cria uma área na página web para renderização, que funciona como uma tela em branco para ser manipulada por código. -->
+        <canvas id="GraficoPizzaLixeira"> </canvas>
+        <canvas id="GraficoBarrasReciclavel"> </canvas>
+        <canvas id="GraficoBarrasOrganico"> </canvas>
+    </div>
+    <script>
+        const PizzaLixeiras = document.getElementById("GraficoPizzaLixeira");
+        const BarrasReciclavel = document.getElementById("GraficoBarrasReciclavel");
+        const BarrasOrganico = document.getElementById("GraficoBarrasOrganico");
+
+        // Gráfico de Pizza dos Status das Lixeiras
+        new Chart(PizzaLixeiras, {
+            type: 'pie',
+            data: {
+                labels: [
+                    'Estável',
+                    'Moderado',
+                    'Alerta',
+                    'Crítico'
+                ],
+                datasets: [{
+                    label: 'Lixeiras',
+                    data: [14, 34, 7, 7],
+                    backgroundColor: [
+                    'rgb(186, 255, 201)',
+                    'rgb(255, 255, 186)',
+                    'rgb(255, 223, 186)',
+                    'rgb(255, 179, 186)'
+                    ],
+                    hoverOffset: 4
+                }]
+            },
+        });
+
+        // Gráfico de Barras das Lixeiras Reciclaveis
+        new Chart(BarrasReciclavel, {
+            type: "bar",
+            data: {
+                labels: ["Estável", "Moderado", "Alerta", "Crítico"],
+                datasets: [
+                    {
+                        data: [3, 18, 7, 3],
+                        borderWidth: 1,
+                        backgroundColor: [
+                            'rgb(186, 255, 201)',
+                            'rgb(255, 255, 186)',
+                            'rgb(255, 223, 186)',
+                            'rgb(255, 179, 186)'
+                        ],
+
+                    },
+                    
+                ],
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
+            },
+        });
+
+        // Gráfico de Barras das Lixeiras Orgânicas
+        new Chart(BarrasOrganico, {
+            type: "bar",
+            data: {
+                labels: ["Estável", "Moderado", "Alerta", "Crítico"],
+                datasets: [
+                    {
+                        data: [3, 18, 7, 3],
+                        borderWidth: 1,
+                        backgroundColor: [
+                            'rgb(186, 255, 201)',
+                            'rgb(255, 255, 186)',
+                            'rgb(255, 223, 186)',
+                            'rgb(255, 179, 186)'
+                        ],
+                    },
+                ],
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
+            },
+        });
+
+    </script>
+</body>
+</html>

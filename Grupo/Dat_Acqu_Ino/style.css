@@ -1,0 +1,16 @@
+body {
+    font-family: Arial, sans-serif;
+    width: 80%;
+    margin: auto;
+    padding: 100px 0 0 0;
+}
+
+canvas {
+    margin: 0 10px 0 10px;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}

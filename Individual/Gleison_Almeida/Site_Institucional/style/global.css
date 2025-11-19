@@ -1,0 +1,112 @@
+
+
+/* Inicio das imortações de conteudos do projeto */
+
+    @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* Fim das importações de conteudos do projeto */
+
+
+
+
+
+/* --Inicio do reset CSS-- */
+
+/*  O reset CSS serve para retirar algumas configurações padrão presente nas tags HTML */
+* {
+
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+a {
+
+    text-decoration: none;
+    color: inherit;
+
+}
+
+li {
+
+    list-style: none;
+
+}
+
+/* --Fim do reser CSS-- */
+
+
+
+
+
+/* --Inicio das configurações padrões do nosso site-- */
+
+/* Criando as variaveis de cores */
+:root {
+
+    /* cores do background */
+    --bg-verde-escuro: #04200D;
+    --bg-verde-claro: #E1F8F2;
+    --bg-cinza: #F9F9F9;
+
+    /* cores dos cards */
+    --bg-card: #FFFFFF;
+    --bg-title-color: #20604A;
+    --card-gradient-claro: #10B77F;
+    --card-gradient-escuro: #04200D;
+    
+    /* cores dos inputs / buttons */
+    --bg-ipt-color: #FCFFFF;
+    --border-ipt-color: #37B594;
+    --bg-bt-gradiend-claro: #10B77F;
+    --bg-bt-gradiend-escuro: #04200D;
+    --bt-text-color: #FFFFFF;
+
+    /* cores dos textos */
+    --text-padrao-color: #000000;
+    --text-navbar-color: #2D2E2E;
+    --text-bg-escuro-color: #FFFFFF;
+    --text-destaque-color: #10B77F;
+
+    /* cores dos icones */
+    --icon-lixeira-verde: #9DC284;
+    --icon-lixeira-amarela: #EAE855 ;
+    --icon-lixeira-laranja: #F29D38 ;
+    --icon-lixeira-vermelha: #BE4A31 ;
+    --icon-alerta: #FFFD54 ;
+    --icon-erro: #EB3223 ;
+
+}
+
+ /* html, body {
+
+    width: 100%;
+    height: 100%;
+
+} */
+
+/* Fonte padrão do site*/
+body {
+
+    font-family: 'Roboto', sans-serif;
+
+}
+
+/* Fonte padrão dos titulos */
+.title {
+
+    font-family: 'Inter', sans-serif;
+
+}
+
+/* Formatação padrão dos botões da pagina */
+.button{
+
+    background: linear-gradient(90deg, var(--bg-bt-gradiend-claro) 0%, var(--bg-bt-gradiend-escuro) 100%);
+    color: var(--bt-text-color);
+    font-weight: bold;
+    
+}
+
+/* Fim das configurações padrão do nosso site*/
