@@ -27,7 +27,8 @@ idEndereco INT PRIMARY KEY AUTO_INCREMENT, 	-- Identificador único do endereço
 logradouro VARCHAR(45),						-- Rua, avenida ou local
 numero INT,									-- Número do local 
 cep CHAR(9),								-- Código postal (CEP)	
-lixeira VARCHAR(45)																																					
+lixeira VARCHAR(45),
+categoria VARCHAR(45)																																			
 );
 
 /*
