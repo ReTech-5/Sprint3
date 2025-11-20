@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculadora</title>
+  <link rel="shortcut icon" href="../asset/LogoIcon.svg" type="image/x-icon">
+  <link rel="stylesheet" href="../public/css/global.css" />
+  <link rel="stylesheet" href="../public/css/navbar.css" />
+  <link rel="stylesheet" href="../public/css/calculadora.css" />
+</head>
+
+<body>
+  <!-- Inicio da Navbar -->
+
+  <header class="navbar">
+    <div id="div_navbar" class="container_nav">
+      <div id="logo_nav">
+        <a href="home.html"><img src="../public/assets/imgs/Logo.svg" /></a>
+      </div>
+
+      <nav class="nav">
+
+        <ul class="ul_nav">
+
+          <li><a href="../public/index.html">Início</a></li>
+          <li><a href="../public/index.html#quemSomos">Quem Somos</a></li>
+          <li><a href="../public/index.html#contado">Contato</a></li>
+          <li><a id="page_atual" href="calculadora.html">Calculadora</a></li>
+
+        </ul>
+
+        <ul class="bt_nav">
+
+          <li><button class="button" onclick="window.location.href='login.html'">Entrar</button></li>
+
+        </ul>
+
+      </nav>
+      
+    </div>
+  </header>
+  <!-- Fim da Navbar -->
+
+  <!-- Inicio da Calculadora -->
+
+  <div class="simulador">
+    <div class="card_simulador">
+      <div class="card_simulador_header">Simulador Financeiro</div>
+      <div class="card_simulador_body">
+        <label class="simulador_label">Quantidade de lixeiras subterrâneas: <br /><br />
+          <input class="simulador_input" type="number" value="50" placeholder="Insira a quantidade..." id="ipt_lixeiras" />
+        </label>
+
+        <label class="simulador_label">Capacidade máxima das lixeiras (toneladas): <br /><br />
+          <input class="simulador_input" type="number" value="5" placeholder="Insira a capacidade..."
+            id="ipt_capacidadeLixeira" />
+        </label>
+
+        <label class="simulador_label">Capacidade de carga dos caminhões de coleta (toneladas):
+          <br /><br />
+          <input class="simulador_input" type="number" value="8" placeholder="Insira a capacidade..."
+            id="ipt_capacidadeCaminhao" />
+        </label>
+
+        <button class="simulador_button" onclick="calcular()">
+          Calcular
+        </button>
+      </div>
+    </div>
+    <div id="div_resultado" class="card_resultado">
+
+      <div class="card_simulador_header">
+        Resultado
+      </div>
+
+      <div class="card_resultado_body">
+        <div id="div_mensagem"></div>
+      </div>
+      
+    </div>
+  </div>
+
+  <!-- Fim da Calculadora -->
+  <script src="../js/calculadora.js"></script>
+</body>
+
+</html>
