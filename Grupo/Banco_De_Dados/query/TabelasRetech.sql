@@ -11,10 +11,10 @@ Tabela Empresa
 - Cada empresa tem sensores, usúarios e contatos associados 
 */
 CREATE TABLE Empresa( 
-idEmpresa INT PRIMARY KEY AUTO_INCREMENT, 	-- Identificador único da empresa
-nomeEmpresa VARCHAR(45),					-- Nome da empresa
-dtInicioContrato DATE,						-- Data de início do contato
-dtFimContrato DATE							-- Data do fim do contrato
+idEmpresa INT PRIMARY KEY AUTO_INCREMENT, 	-- Identificador Único da Empresa
+nomeEmpresa VARCHAR(45),					-- Nome da Empresa
+dtInicioContrato DATE,						-- Data de Início do Contato
+dtFimContrato DATE							-- Data do Fim do Contrato
 );
 
 /*
@@ -23,12 +23,10 @@ Tabela Endereco
 - No diagrama de solução representa o ponto físico das lixeiras
 */
 CREATE TABLE Endereco(
-idEndereco INT PRIMARY KEY AUTO_INCREMENT, 	-- Identificador único do endereço
-logradouro VARCHAR(45),						-- Rua, avenida ou local
-numero INT,									-- Número do local 
-cep CHAR(9),								-- Código postal (CEP)	
-lixeira VARCHAR(45),
-categoria VARCHAR(45)																																			
+idEndereco INT PRIMARY KEY AUTO_INCREMENT, 	-- Identificador Único do Endereço
+logradouro VARCHAR(45),						-- Rua, Avenida, Alameda, etc
+numero INT,									-- Número do Local 
+cep CHAR(9) 								-- Código Postal (CEP)	
 );
 
 /*
@@ -39,14 +37,18 @@ Tabela Sensor
 via API para o banco de dados
 */
 CREATE TABLE Sensor(
-idSensor INT PRIMARY KEY AUTO_INCREMENT,	-- identificador do sensor
-codigoSensor VARCHAR(45),					-- Código/Identificador do sensor
-`status` TINYINT,                           -- Status da lixeira (1 = Ativada, 0 = Desativado)
-fkEmpresa INT,								-- Empresa responsável
+idSensor INT PRIMARY KEY AUTO_INCREMENT,    -- Identificador Único do Sensor
+codigoSensor VARCHAR(45),				    -- Código/Identificador do Sensor
+codigoLixeira VARCHAR(45),                  -- Código/Identificador da Lixeira
+categoria VARCHAR(45),                      -- Categoria da Lixeira (Orgânica ou Reciclável)
+CONSTRAINT chkCategoria
+    CHECK (categoria IN ('orgânica', 'reciclável')),
+`status` TINYINT,                           -- Status da Lixeira (1 = Ativada, 0 = Desativado)
+fkEmpresa INT,								-- Empresa Responsável
 	CONSTRAINT fkSensorEmpresa
     FOREIGN KEY (fkEmpresa)
     REFERENCES Empresa(idEmpresa),
-fkEndereco INT,								-- Local onde o sensor está instalado
+fkEndereco INT,								-- Endereço do Sensor
 	CONSTRAINT fkSensorEndereco 
     FOREIGN KEY (fkEndereco)
     REFERENCES Endereco(idEndereco)
@@ -54,21 +56,21 @@ fkEndereco INT,								-- Local onde o sensor está instalado
 
 /*
 Tabela Usúario
-Representam os operadores das empresas ou o administrador 
+Representam os operadores das empresas
+e seus respectivos níveis de acesso
 */
 CREATE TABLE Usuario(
-idUsuario INT PRIMARY KEY AUTO_INCREMENT, 		-- Identificador do usúario
-nome VARCHAR(100),								-- Nome do usuário
-email VARCHAR(100),								-- E-mail de login
-senha VARCHAR(100),								-- Senha do acesso
-fkAdministrador INT,							-- Auto-relacionamento (usuário administrador)
-	CONSTRAINT fkUsuarioAdministrador 			
-	FOREIGN KEY (fkAdministrador)
-	REFERENCES Usuario(idUsuario),
-fkEmpresa INT,									-- Empresa a que o usuário pertence
-	CONSTRAINT fkusuarioEmpresa
+idUsuario INT PRIMARY KEY AUTO_INCREMENT, 		-- Identificador Único do Usúario
+nome VARCHAR(100),								-- Nome do Usuário
+email VARCHAR(100),								-- E-mail de Login
+senha VARCHAR(100),								-- Senha de Login
+acesso VARCHAR(100),                            -- Nível de Acesso do Usuário (Padrão, Admnistrador e Suporte)
+CONSTRAINT chkAcesso
+    CHECK (acesso IN ('Padrão', 'Admnistrador', 'Suporte')),
+fkEmpresa INT,									-- Empresa do Usuário
+CONSTRAINT fkUsuarioEmpresa
     FOREIGN KEY (fkEmpresa)
-    REFERENCES Empresa(idEmpresa)
+        REFERENCES Empresa(idEmpresa)
 );
 
 /*
@@ -79,22 +81,14 @@ No diagrama, corresponde à comunicação entre
 sistema de coleta de dados (Arduino) e o Banco de Dados.
 */
 CREATE TABLE ColetaDados(
-idColeta INT AUTO_INCREMENT UNIQUE NOT NULL,		-- Identificador daa coleta
-distancia DECIMAL(5,2),								-- Distância medida  (nível de resíduo)
-horaColeta TIME DEFAULT (CURRENT_TIME),				-- Hora da leitura
-dataColeta DATE DEFAULT (CURRENT_DATE), 			-- Data da leitura
-fkSensor INT,										-- Sensor que coletou os dados
-	CONSTRAINT fkColetaDadosSensor
+idColeta INT AUTO_INCREMENT UNIQUE NOT NULL,        -- Identificador da Coleta
+fkSensor INT,                                       -- Sensor que Realizou as Coletas
+CONSTRAINT fkColetaDadosSensor
     FOREIGN KEY (fkSensor)
-    REFERENCES Sensor(idSensor),
-    PRIMARY KEY (idColeta, fkSensor)				-- Estabelecendo uma entidade fraca
+        REFERENCES Sensor(idSensor),
+CONSTRAINT pkComposta
+    PRIMARY KEY (idColeta, fkSensor),               -- Identificador das Coleta Realizadas por Sensor
+distancia DECIMAL(5,2),								-- Distância Medida (Preenchimento da Lixeira)
+horaColeta TIME DEFAULT (CURRENT_TIME),				-- Hora da Leitura
+dataColeta DATE DEFAULT (CURRENT_DATE)   			-- Data da Leitura				
 );
-
-	
-
-
-
-
-
-
-
