@@ -1,6 +1,6 @@
 -- INSERÇÃO DE DADOS
 
-INSERT INTO Empresa (nomeEmpresa, dtInicioContrato, dtFimContrato) VALUES
+INSERT INTO Empresa (nome, inicioContrato, fimContrato) VALUES
 ('EcoLog Transportes', '2024-11-01', '2025-11-01');
 
 INSERT INTO Endereco (logradouro, numero, cep) VALUES
@@ -12,13 +12,10 @@ INSERT INTO Sensor (codigoSensor, `status`, fkEmpresa, fkEndereco) VALUES
 ('SNSR-C001', 1, 1, 2),
 ('SNSR-C002', 0, 1, 2);
 
-INSERT INTO Contato (email, telefone, fkEmpresa) VALUES
-('financeiro@ecolog.com', '11912345678', 1);
-
 INSERT INTO Usuario (nome, email, senha, fkEmpresa) VALUES
 ('Gestor EcoLog', 'gestor@ecolog.com', 'eco123', 1);
 
-INSERT INTO Usuario (nome, email, senha, fkAdministrador, fkEmpresa) VALUES
+INSERT INTO Usuario (nome, email, senha, fkEmpresa) VALUES
 ('Fiscal Parque', 'fiscal@ecolog.com', 'eco456', 1, 1);
 
 INSERT INTO Sensor (codigoSensor, `status`, fkEmpresa, fkEndereco) VALUES

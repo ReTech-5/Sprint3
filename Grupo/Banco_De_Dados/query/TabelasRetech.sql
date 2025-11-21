@@ -12,9 +12,9 @@ Tabela Empresa
 */
 CREATE TABLE Empresa( 
 idEmpresa INT PRIMARY KEY AUTO_INCREMENT, 	-- Identificador Único da Empresa
-nomeEmpresa VARCHAR(45),					-- Nome da Empresa
-dtInicioContrato DATE,						-- Data de Início do Contato
-dtFimContrato DATE							-- Data do Fim do Contrato
+nome VARCHAR(100),					        -- Nome da Empresa
+inicioContrato DATE,						-- Data de Início do Contato
+fimContrato DATE							-- Data do Fim do Contrato
 );
 
 /*
@@ -64,7 +64,7 @@ idUsuario INT PRIMARY KEY AUTO_INCREMENT, 		-- Identificador Único do Usúario
 nome VARCHAR(100),								-- Nome do Usuário
 email VARCHAR(100),								-- E-mail de Login
 senha VARCHAR(100),								-- Senha de Login
-acesso VARCHAR(100),                            -- Nível de Acesso do Usuário (Padrão, Admnistrador e Suporte)
+acesso VARCHAR(12),                            -- Nível de Acesso do Usuário (Padrão, Admnistrador e Suporte)
 CONSTRAINT chkAcesso
     CHECK (acesso IN ('Padrão', 'Admnistrador', 'Suporte')),
 fkEmpresa INT,									-- Empresa do Usuário
@@ -80,7 +80,7 @@ Registra todas as leituras feitas pelos sensores
 No diagrama, corresponde à comunicação entre
 sistema de coleta de dados (Arduino) e o Banco de Dados.
 */
-CREATE TABLE ColetaDados(
+CREATE TABLE Coleta(
 idColeta INT AUTO_INCREMENT UNIQUE NOT NULL,        -- Identificador da Coleta
 fkSensor INT,                                       -- Sensor que Realizou as Coletas
 CONSTRAINT fkColetaDadosSensor
