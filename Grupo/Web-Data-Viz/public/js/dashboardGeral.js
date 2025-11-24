@@ -286,13 +286,13 @@ function mostrarLista() {
       listaDivConteudo += "<li>";
 
       if (endereco.status == "Crítico") {
-        listaDivConteudo += "<img src='../asset/LixeiraCriticaIcon.svg'>";
+        listaDivConteudo += "<img src='../assets/LixeiraCriticaIcon.svg'>";
       } else if (endereco.status == "Alerta") {
-        listaDivConteudo += "<img src='../asset/LixeiraAlertaIcon.svg'>";
+        listaDivConteudo += "<img src='../assets/LixeiraAlertaIcon.svg'>";
       } else if (endereco.status == "Moderado") {
-        listaDivConteudo += "<img src='../asset/LixeiraModeradaIcon.svg'>";
+        listaDivConteudo += "<img src='../assets/LixeiraModeradaIcon.svg'>";
       } else if (endereco.status == "Estável") {
-        listaDivConteudo += "<img src='../asset/LixeiraEstavelIcon.svg'>";
+        listaDivConteudo += "<img src='../assets/LixeiraEstavelIcon.svg'>";
       }
 
       if (endereco.nome == "Av. Francisco Matarazzo") {

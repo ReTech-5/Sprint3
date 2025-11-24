@@ -14,13 +14,12 @@
 
 <body>
 
-    <!-- Inicio da Navbar -->
-
     <header class="navbar">
+
         <div class="container_nav">
 
             <div id="logo_nav">
-                <a href="dashboardGeral.html"><img src="../asset/Logo.svg" alt=""></a>
+                <a href="dashboardGeral.html"><img src="../assets/Logo.svg" alt=""></a>
             </div>
 
             <nav class="nav">
@@ -34,7 +33,7 @@
 
                 <div class="user">
 
-                    <a href="perfil.html"><img src="../asset/Avatar.svg" alt=""></a>
+                    <a href="perfil.html"><img src="../assets/Avatar.svg" alt=""></a>
                     <span id="msg_user"></span>
 
                 </div>
@@ -43,10 +42,6 @@
 
         </div>
     </header>
-
-    <!-- Fim da Navbar -->
-
-    <!-- Inicio tela de Dashboard dos Sensores -->
 
     <section class="dashboard_sensor">
 
@@ -57,63 +52,63 @@
             <li class="sensor">
 
                 <div class="container_flexSide">
+
                     <div class="container card_lista">
+
                         <div class="card_title lista">Lista de sensor</div>
 
-                        
-
-                        
                     </div>
 
                     <div class="container card_detalhes">
-                        <div class="card_title detalhes">Detalhes</div>
-                        
-                        <span>
-                            Sensor:
-                        </span>
 
-                        <span>
-                            Lixeira:
-                        </span>
-                        
-                        <span>
-                            Status:
-                        </span>
-                        
-                        <span>
-                            Categoria:
-                        </span>
-                        
-                        <span>
-                            Data de instalação:
-                        </span>
-                        
+                        <div class="card_title detalhes">Detalhes</div>
+
+                        <span>Sensor:</span>
+
+                        <span>Lixeira:</span>
+
+                        <span>Status:</span>
+
+                        <span>Categoria:</span>
+
+                        <span>Data de instalação:</span>
+
                     </div>
+
                 </div>
 
                 <div class="container_flex">
+
                     <div class="container_kpis">
 
                         <div class="container kpi">
+
                             <div class="card_title">Faixa de Pico de Preenchimento <br> (Ultimos 90 dias) </div>
+
                         </div>
 
                         <div class="container kpi">
+
                             <div class="card_title">Padrão de Esvaziamento <br> (Ultimos 30 dias)</div>
+
                         </div>
 
                         <div class="container kpi">
+
                             <div class="card_title">Tempo até Condição Crítica <br> (Ultimos 30 dias)</div>
+
                         </div>
 
                         <div class="container kpi">
+
                             <div class="card_title">Maior Preenchimento <br> (Ultimos 7 dias)</div>
+
                         </div>
 
                     </div>
 
                     <div class="container_graficos">
-                        
+
                         <div class="container linha">
 
                             <canvas id="cvs_linhaReciclavel"></canvas>
@@ -129,18 +124,15 @@
                     </div>
 
                 </div>
+
             </li>
 
         </ul>
 
     </section>
 
-    <!-- Fim da tela de Dashboar dos Sensores -->
-
-    <script src="../js/login.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../js/dashboardSensor.js"></script>
-
 
 </body>
 

@@ -1,7 +1,7 @@
 :root {
   --bg-dark: #0b0f0a;
   --bg-hero: #1c1c1c;
-  --bg-deep: #04200D;
+  --bg-deep: #04200d;
   --primary: #1e8449;
   --primary-2: #27ae60;
   --text-light: #ffffff;
@@ -11,9 +11,6 @@
   --gray-2: #dddddd;
   --white: #ffffff;
 }
-
-
-
 
 body {
   font-family: Arial, sans-serif;
@@ -27,16 +24,12 @@ body {
   width: 100%;
 }
 
-
-
-
-
 .partePrincipal {
   position: relative;
   text-align: center;
   padding: 19.6%;
   background-color: var(--bg-hero);
-  background-image: url(../asset/capa.jpeg);
+  background-image: url(../assets/capa.jpeg);
   background-size: cover;
   background-position: center;
   color: var(--text-light);
@@ -55,24 +48,20 @@ body {
   z-index: 2;
 }
 
-
 .principalTexto h1 {
   font-size: 48px;
   margin-bottom: 10px;
   color: var(--text-light);
 }
 
-
 .principalTexto p {
   font-size: 20px;
   color: var(--text-muted);
 }
 
-
 .principalBotoes {
   margin-top: 30px;
 }
-
 
 .principalBotoes a {
   color: var(--text-light);
@@ -80,28 +69,23 @@ body {
   padding: 12px 25px;
   border-radius: 5px;
   margin: 0 10px;
-  background-color: #10B77F;
+  background-color: #10b77f;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-
 .principalBotoes a:last-child {
-  background-color: #10B77F;
+  background-color: #10b77f;
 }
-
 
 .principalBotoes a:hover {
-  background-color: #10B77F;
+  background-color: #10b77f;
   transform: translateY(-2px);
 }
-
-
-
 
 .problemas {
   text-align: center;
   padding: 80px 20px;
- background-color: var(--bg-deep);
+  background-color: var(--bg-deep);
 }
 
 .problemas h2 {
@@ -110,7 +94,7 @@ body {
   margin-bottom: 10px;
 }
 
-.problemas>p {
+.problemas > p {
   font-size: 17px;
   color: var(--text-light);
   margin-bottom: 40px;
@@ -143,16 +127,12 @@ body {
   margin-top: 0;
 }
 
-
-
-
 .sobre {
   background: linear-gradient(90deg, #f7fffa 0%, #e8f8f2 100%);
   color: var(--text-dark);
   padding: 80px 60px;
-  font-family: 'Segoe UI', Arial, sans-serif;
+  font-family: "Segoe UI", Arial, sans-serif;
 }
-
 
 .sobre h2 {
   text-align: center;
@@ -162,7 +142,6 @@ body {
   color: #000000;
 }
 
-
 .sobreContainer {
   display: flex;
   justify-content: space-between;
@@ -170,7 +149,6 @@ body {
   flex-wrap: wrap;
   gap: 40px;
 }
-
 
 .empresa {
   flex: 1;
@@ -181,7 +159,7 @@ body {
 
 .empresa h3 {
   text-align: center;
-  color: #10B77F;
+  color: #10b77f;
   font-size: 22px;
   margin-bottom: 20px;
 }
@@ -193,7 +171,6 @@ body {
   text-align: justify;
 }
 
-
 .info {
   flex: 1;
   min-width: 300px;
@@ -202,7 +179,7 @@ body {
 
 .info h3 {
   font-size: 20px;
-  color: #10B77F;
+  color: #10b77f;
   margin-bottom: 5px;
 }
 
@@ -213,7 +190,6 @@ body {
   margin-bottom: 25px;
 }
 
-
 .colunaValores {
   flex: 1;
   min-width: 280px;
@@ -222,11 +198,10 @@ body {
 }
 
 .colunaValores h3 {
-  color: #10B77F;
+  color: #10b77f;
   font-size: 22px;
   margin-bottom: 20px;
 }
-
 
 .valoresCaixas {
   display: grid;
@@ -251,17 +226,17 @@ body {
 
 .caixaValor:hover {
   transform: translateY(-5px);
-  box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
 }
 
 .caixaValor .emoji {
-  font-size: 30px; 
-  margin-bottom: 0; 
+  font-size: 30px;
+  margin-bottom: 0;
 }
 .beneficios {
   padding: 80px 20px;
   text-align: center;
-  background-color:var(--bg-deep);
+  background-color: var(--bg-deep);
 }
 
 .beneficios h2 {
@@ -269,12 +244,11 @@ body {
   font-size: 36px;
 }
 
-.beneficios>p {
+.beneficios > p {
   color: var(--text-light);
   margin-bottom: 40px;
   font-size: 17px;
 }
-
 
 .beneficiosContainer {
   display: flex;
@@ -299,7 +273,6 @@ body {
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }
 
-
 .impactoBanner {
   background-color: var(--white);
   color: var(--text-dark);
@@ -310,7 +283,6 @@ body {
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
 }
 
-
 .stats {
   display: flex;
   justify-content: space-around;
@@ -318,13 +290,11 @@ body {
   margin-top: 20px;
 }
 
-
 .stats div {
   font-size: 40px;
   font-weight: bold;
   text-align: center;
 }
-
 
 .stats p {
   font-size: 16px;
@@ -349,7 +319,7 @@ body {
   color: var(--text-dark);
   padding: 80px 60px;
   text-align: center;
-  font-family: 'Segoe UI', Arial, sans-serif;
+  font-family: "Segoe UI", Arial, sans-serif;
 }
 
 .servicos h2 {
@@ -369,7 +339,6 @@ body {
   margin-bottom: 60px;
 }
 
-
 .servicosContainer {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -378,7 +347,6 @@ body {
   max-width: 1000px;
   margin: 0 auto 60px auto;
 }
-
 
 .servicoCaixa {
   background-color: var(--white);
@@ -410,7 +378,7 @@ body {
 }
 
 .metricas {
-   background-color: var(--bg-deep);
+  background-color: var(--bg-deep);
   padding: 80px 20px;
 }
 
@@ -487,7 +455,7 @@ body {
 
 .tecnologiaBanner {
   border-radius: 16px;
-  background: linear-gradient(90deg, #10B77F 0%, #04200D 100%);
+  background: linear-gradient(90deg, #10b77f 0%, #04200d 100%);
   color: var(--white);
   padding: 25px 30px;
   max-width: 1000px;
@@ -512,9 +480,8 @@ body {
   background: linear-gradient(90deg, #f7fffa 0%, #e8f8f2 100%);
   padding: 80px 60px;
   margin: auto;
-  font-family: 'Segoe UI', Arial, sans-serif;
+  font-family: "Segoe UI", Arial, sans-serif;
 }
-
 
 .quemSomos h2 {
   color: #000000;
@@ -523,7 +490,6 @@ body {
   margin-bottom: 15px;
   font-weight: 700;
 }
-
 
 .equipeContainer {
   display: flex;
@@ -545,8 +511,6 @@ body {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-
-
 .membro:hover {
   transform: translateY(-5px);
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
@@ -561,11 +525,10 @@ body {
   border: 2px solid var(--primary);
 }
 
-
 .membro .info {
   display: flex;
-  flex-direction: column; 
-  align-items: flex-start; 
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .membro p {
@@ -584,7 +547,7 @@ body {
 .membro .cargo {
   color: var(--primary);
   font-size: 14px;
-  margin-top: 4px; 
+  margin-top: 4px;
 }
 
 @media (max-width: 960px) {
