@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="shortcut icon" href="../asset/LogoIcon.svg" type="image/x-icon">
+  <link rel="stylesheet" href="../style/global.css">
+  <link rel="stylesheet" href="../style/login.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+  <main class="container-login">
+
+    <div class="cabecalho-login">
+
+      <h1 class="title"><span style="color: var(--text-destaque-color);">Bem-vindo a ReTech</span></h1>
+
+    </div>
+
+    <div class="container-conteudo">
+
+      <header class="container-logo">
+
+        <a href="home.html"><img src="../asset/Logo.svg" width="100" height="100" alt="Logo ReTech" class="logo-retech"></a>
+
+      </header>
+
+      <div class="formulario-login" id="tela_login">
+
+        <h2>Entrar na sua conta</h2><br>
+
+        <div class="grupo-campo">
+
+          <label for="email" class="label-campo">E-mail</label>
+          <input onkeyup="validarEmail()" type="text" id="ipt_email" class="input-campo" placeholder="seu@email.com"
+          value="lucas.castrosptech.gov">
+
+        </div>
+
+        <div class="grupo-campo">
+
+          <label for="senha" class="label-campo">Senha</label>
+          <div class="visualizar_senha">
+
+            <input type="password" id="ipt_senha" class="input-campo"
+              placeholder="Digite sua senha..." value="Polenta7">
+            <i id="icone_olho" class="fa-solid fa-eye" onclick="verSenha()"></i>
+
+          </div>
+
+        </div>
+
+        <button id="btn_entrar" onclick="entrar()" class="button">Entrar</button>
+
+        <div id="div_erro" class="mensagem-erro"></div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <script src="../js/login.js"></script>
+
+</body>
+
+</html>

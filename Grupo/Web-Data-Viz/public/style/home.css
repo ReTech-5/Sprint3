@@ -36,7 +36,7 @@ body {
   text-align: center;
   padding: 19.6%;
   background-color: var(--bg-hero);
-  background-image: url(../assets/imgs/capa.jpeg);
+  background-image: url(../asset/capa.jpeg);
   background-size: cover;
   background-position: center;
   color: var(--text-light);
