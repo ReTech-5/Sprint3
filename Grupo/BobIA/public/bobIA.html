@@ -4,29 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BobIA</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="bobIA.css">
 </head>
 <body>
 
+    <h1 class="titulo">BobIA</h1>
+
     <div id="container">
-        <h1>BobIA</h1>
-        <textarea id="pergunta" type="text" placeholder="Digite a pergunta..."></textarea>
-        <br><br>
-        <button onclick="gerarResposta()">Gerar Resposta</button>
-        <h3>Resposta da IA:</h3>
-        <div id="resposta"></div>
+
+        <!-- CARD PERGUNTA -->
+        <div class="card">
+            <div class="card-top">Tire sua dúvida</div>
+
+            <div class="card-body">
+                <textarea id="pergunta" placeholder="Digite a pergunta..."></textarea>
+                <button onclick="gerarResposta()">Gerar Resposta</button>
+            </div>
+        </div>
+
+        <!-- CARD RESPOSTA -->
+        <div class="card">
+            <div class="card-top">Resposta da IA:</div>
+
+            <div class="card-body">
+                <div id="resposta"></div>
+            </div>
+        </div>
+
     </div>
 
     <script>
-        
         async function gerarResposta() {
             const pergunta = document.getElementById('pergunta').value;
 
             const response = await fetch('/perguntar', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ pergunta })
             });
 
@@ -35,8 +48,6 @@
             resposta.style.display = 'block';
             document.getElementById('resposta').innerText = data.resultado;
         }
-
     </script>
-    
 </body>
 </html>
