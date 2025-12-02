@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sensor</title>
+    <link rel="shortcut icon" href="../asset/LogoIcon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="../style/global.css">
+    <link rel="stylesheet" href="../style/navbar.css">
+    <link rel="stylesheet" href="../style/dashboardSensor.css">
+
+</head>
+<body>
+
+    <!-- Inicio da Navbar -->
+
+    <header class="navbar">
+        <div class="container_nav">
+
+            <div id="logo_nav">
+                <a href="dashboardGeral.html"><img src="../asset/Logo.svg" alt=""></a>
+            </div>
+
+            <nav class="nav">
+
+                <ul class="ul_nav">
+
+                    <li><a id="page_atual" href="dashboardGeral.html">Dashboard</a></li>
+                    <li><a href="cadastro.html">Cadastro</a></li>
+
+                </ul>
+
+                <div class="user">
+
+                    <a href="perfil.html"><img src="../asset/Avatar.svg" alt=""></a>
+                    <span id="msg_user"></span>
+
+                </div>
+
+            </nav>
+
+        </div>
+    </header>
+
+    <!-- Fim da Navbar -->
+
+    <!-- Inicio tela de Dashboard dos Sensores -->
+
+    <section class="dashboard_sensor">
+
+        <h1>Grupo: Av. Francisco Matarazzo</h1>
+
+        <ul>
+
+            <h4>Categoria: <span>Organico</span></h4>
+            <h4>Sensor: <span>G29541A</span></h4>
+            <li class="sensor">
+                <div id="container_flex">
+                    <div class="container rosquinha">
+
+                        <canvas id="cvs_roscaReciclavel"></canvas>
+
+                    </div>
+
+                    <div class="container_kpi">
+
+                        <div class="title_kpi">
+
+                            <span>Pico Preenchi.</span>
+                            <div class="info_icon">
+                                <img src="../asset/InfoIcon.png" alt="">
+                                <span class="tooltip">Maior nível de ocupação registrado.</span>
+                            </div>
+
+                        </div>
+
+                        <div class="container kpi">
+
+                            <span>75%</span>
+
+                        </div>
+
+                        <div class="title_kpi meio">
+
+                            <span>Horário Pico</span>
+                            <div class="info_icon">
+                                <a href=""><img src="../asset/InfoIcon.png" alt=""></a>
+                                <span class="tooltip">Faixa de horario com maior preenchimento</span>
+                            </div>
+
+                        </div>
+
+                        <div class="container kpi meio conteudo_kpi">
+
+                            <span>12:30</span>
+
+                        </div>
+
+                        <div class="title_kpi meio">
+
+                            <span>Preenchi. Médio</span>
+                            <div class="info_icon">
+                                <a href=""><img src="../asset/InfoIcon.png" alt=""></a>
+                                <span class="tooltip">Media de preenchimento na hora das coletas</span>
+                            </div>
+                        </div>
+
+                        <div class="container kpi meio conteudo_kpi">
+
+                            <span>62%</span>
+
+                        </div>
+
+                        <div class="title_kpi">
+
+                            <span>Temp. Médio</span> <a href="">
+                                <div class="info_icon">
+                                    <img src="../asset/InfoIcon.png" alt="">
+                            </a>
+                            <span class="tooltip">Tempo medio em que uma lixeira sair do staus estavel para
+                                alerta</span>
+                        </div>
+
+                    </div>
+
+                    <div class="container kpi">
+
+                        <span>9 Horas</span>
+
+                    </div>
+
+                </div>
+
+                </div>
+
+                <div class="container linha">
+
+                    <canvas id="cvs_linhaReciclavel"></canvas>
+
+                </div>
+
+            </li>
+
+        </ul>
+
+    </section>
+
+    <!-- Fim da tela de Dashboar dos Sensores -->
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/dashboardSensorInativo.js"></script>
+    
+</body>
+</html>

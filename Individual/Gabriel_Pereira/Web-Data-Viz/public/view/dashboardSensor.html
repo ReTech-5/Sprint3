@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sensor</title>
+    <link
+      rel="shortcut icon"
+      href="../assets/LogoIcon.svg"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="../style/global.css" />
+    <link rel="stylesheet" href="../style/navbar.css" />
+    <link rel="stylesheet" href="../style/dashboardSensor.css" />
+  </head>
+  <body>
+    <header class="navbar">
+      <div class="container_nav">
+        <div id="logo_nav">
+          <a href="dashboardGeral.html"
+            ><img src="../assets/Logo.svg" alt=""
+          /></a>
+        </div>
+        <nav class="nav">
+          <ul class="ul_nav">
+            <li><a id="page_atual" href="dashboardGeral.html">Dashboard</a></li>
+            <li><a href="cadastro.html">Cadastro</a></li>
+          </ul>
+          <div class="user">
+            <a href="perfil.html"><img src="../assets/Avatar.svg" alt="" /></a>
+            <span id="msg_user"></span>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <section class="dashboard_sensor">
+      <h1 id="titulo_pagina">Carregando...</h1>
+      <ul>
+        <li class="sensor">
+          <div class="container_flexSide">
+            <div class="container card_lista">
+              <div class="card_title lista">Lista de sensor</div>
+            </div>
+            <div class="container card_detalhes">
+              <div class="card_title detalhes">Detalhes</div>
+
+              <span id="span_sensor">Sensor: </span>
+              <span id="span_lixeira">Lixeira: </span>
+              <span id="span_status">Status: </span>
+              <span id="span_categoria">Categoria: </span>
+              <span id="span_data">Data de instalação: </span>
+            </div>
+          </div>
+
+          <div class="container_flex">
+            <div class="container_kpis">
+              <div class="container kpi">
+                <div class="card_title">
+                  Faixa de Pico de Preenchimento <br />
+                  (Ultimos 90 dias)
+                </div>
+              </div>
+              <div class="container kpi">
+                <div class="card_title">
+                  Padrão de Esvaziamento <br />
+                  (Ultimos 30 dias)
+                </div>
+              </div>
+              <div class="container kpi">
+                <div class="card_title">
+                  Tempo até Condição Crítica <br />
+                  (Ultimos 30 dias)
+                </div>
+              </div>
+              <div class="container kpi">
+                <div class="card_title">
+                  Maior Preenchimento <br />
+                  (Ultimos 7 dias)
+                </div>
+              </div>
+            </div>
+
+            <div class="container_graficos">
+              <div class="container linha">
+                <canvas id="cvs_linhaReciclavel"></canvas>
+              </div>
+              <div class="container rosquinha">
+                <canvas id="cvs_roscaReciclavel"></canvas>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/dashboardSensor.js"></script>
+  </body>
+</html>

@@ -1,0 +1,161 @@
+body, html {
+    height: 100%;
+}
+
+body {
+    background: linear-gradient(248deg, var(--bg-cinza) 0%, #FFF 100% );
+}
+
+.dashboard_sensor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2% 0;
+    width: 100%;
+    height: 80%;
+}
+
+.dashboard_sensor h1{
+    margin-bottom: 1%;
+}
+
+.container{
+    background-color: var(--bg-card);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dashboard_sensor ul{
+    width: 100%;
+    height: 100%;
+}
+
+.sensor {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.container_flexSide{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 20%;
+}
+
+.container_flex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 77%;
+}
+
+.container_kpis{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    justify-self: end;
+    width: 100%;
+    height: 25%;
+}
+
+.container_graficos{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+    height: 70%;
+}
+
+.card_title {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: small;
+    font-weight: 500;
+    background-color: var(--bg-title-color);
+    color: var(--text-bg-escuro-color);
+    margin-bottom: 5%;
+    height: 45px;
+    min-height: 45px;
+}
+
+.kpi{
+    width: 20%;
+    height: 100%;
+}
+
+.card_lista, .card_detalhes {
+    width: 90%;
+    height: 49%;
+}
+
+.card_lista span, .card_detalhes span {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    margin-left: 10%;
+    margin-bottom: 5%;
+    font-weight: 700;
+}
+
+.detalhes, .lista {
+    font-size: medium;
+}
+
+.rosquinha {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    min-width: auto;
+    height: auto;
+}
+
+.linha {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 55%;
+    height: 100%;
+}
+
+/* Kpis do sensor inativo */
+.title_kpi {
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.info_icon img {
+    width: 15px;
+    cursor: help;
+}
+
+#lista_lateral_sensores a {
+    text-decoration: none;
+    color: black;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-left: 10px;
+}
+
+#lista_lateral_sensores div {
+    display: flex;
+    align-items: center;
+    width: 90%;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #eee;
+}
+
+#lista_lateral_sensores img {
+    width: 25px;
+}
