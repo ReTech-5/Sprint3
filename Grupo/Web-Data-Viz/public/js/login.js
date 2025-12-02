@@ -41,22 +41,32 @@ function entrar() {
         resposta.json().then((json) => {
           console.log(json);
           console.log(JSON.stringify(json));
+          sessionStorage.NOME_USUARIO = json.nome;
           sessionStorage.EMAIL_USUARIO = json.email;
-          sessionStorage.NOME_USUARIO = json.nome;
-          sessionStorage.NOME_USUARIO = json.nome;
-          sessionStorage.ID_USUARIO = json.id;
-          sessionStorage.AQUARIOS = JSON.stringify(json.aquarios);
+          sessionStorage.ACESSO_USUARIO = json.acesso;
+          sessionStorage.ID_USUARIO = json.idUsuario;
+          sessionStorage.FK_EMPRESA = json.fkEmpresa;
 
-          setTimeout(function () {
-            window.location = "./dashboard/cards.html";
-          }, 1000); // apenas para exibir o loading
+          var acesso = sessionStorage.ACESSO_USUARIO
+
+          if (acesso == 'Suporte'){
+
+            window.location = "bobIA.html"
+
+          }else {
+
+            window.location = "perfil.html"
+
+          }
+
         });
       } else {
         console.log("Houve um erro ao tentar realizar o login!");
 
         resposta.text().then((texto) => {
           console.error(texto);
-          finalizarAguardar(texto);
+
+          document.getElementById('div_erro').innerHTML = texto
         });
       }
     })

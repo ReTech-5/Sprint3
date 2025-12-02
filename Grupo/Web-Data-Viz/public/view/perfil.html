@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
   </head>
-  <body>
+  <body onload="validarSessao()">
 
     <div class="perfilContainer">
 
@@ -27,9 +27,8 @@
 
           <div class="dados">
 
-            <h2>Lucas Quevedo</h2>
-            <p class="email">lucas.castro@sptech.gov</p>
-            <p class="cargo">Analista</p>
+            <h2 id="usuario"></h2>
+            <p id="email" class="email"></p>
            
           </div>
 
@@ -40,8 +39,8 @@
           <div class="atalhos">
 
             <a href="dashboardGeral.html">Dashboards</a>
-            <a href="cadastro.html">Cadastro</a>
-            <a onclick="sair()" class="sair">Sair</a>
+            <a id="btn_cadastro" href="cadastro.html">Cadastro</a>
+            <a onclick="limparSessao()" class="sair">Sair</a>
 
           </div>
 
@@ -52,7 +51,8 @@
       </div>
 
     </div>
-
+    
+    <script src="../js/sessao.js"></script>
   </body>
 
 </html>

@@ -29,39 +29,6 @@ var listaCaracteresEspeciais = [
   "/",
 ];
 
-// Lista de usuários
-var listaUsuarios = [{
-  nome: "Lucas Quevedo",
-  email: "lucas.castro@sptech.gov",
-  senha: "Polenta7?",
-  nivel: "Administrador",
-}, {
-  nome: "Samara Freitas",
-  email: "samara.farias@sptech.gov",
-  senha: "Chocolate9.",
-  nivel: "Administrador",
-}, {
-  nome: "Gleison Almeida",
-  email: "gleison.almeida@sptech.gov",
-  senha: "OrdemParanormal20!",
-  nivel: "Padrão",
-}, {
-  nome: "Pedro Cardoso",
-  email: "pedro.cardoso@sptech.gov",
-  senha: "Formula1)",
-  nivel: "Padrão",
-}, {
-  nome: "Gabriel Pereira",
-  email: "gabriel.pereira@sptech.gov",
-  senha: "Espanhol12$",
-  nivel: "Padrão",
-}, {
-  nome: "Arthur Rodrigues",
-  email: "arthur.rodrigues@sptech.gov",
-  senha: "Minecraft33#",
-  nivel: "Administrador",
-}];
-
 var nome = "";
 var email = "";
 var senha = "";
@@ -80,46 +47,68 @@ var mostrarCadastro = false;
 
 // Função para "renderizar" tabela dentro da div
 function mostrarTabela() {
-  tabelaDivConteudo =
-    "<table class='tabela'><tr><th>Nome</th><th>E-mail</th><th>Senha</th><th>Nível</th></tr>";
+  sessionStorage.FK_EMPRESA = 1
+  fkEmpresa = sessionStorage.FK_EMPRESA
 
-  var cont = 0;
-  var tamanhoListaUsuario = listaUsuarios.length;
-  while (cont < tamanhoListaUsuario) {
-    var usuario = listaUsuarios[cont];
-    var mostrar = false;
+  fetch(`/usuarios/listarUsuarios/${fkEmpresa}`, {
+  method: "GET",
+  })
+  .then (function (resposta) {
+    if (resposta.ok){
+      if (resposta.status == 204) {
 
-    if (filtro == "todos") {
-      mostrar = true;
-    } else if (usuario.nivel.toLowerCase() == filtro) {
-      mostrar = true;
+        console.log('Nenhuma dado encontrado')
+        throw 'Nenhum resultado encontrado'
+
+      }
+
+      resposta.json().then(function (resposta) {
+        console.log(resposta)
+
+        tabelaDivConteudo =
+        "<table class='tabela'><tr><th>Nome</th><th>E-mail</th><th>Senha</th><th>Nível</th></tr>";
+
+        var tamanhoListaUsuario = resposta.length;
+        
+        for (var i = 0; i < tamanhoListaUsuario; i++) {
+          var usuario = resposta[i];
+          var mostrar = false;
+
+          if (filtro == "todos") {
+            mostrar = true;
+          } else if (usuario.nivel.toLowerCase() == filtro) {
+            mostrar = true;
+          }
+
+          if (mostrar == true) {
+            tabelaDivConteudo +=
+              "<tr>" +
+              "<td>" +
+              usuario.nome +
+              "</td>" +
+              "<td>" +
+              usuario.email +
+              "</td>" +
+              "<td>" +
+              usuario.senha +
+              "</td>" +
+              "<td>" +
+              usuario.acesso +
+              "</td>" +
+              "</tr>";
+          }
+        }
+
+        tabelaDivConteudo += "</table>";
+
+        div_tabela.innerHTML = tabelaDivConteudo;
+
+      })
+
     }
 
-    if (mostrar == true) {
-      tabelaDivConteudo +=
-        "<tr>" +
-        "<td>" +
-        usuario.nome +
-        "</td>" +
-        "<td>" +
-        usuario.email +
-        "</td>" +
-        "<td>" +
-        usuario.senha +
-        "</td>" +
-        "<td>" +
-        usuario.nivel +
-        "</td>" +
-        "</tr>";
-    }
+  })
 
-    cont++;
-  }
-
-  tabelaDivConteudo += "</table>";
-
-  // Atualiza o conteúdo da div
-  div_tabela.innerHTML = tabelaDivConteudo;
 }
 
 // Função para renderizar o card de cadastro
