@@ -1,35 +1,51 @@
-# Visão Geral
+# Explicação da Modelagem
 
-O modelo representa um sistema de monitoramento de sensores vinculado as empresas parceiras, com coleta de dados, controle de usuários e endereços.
-A modelagem está organizada em seis entidades principais:
+## Visão Geral
 
-- **EMPRESA:** é o centro do sistema, guarda o nome e o período de contrato.
-- **CONTATO:** armazena os meios de comunicação (telefone, e-mail) da empresa.
-- **SENSOR:** representa o dispositivo físico que coleta informações.
-- **COLETA DADOS:** registra as medições captadas pelos sensores (data, hora, valor).
-- **ENDEREÇO:** indica onde os sensores estão instalados.
-- **USUÁRIO:** controla quem acessa o sistema e a qual empresa pertence.
+A modelagem representa um sistema de monitoramento de sensores
+vinculados a empresas parceiras, incluindo controle de usuários,
+registros de coleta e endereços associados aos sensores.
 
-## TIPOS DE ENTIDADES
-O modelo contém dois tipos principais de entidades:
+O modelo está organizado em cinco entidades principais:
 
-a) **ENTIDADES PRINCIPAIS** (ou fortes)
-   São aquelas que possuem existência independente e representam objetos centrais do sistema.
-   
-   - **EMPRESA:** representa o cliente principal do sistema.
-   - **SENSOR:** dispositivo físico que coleta dados.
-   - **USUÁRIO:** pessoa que acessa o sistema e realiza ações.
-   - **ENDEREÇO:** localização física de sensores.
+-   **EMPRESA:** armazena informações da empresa cliente, como nome e
+    período de contrato.
+-   **SENSOR:** representa o dispositivo físico que monitora e reporta
+    dados.
+-   **COLETA:** registra os eventos de coleta feitos pelos sensores
+    (data, hora, distância).
+-   **ENDEREÇO:** determina o local onde cada sensor está instalado.
+-   **USUÁRIO:** representa os usuários do sistema, vinculados a uma
+    empresa.
 
-b) ENTIDADES DEPENDENTES (ou fracas)
-   Dependem de outras para existir e só fazem sentido quando associadas a uma entidade principal.
-   
-   - **CONTATO:** depende de EMPRESA, pois só existe se houver uma empresa associada.
-   - **COLETA DADOS:** depende de SENSOR, pois só existe se o sensor tiver feito uma coleta.
+------------------------------------------------------------------------
 
-## RELACIONAMENTOS
+## Tipos de Entidades
 
-- Uma **EMPRESA** pode ter vários **CONTATOS, USUÁRIOS e SENSORES**.
-- Cada **SENSOR** está ligado a um ENDEREÇO e pertence a uma **EMPRESA**.
-- Cada **SENSOR** gera várias **COLETAS DE DADOS**.
-- Cada **USUÁRIO** pertence a uma **EMPRESA** e pode ter um superior (administrador).
+### a) Entidades Principais (Fortes)
+
+Possuem existência independente dentro do sistema:
+
+-   **EMPRESA:** cliente principal.
+-   **SENSOR:** dispositivo monitorado.
+-   **USUÁRIO:** pessoas com acesso ao sistema.
+-   **ENDEREÇO:** localização física dos sensores.
+
+### b) Entidades Dependentes (Fracas)
+
+Dependem de outras entidades para existir:
+
+-   **COLETA:** depende de **SENSOR**, pois cada coleta só existe se
+    houver um sensor associado.
+
+------------------------------------------------------------------------
+
+## Relacionamentos
+
+-   Uma **EMPRESA** pode ter vários **USUÁRIOS** e vários **SENSORES**
+    associados.
+-   Cada **SENSOR** pertence a uma **EMPRESA** e está vinculado a um
+    **ENDEREÇO**.
+-   Cada **SENSOR** pode gerar diversas **COLETAS** ao longo do tempo.
+-   Cada **USUÁRIO** pertence a uma **EMPRESA** e possui níveis de
+    acesso definidos.

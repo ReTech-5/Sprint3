@@ -26,7 +26,10 @@ CREATE TABLE Endereco(
 idEndereco INT PRIMARY KEY AUTO_INCREMENT, 	-- Identificador Único do Endereço
 logradouro VARCHAR(45),						-- Rua, Avenida, Alameda, etc
 numero INT,									-- Número do Local 
-cep CHAR(9) 								-- Código Postal (CEP)	
+cep CHAR(9),								-- Código Postal (CEP)	
+lixeira VARCHAR(20),						-- Identificador da lixeira
+tipoLixeira VARCHAR(10)
+	CONSTRAINT TipoLixeira CHECK (tipoLixeira in ('Organico', 'Reciclável'))
 );
 
 /*
@@ -66,7 +69,7 @@ email VARCHAR(100),								-- E-mail de Login
 senha VARCHAR(100),								-- Senha de Login
 acesso VARCHAR(12),                            -- Nível de Acesso do Usuário (Padrão, Admnistrador e Suporte)
 CONSTRAINT chkAcesso
-    CHECK (acesso IN ('Padrão', 'Admnistrador', 'Suporte')),
+    CHECK (acesso IN ('Padrão', 'Administrador', 'Suporte')),
 fkEmpresa INT,									-- Empresa do Usuário
 CONSTRAINT fkUsuarioEmpresa
     FOREIGN KEY (fkEmpresa)
@@ -92,3 +95,4 @@ distancia DECIMAL(5,2),								-- Distância Medida (Preenchimento da Lixeira)
 horaColeta TIME DEFAULT (CURRENT_TIME),				-- Hora da Leitura
 dataColeta DATE DEFAULT (CURRENT_DATE)   			-- Data da Leitura				
 );
+
