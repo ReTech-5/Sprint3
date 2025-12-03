@@ -53,7 +53,7 @@ function entrar() {
 
             window.location = "bobIA.html"
 
-          }else {
+          } else {
 
             window.location = "perfil.html"
 

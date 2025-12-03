@@ -33,9 +33,9 @@ var nome = "";
 var email = "";
 var senha = "";
 var nivel = "";
+var fkEmpresa;
 var mensagem = "";
 var campoValidado = false;
-var usuarioValidado = false;
 
 // Filtro atual
 var filtro = "todos";
@@ -47,29 +47,25 @@ var mostrarCadastro = false;
 
 // Função para "renderizar" tabela dentro da div
 function mostrarTabela() {
-  sessionStorage.FK_EMPRESA = 1
-  fkEmpresa = sessionStorage.FK_EMPRESA
+  fkEmpresa = sessionStorage.FK_EMPRESA;
 
   fetch(`/usuarios/listarUsuarios/${fkEmpresa}`, {
-  method: "GET",
-  })
-  .then (function (resposta) {
-    if (resposta.ok){
+    method: "GET",
+  }).then(function (resposta) {
+    if (resposta.ok) {
       if (resposta.status == 204) {
-
-        console.log('Nenhuma dado encontrado')
-        throw 'Nenhum resultado encontrado'
-
+        console.log("Nenhuma dado encontrado");
+        throw "Nenhum resultado encontrado";
       }
 
       resposta.json().then(function (resposta) {
-        console.log(resposta)
+        console.log(resposta);
 
         tabelaDivConteudo =
-        "<table class='tabela'><tr><th>Nome</th><th>E-mail</th><th>Senha</th><th>Nível</th></tr>";
+          "<table class='tabela'><tr><th>Nome</th><th>E-mail</th><th>Senha</th><th>Nível</th></tr>";
 
         var tamanhoListaUsuario = resposta.length;
-        
+
         for (var i = 0; i < tamanhoListaUsuario; i++) {
           var usuario = resposta[i];
           var mostrar = false;
@@ -102,13 +98,9 @@ function mostrarTabela() {
         tabelaDivConteudo += "</table>";
 
         div_tabela.innerHTML = tabelaDivConteudo;
-
-      })
-
+      });
     }
-
-  })
-
+  });
 }
 
 // Função para renderizar o card de cadastro
@@ -116,8 +108,7 @@ function novoUsuario() {
   if (mostrarCadastro == false) {
     div_tela_cadastro.style.display = "flex";
     mostrarCadastro = true;
-  }
-  else if (mostrarCadastro == true) {
+  } else if (mostrarCadastro == true) {
     div_tela_cadastro.style.display = "none";
     mostrarCadastro = false;
     ipt_nome.value = "";
@@ -155,8 +146,7 @@ function validarCampos() {
 
   if (nome == "" || email == "" || senha == "" || nivel == "#") {
     mensagem = "Todos os campos devem estar preenchidos antes de prosseguir!";
-  } 
-  else if (
+  } else if (
     !email.includes("@") ||
     tamanhoSenha < 8 ||
     senha == senhaMaiuscula ||
@@ -182,77 +172,46 @@ function validarCampos() {
     if (temCaracteresEspeciais == 0) {
       mensagem += "- Senha deve conter caractere especial<br>";
     }
-  }
-  else {
+  } else {
     campoValidado = true;
   }
 }
 
-function usuarioExistente() {
-  var tamanhoListaUsuario = listaUsuarios.length;
-  var cont = 0;
-  var falha = 0;
-
-  while (cont < tamanhoListaUsuario) {
-    var usuario = listaUsuarios[cont];
-
-    if (usuario.email == email) {
-      mensagem += "- Esse e-mail já está sendo utilizado!"
-      falha++;
-    }
-
-    cont++;
-  }
-
-  if (falha == 0) {
-    usuarioValidado = true;
-  }
-}
-
-// Função para cadastrar novo usuário
 function cadastrar() {
   validarCampos();
-  usuarioExistente();
 
-  if (campoValidado && usuarioValidado) {
-    listaUsuarios.push({ nome: nome, email: email, senha: senha, nivel: nivel });
-    mostrarTabela();
-    ipt_nome.value = "";
-    ipt_email.value = "";
-    ipt_senha.value = "";
-    slc_nivel.value = "#";
-    div_erro.innerHTML = "";
-  }
+  if (campoValidado) {
+    // Enviando o valor da nova input
+    fetch("/usuarios/cadastrar", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        nomeServer: nome,
+        emailServer: email,
+        senhaServer: senha,
+        nivelServer: nivel,
+        empresaServer: fkEmpresa,
+      }),
+    })
+      .then(function (resposta) {
+        console.log("resposta: ", resposta);
 
-  div_erro.innerHTML = mensagem;
-}
+        if (resposta.ok) {
+          mostrarTabela();
+        } 
+        else {
+          throw "Houve um erro ao tentar realizar o cadastro!";
+        }
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+      });
 
-/*
-// Função para editar usuário
-function editarUsuario() {
-  mostrarTabela();
-  var id = prompt("Digite o ID do usuário que deseja editar:");
-  var idNum = id * 1; // converte string em número
-
-  if (idNum < 0 || idNum >= usuarios.length || id == "") {
-    alert("ID inválido!");
-  } else {
-    var u = usuarios[idNum];
-    var novoNome = prompt("Editar nome:", u.nome);
-    var novoEmail = prompt("Editar e-mail:", u.email);
-    var novoNivel = prompt("Editar nível:", u.nivel);
-
-    if (novoNome && novoEmail && novoNivel) {
-      usuarios[idNum].nome = novoNome;
-      usuarios[idNum].email = novoEmail;
-      usuarios[idNum].nivel = novoNivel;
-      mostrarTabela();
-    } else {
-      alert("Todos os campos são obrigatórios!");
-    }
+    return false;
   }
 }
-*/
 
 // Funções de filtro
 function filtrarTodos() {
