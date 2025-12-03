@@ -76,7 +76,7 @@ function mostrarTabela() {
 
           if (filtro == "todos") {
             mostrar = true;
-          } else if (usuario.nivel.toLowerCase() == filtro) {
+          } else if (usuario.acesso.toLowerCase() == filtro) {
             mostrar = true;
           }
 
