@@ -1,4 +1,5 @@
 -- Criação do banco de dados
+DROP DATABASE IF EXISTS ReTech; 
 CREATE DATABASE ReTech;
 
 -- Seleciona o banco de dados para uso
@@ -64,10 +65,10 @@ e seus respectivos níveis de acesso
 */
 CREATE TABLE Usuario(
 idUsuario INT PRIMARY KEY AUTO_INCREMENT, 		-- Identificador Único do Usúario
-nome VARCHAR(100),								-- Nome do Usuário
-email VARCHAR(100),								-- E-mail de Login
+nome VARCHAR(100),						-- Nome do Usuário
+email VARCHAR(100) UNIQUE,								-- E-mail de Login
 senha VARCHAR(100),								-- Senha de Login
-acesso VARCHAR(12),                            -- Nível de Acesso do Usuário (Padrão, Admnistrador e Suporte)
+acesso VARCHAR(13),                             -- Nível de Acesso do Usuário (Padrão, Admnistrador e Suporte)
 CONSTRAINT chkAcesso
     CHECK (acesso IN ('Padrão', 'Administrador', 'Suporte')),
 fkEmpresa INT,									-- Empresa do Usuário

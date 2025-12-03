@@ -175,13 +175,15 @@ function validarCampos() {
   } else {
     campoValidado = true;
   }
+
+  div_erro.innerHTML = mensagem;
 }
 
 function cadastrar() {
+  div_erro.innerHTML = "";
   validarCampos();
 
   if (campoValidado) {
-    // Enviando o valor da nova input
     fetch("/usuarios/cadastrar", {
       method: "POST",
       headers: {
@@ -202,13 +204,14 @@ function cadastrar() {
           mostrarTabela();
         } 
         else {
-          throw "Houve um erro ao tentar realizar o cadastro!";
+          throw "- Usuário já existente!";
         }
       })
       .catch(function (resposta) {
         console.log(`#ERRO: ${resposta}`);
+        mensagem = resposta;
+        div_erro.innerHTML = mensagem;
       });
-
     return false;
   }
 }

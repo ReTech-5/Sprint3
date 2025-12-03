@@ -12,11 +12,11 @@ INSERT INTO Sensor (codigoSensor, `status`, fkEmpresa, fkEndereco) VALUES
 ('SNSR-C001', 1, 1, 2),
 ('SNSR-C002', 0, 1, 2);
 
-INSERT INTO Usuario (nome, email, senha, fkEmpresa) VALUES
-('Gestor EcoLog', 'gestor@ecolog.com', 'eco123', 1);
+INSERT INTO Usuario (nome, email, senha, acesso, fkEmpresa) VALUES
+('Gestor EcoLog', 'gestor@ecolog.com', 'eco123', "Padrão", 1);
 
-INSERT INTO Usuario (nome, email, senha, fkEmpresa) VALUES
-('Fiscal Parque', 'fiscal@ecolog.com', 'eco456', 1);
+INSERT INTO Usuario (nome, email, senha, acesso, fkEmpresa) VALUES
+('Fiscal Parque', 'fiscal@ecolog.com', 'eco456', "Administrador", 1);
 
 INSERT INTO Sensor (codigoSensor, `status`, fkEmpresa, fkEndereco) VALUES
 ('A2315', 0, 1, 1);
