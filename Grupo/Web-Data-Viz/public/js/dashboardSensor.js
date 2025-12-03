@@ -1,432 +1,191 @@
-// Pega o elemento <canvas> do DOM pelo ID e guarda em uma constante para usar com o Chart.js.
+// dashboardSensor.js - VERSÃO FINAL: DADOS DO BANCO + DESIGN DE REFERÊNCIA
+
+const urlParams = new URLSearchParams(window.location.search);
+const idSensor = urlParams.get('id');
+
+const tituloPagina = document.getElementById("titulo_pagina");
+// Elementos de detalhes mantidos estáticos no HTML conforme solicitado
+
 const LinhaReciclavel = document.getElementById("cvs_linhaReciclavel");
-const LinhaOrganico = document.getElementById("cvs_linhaOrganico");
 const RoscaReciclavel = document.getElementById("cvs_roscaReciclavel");
-const RoscaOrganico = document.getElementById("cvs_roscaOrganico");
-var ultimo1 = 80;
-var ultimo2 = 74;
-var cor1 = "";
-var cor2 = "";
 
-// Gráfico de Linha da Curva de Preenchimento de uma Lixeira Reciclável
-/* Cria uma nova instância de Chart no canvas LinhaReciclavel
-      "new Chart(elemento, config)" é a forma padrão de inicializar um gráfico com Chart.js */
-new Chart(LinhaReciclavel, {
-  type: "line", // Tipo do gráfico: "line" (linha)
-  data: {
-    // Objeto que contém os dados e rótulos do gráfico
-    labels: [
-      "10:00",
-      "10:30",
-      "11:00",
-      "11:30",
-      "12:00",
-      "12:30",
-      "13:00",
-      "13:30",
-      "14:00",
-      "14:30",
-      "15:00",
-      "15:30",
-      "16:00",
-      "16:30",
-      "17:00",
-      "17:30",
-      "18:00",
-      "18:30",
-      "19:00",
-      "19:30",
-      "20:00",
-    ],
-    // "labels" define os rótulos do eixo X (cada valor do dataset corresponde a um label na mesma posição)
-    datasets: [
-      {
-        // Vetor de conjuntos de dados. Mesmo que seja apenas 1 dataset, precisa ser um vetor
-        label: "Nível de Preenchimento", // Nome do dataset — aparece na legenda
-        data: [
-          2,
-          5,
-          5,
-          6,
-          15,
-          25,
-          28,
-          33,
-          40,
-          40,
-          42,
-          42,
-          43,
-          55,
-          62,
-          68,
-          70,
-          72,
-          72,
-          75,
-          ultimo1,
-        ], // Valores numéricos do dataset (nesta ordem correspondem aos labels acima)
-        fill: false, // Indica se a área abaixo da linha deve ser preenchida
-        borderColor: "rgb(16, 183, 127)", // Cor da linha
-        tension: 0.2, // Curvatura da linha: 0 = reta entre pontos, valores maiores = curvas mais suaves
-      },
-    ],
-  },
-  options: {
-    // Configurações e opções do gráfico (layout, plugins, escalas, interatividade, etc.)
-    responsive: true, // Faz o gráfico redimensionar automaticamente com o container
-    plugins: {
-      // Configurações para plugins nativos (legend, title, tooltip, etc.)
-      legend: { display: true }, // Mostra a legenda (nome do dataset)
-      title: {
-        display: true,
-        text: "Curva de Preenchimento - Reciclável",
-        color: "black",
-        font: { size: 15, weight: "bold", family: "Arial" },
-      }, // Título do gráfico
-      tooltip: {
-        // Personaliza o conteúdo do tooltip (o balão que aparece ao passar o mouse)
-        callbacks: {
-          label: function (context) {
-            // "label" recebe o contexto do ponto e retorna a string que aparecerá no tooltip
-            return context.dataset.label + ": " + context.parsed.y + "%";
-            // context.dataset.label = nome do dataset
-            // context.parsed.y = valor do ponto no eixo y (para gráfico de linha)
-          },
-        },
-      },
-    },
-    scales: {
-      // Configuração das escalas (eixos x e y)
-      y: {
-        // Configuração do eixo Y
-        beginAtZero: true, // Faz com que o eixo comece em zero
-        max: 100, // Define o limite máximo como 100%
-        ticks: {
-          // Personaliza os ticks (rótulos) do eixo
-          callback: function (value) {
-            // Função chamada para renderizar cada tick no eixo
-            return value + "%"; // Adiciona o símbolo '%' aos rótulos do eixo Y
-          },
-        },
-        title: {
-          // Título do eixo Y
-          display: true,
-          text: "Ocupação (%)",
-          color: "rgb(4, 32, 13)",
-          font: { size: 15, weight: "bold" },
-        },
-      },
-      x: {
-        title: {
-          // Título do eixo X
-          display: true,
-          text: "Horário",
-          color: "rgb(4, 32, 13)",
-          font: { size: 15, weight: "bold" },
-        },
-      },
-    },
-  },
-});
-
-// Gráfico de Linha da Curva de Preenchimento de uma Lixeira Orgânica
-/* Cria uma nova instância de Chart no canvas LinhaOrganico
-      "new Chart(elemento, config)" é a forma padrão de inicializar um gráfico com Chart.js */
-new Chart(LinhaOrganico, {
-  type: "line", // Tipo do gráfico: "line" (linha)
-  data: {
-    // Objeto que contém os dados e rótulos do gráfico
-    labels: [
-      "10:00",
-      "10:30",
-      "11:00",
-      "11:30",
-      "12:00",
-      "12:30",
-      "13:00",
-      "13:30",
-      "14:00",
-      "14:30",
-      "15:00",
-      "15:30",
-      "16:00",
-      "16:30",
-      "17:00",
-      "17:30",
-      "18:00",
-      "18:30",
-      "19:00",
-      "19:30",
-      "20:00",
-    ],
-    // "labels" define os rótulos do eixo X (cada valor do dataset corresponde a um label na mesma posição)
-    datasets: [
-      {
-        // Vetor de conjuntos de dados. Mesmo que seja apenas 1 dataset, precisa ser um vetor
-        label: "Nível de Preenchimento", // Nome do dataset — aparece na legenda
-        data: [
-          2,
-          5,
-          5,
-          6,
-          15,
-          17,
-          20,
-          24,
-          28,
-          33,
-          39,
-          42,
-          43,
-          50,
-          56,
-          60,
-          64,
-          69,
-          70,
-          71,
-          ultimo2,
-        ], // Valores numéricos do dataset (nesta ordem correspondem aos labels acima)
-        fill: false, // Indica se a área abaixo da linha deve ser preenchida
-        borderColor: "rgb(16, 183, 127)", // Cor da linha
-        tension: 0.2, // Curvatura da linha: 0 = reta entre pontos, valores maiores = curvas mais suaves
-      },
-    ],
-  },
-  options: {
-    // Configurações e opções do gráfico (layout, plugins, escalas, interatividade, etc.)
-    responsive: true, // Faz o gráfico redimensionar automaticamente com o container
-    plugins: {
-      // Configurações para plugins nativos (legend, title, tooltip, etc.)
-      legend: { display: true }, // Mostra a legenda (nome do dataset)
-      title: {
-        display: true,
-        text: "Curva de Preenchimento - Orgânico",
-        color: "black",
-        font: { size: 15, weight: "bold", family: "Arial" },
-      }, // Título do gráfico
-      tooltip: {
-        // Personaliza o conteúdo do tooltip (o balão que aparece ao passar o mouse)
-        callbacks: {
-          label: function (context) {
-            // "label" recebe o contexto do ponto e retorna a string que aparecerá no tooltip
-            return context.dataset.label + ": " + context.parsed.y + "%";
-            // context.dataset.label = nome do dataset
-            // context.parsed.y = valor do ponto no eixo y (para gráfico de linha)
-          },
-        },
-      },
-    },
-    scales: {
-      // Configuração das escalas (eixos x e y)
-      y: {
-        // Configuração do eixo Y
-        beginAtZero: true, // Faz com que o eixo comece em zero
-        max: 100, // Define o limite máximo como 100%
-        ticks: {
-          // Personaliza os ticks (rótulos) do eixo
-          callback: function (value) {
-            // Função chamada para renderizar cada tick no eixo
-            return value + "%"; // Adiciona o símbolo '%' aos rótulos do eixo Y
-          },
-        },
-        title: {
-          // Título do eixo Y
-          display: true,
-          text: "Ocupação (%)",
-          color: "rgb(4, 32, 13)",
-          font: { size: 15, weight: "bold" },
-        },
-      },
-      x: {
-        title: {
-          // Título do eixo X
-          display: true,
-          text: "Horário",
-          color: "rgb(4, 32, 13)",
-          font: { size: 15, weight: "bold" },
-        },
-      },
-    },
-  },
-});
-
-// Validações para alterar a cor dos gráficos de rosca dinamicamente
-if (ultimo1 >= 0 && ultimo1 <= 25) {
-  cor1 = "rgb(29, 209, 9)";
-} else if (ultimo1 >= 26 && ultimo1 <= 50) {
-  cor1 = "rgb(209, 206, 9)";
-} else if (ultimo1 >= 51 && ultimo1 <= 75) {
-  cor1 = "rgb(209, 132, 9)";
+if (idSensor) {
+    obterDadosSensor();
+    obterDadosGrafico();
 } else {
-  cor1 = "rgb(209, 9, 9)";
-}
-if (ultimo2 >= 0 && ultimo2 <= 25) {
-  cor2 = "rgb(29, 209, 9)";
-} else if (ultimo2 >= 26 && ultimo2 <= 50) {
-  cor2 = "rgb(209, 206, 9)";
-} else if (ultimo2 >= 51 && ultimo2 <= 75) {
-  cor2 = "rgb(209, 132, 9)";
-} else {
-  cor2 = "rgb(209, 9, 9)";
+    tituloPagina.innerHTML = "Sensor não selecionado";
 }
 
-// Plugin para exibir texto central dentro da rosca
-const centerTextPlugin = {
-  // Declara um objeto que será o plugin
-  id: "centerText", // Identificador único do plugin (usado internamente pelo Chart.js)
-  afterDraw(chart) {
-    // Hook chamado "após" o Chart desenhar tudo (ideal para desenhar sobre o gráfico)
-    const {
-      ctx,
-      chartArea: { width, height },
-    } = chart;
-    // Desestruturação: pega o contexto 2D (ctx) e as dimensões do "chartArea" (área de desenho útil)
-    // ctx => objeto CanvasRenderingContext2D usado para desenhar texto/formas
-    // width, height => largura/altura da área de desenho
-    const dataset = chart.data.datasets[0]; // Acessa o primeiro dataset do gráfico (assumimos que o valor principal está aqui)
-    const value = dataset.data[1]; // Pega o valor do segundo item do dataset (ex: 80 = 80%)
-    // Ajuste fino de proporção — define tamanhos relativos de fonte com base no tamanho do gráfico
-    const mainFontSize = Math.min(width, height) / 8; // Tamanho da fonte principal (porcentagem). Usa o menor lado para manter proporção.
-    const subFontSize = Math.min(width, height) / 18; // Tamanho da fonte do subtítulo (legenda menor)
-    ctx.save(); // Salva o estado atual do contexto (cores, fontes, alinhamentos) para restaurar depois
-    ctx.textAlign = "center"; // Alinha o texto horizontalmente ao centro (para usar width/2)
-    ctx.textBaseline = "middle"; // Alinha o texto verticalmente ao meio (para usar height/2)
-    ctx.fillStyle = "#0a1911"; // Cor do texto (hex ou nome) — define a cor usada em fillText
-    // Texto principal (porcentagem)
-    ctx.font = `bold ${mainFontSize}px Arial`; // Define a fonte: peso 'bold', tamanho calculado dinamicamente e família 'Arial'
-    ctx.fillText(value + "%", width / 2, height / 2 - subFontSize * 0.8);
-    // Desenha o texto principal (ex: "80%") no centro horizontal (width/2)
-    // A posição vertical é ajustada para ficar um pouco acima do centro (subFontSize * 0.8) para abrir espaço ao subtítulo
-    // Subtítulo
-    ctx.font = `bold ${subFontSize}px Arial`; // Fonte do subtítulo (um pouco menor)
-    ctx.fillText(
-      "Preenchimento atual",
-      width / 2,
-      height / 2 + mainFontSize * 0.5
-    );
-    // Desenha o subtítulo logo abaixo do número principal.
-    // A posição vertical usa mainFontSize * 0.5 para garantir espaçamento proporcional.
-    ctx.restore(); // Restaura o estado do contexto salvo por ctx.save()
-    // Isso evita que alterações de fonte/alinhamento/cor afetem outros desenhos no canvas
-  },
-};
+function obterDadosSensor() {
+    fetch(`/lixeiras/${idSensor}`).then(res => {
+        if (res.ok) {
+            res.json().then(dados => {
+                var sensor = dados[0];
+                tituloPagina.innerHTML = `Grupo: ${sensor.logradouro}`;
+            });
+        }
+    });
+}
 
-// Gráfico de Rosca do Preenchimento Atual de uma Lixeira Recicável
-/* Cria uma nova instância de Chart no canvas RoscaReciclavel.
-      "new Chart(elemento, config)" é a forma padrão de inicializar um gráfico com Chart.js. */
-new Chart(RoscaReciclavel, {
-  type: "doughnut", // Tipo do gráfico: "doughnut" (rosquinha).
-  data: {
-    // Objeto que contém os dados e rótulos do gráfico
-    // labels: [ // "labels" define os rótulos das fatias
-    //     "Vazio",
-    //     "Ocupado"
-    // ],
-    datasets: [
-      {
-        // Vetor de conjuntos de dados. Mesmo que seja apenas 1 dataset, precisa ser um vetor
-        label: "", // Nome do dataset — aparece na legenda e pode ser usado nos tooltips
-        data: [100 - ultimo1, ultimo1], // Valores numéricos do dataset (ultimo1 = ultimo dado coletado do sensor, 100 - ultimo1 = porcentagem da lixeira vazia)
-        backgroundColor: [
-          // Cor de cada fatia do gráfico
-          "rgb(240, 240, 240)", // Cor da fatia de espaço vazio na lixeira sempre será branco
-          cor1, // Cor da fatia de ocupação da lixeira se altera dinamicamente
-        ],
-        hoverOffset: 4, // Efeito de crescimento da fatia ao passar o mouse por cima
-      },
-    ],
-  },
-  options: {
-    // Configurações e opções do gráfico (layout, plugins, escalas, interatividade, etc.)
-    responsive: true, // Faz o gráfico redimensionar automaticamente com o container
-    cutout: "80%", // Espessura do gráfico de rosca, quanto maior mais fino o círculo
-    plugins: {
-      // Configurações para plugins nativos (legend, title, tooltip, etc.) ou criados
-      legend: {
-        position: "center",
-        labels: {
-          boxWidth: 15,
-          font: { size: 12 },
-        },
-      }, // Mostra a legenda (nome do dataset)
-      // title: {
-      //     display: true,
-      //     text: "Preenchimento Atual - Reciclável",
-      //     color: "black",
-      //     font: {size: 15, weight: "bold", family: "Arial"},
-      // }, // Título do gráfico
-      tooltip: {
-        // Personaliza o conteúdo do tooltip (o balão que aparece ao passar o mouse)
-        callbacks: {
-          label: function (context) {
-            // "label" recebe o contexto do ponto e retorna a string que aparecerá no tooltip
-            // context.parsed = valor do dataset
-            return " " + context.parsed + "%";
-          },
-        },
-      },
-    },
-  },
-  plugins: [centerTextPlugin], // Plugin criado para acrescentar a porcentagem de ocupação da lixeira no centro do gráfico
-});
+function obterDadosGrafico() {
+    fetch(`/lixeiras/medidas/${idSensor}`).then(res => {
+        if (res.ok) {
+            res.json().then(medidas => {
+                plotarGrafico(medidas);
+            });
+        }
+    });
+}
 
-// Gráfico de Rosca do Preenchimento Atual de uma Lixeira Orgânica
-/* Cria uma nova instância de Chart no canvas RoscaOrganico.
-      "new Chart(elemento, config)"" é a forma padrão de inicializar um gráfico com Chart.js */
-new Chart(RoscaOrganico, {
-  type: "doughnut", // Tipo do gráfico: "doughnut" (rosquinha).
-  data: {
-    // Objeto que contém os dados e rótulos do gráfico
-    // labels: [ // "labels" define os rótulos das fatias
-    //     "Vazio",
-    //     "Ocupado"
-    // ],
-    datasets: [
-      {
-        // Vetor de conjuntos de dados. Mesmo que seja apenas 1 dataset, precisa ser um vetor
-        label: "", // Nome do dataset — aparece na legenda e pode ser usado nos tooltips
-        data: [100 - ultimo2, ultimo2], // Valores numéricos do dataset (ultimo1 = ultimo dado coletado do sensor, 100 - ultimo1 = porcentagem da lixeira vazia)
-        backgroundColor: [
-          // Cor de cada fatia do gráfico
-          "rgb(240, 240, 240)", // Cor da fatia de espaço vazio na lixeira sempre será branco
-          cor2, // Cor da fatia de ocupação da lixeira se altera dinamicamente
-        ],
-        hoverOffset: 4, // Efeito de crescimento da fatia ao passar o mouse por cima
-      },
-    ],
-  },
-  options: {
-    // Configurações e opções do gráfico (layout, plugins, escalas, interatividade, etc.)
-    responsive: true, // Faz o gráfico redimensionar automaticamente com o container
-    cutout: "80%", // Espessura do gráfico de rosca, quanto maior mais fino o círculo
-    plugins: {
-      // Configurações para plugins nativos (legend, title, tooltip, etc.) ou criados
-      legend: {
-        position: "center",
-        labels: {
-          boxWidth: 15,
-          font: { size: 12 },
+function plotarGrafico(medidas) {
+    // Processamento dos dados reais do banco
+    medidas.reverse();
+    var labels = [];
+    var dados = [];
+
+    for (var i = 0; i < medidas.length; i++) {
+        labels.push(medidas[i].momento);
+        dados.push(medidas[i].preenchimento);
+    }
+    
+    // Pega o último valor real para a rosca
+    var ultimoValor = dados.length > 0 ? dados[dados.length - 1] : 0;
+
+    // --- LÓGICA DE CORES (Igual à referência) ---
+    var corDestaque = "";
+    if (ultimoValor >= 0 && ultimoValor <= 25) {
+        corDestaque = "rgb(29, 209, 9)";
+    } else if (ultimoValor >= 26 && ultimoValor <= 50) {
+        corDestaque = "rgb(209, 206, 9)";
+    } else if (ultimoValor >= 51 && ultimoValor <= 75) {
+        corDestaque = "rgb(209, 132, 9)";
+    } else {
+        corDestaque = "rgb(209, 9, 9)";
+    }
+
+    // --- PLUGIN DE TEXTO CENTRAL (Copiado da referência) ---
+    const centerTextPlugin = {
+        id: "centerText",
+        afterDraw(chart) {
+            const { ctx, chartArea: { width, height } } = chart;
+            const dataset = chart.data.datasets[0];
+            const value = dataset.data[1]; // Valor de ocupação
+            
+            const mainFontSize = Math.min(width, height) / 8;
+            const subFontSize = Math.min(width, height) / 18;
+            
+            ctx.save();
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillStyle = "#0a1911";
+            
+            ctx.font = `bold ${mainFontSize}px Arial`;
+            ctx.fillText(value + "%", width / 2, height / 2 - subFontSize * 0.8);
+            
+            ctx.font = `bold ${subFontSize}px Arial`;
+            ctx.fillText("Preenchimento atual", width / 2, height / 2 + mainFontSize * 0.5);
+            
+            ctx.restore();
         },
-      }, // Mostra a legenda (nome do dataset)
-      // title: {
-      //     display: true,
-      //     text: "Preenchimento Atual - Orgânico",
-      //     color: "black",
-      //     font: {size: 15, weight: "bold", family: "Arial"},
-      // }, // Título do gráfico
-      tooltip: {
-        // Personaliza o conteúdo do tooltip (o balão que aparece ao passar o mouse)
-        callbacks: {
-          label: function (context) {
-            // "label" recebe o contexto do ponto e retorna a string que aparecerá no tooltip
-            // context.parsed = valor do dataset
-            return " " + context.parsed + "%";
-          },
+    };
+
+    // --- GRÁFICO DE LINHA (Configurações da referência) ---
+    new Chart(LinhaReciclavel, {
+        type: "line",
+        data: {
+            labels: labels, // Dados do Banco
+            datasets: [
+                {
+                    label: "Nível de Preenchimento",
+                    data: dados, // Dados do Banco
+                    fill: false,
+                    borderColor: "rgb(16, 183, 127)",
+                    tension: 0.2,
+                },
+            ],
         },
-      },
-    },
-  },
-  plugins: [centerTextPlugin], // Plugin criado para acrescentar a porcentagem de ocupação da lixeira no centro do gráfico
-});
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: true },
+                title: {
+                    display: true,
+                    text: "Curva de Preenchimento",
+                    color: "black",
+                    font: { size: 15, weight: "bold", family: "Arial" },
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function (context) {
+                            return context.dataset.label + ": " + context.parsed.y + "%";
+                        },
+                    },
+                },
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100,
+                    ticks: {
+                        callback: function (value) {
+                            return value + "%";
+                        },
+                    },
+                    title: {
+                        display: true,
+                        text: "Ocupação (%)",
+                        color: "rgb(4, 32, 13)",
+                        font: { size: 15, weight: "bold" },
+                    },
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: "Horário",
+                        color: "rgb(4, 32, 13)",
+                        font: { size: 15, weight: "bold" },
+                    },
+                },
+            },
+        },
+    });
+
+    // --- GRÁFICO DE ROSCA (Configurações da referência) ---
+    new Chart(RoscaReciclavel, {
+        type: "doughnut",
+        data: {
+            datasets: [
+                {
+                    label: "",
+                    data: [100 - ultimoValor, ultimoValor], // Dados reais
+                    backgroundColor: [
+                        "rgb(240, 240, 240)", // Fundo cinza
+                        corDestaque, // Cor dinâmica
+                    ],
+                    hoverOffset: 4,
+                },
+            ],
+        },
+        options: {
+            responsive: true,
+            cutout: "80%",
+            plugins: {
+                legend: {
+                    position: "center",
+                    labels: {
+                        boxWidth: 15,
+                        font: { size: 12 },
+                    },
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function (context) {
+                            return " " + context.parsed + "%";
+                        },
+                    },
+                },
+            },
+        },
+        plugins: [centerTextPlugin],
+    });
+}

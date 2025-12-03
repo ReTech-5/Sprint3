@@ -15,9 +15,10 @@ var HOST_APP = process.env.APP_HOST;
 
 var app = express();
 
-var sensorRouter = require("./src/routes/sensor");
 var indexRouter = require("./src/routes/index");
 var usuarioRouter = require("./src/routes/usuarios");
+var lixeirasRouter = require("./src/routes/lixeiras");
+var sensorRouter = require("./src/routes/sensor");
 var bobIARouter = require("./src/routes/bobIA");
 
 app.use(express.json());
@@ -26,9 +27,10 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(cors());
 
-app.use("/sensores", sensorRouter);
 app.use("/", indexRouter);
 app.use("/usuarios", usuarioRouter);
+app.use("/lixeiras", lixeirasRouter);
+app.use("/sensores", sensorRouter);
 app.use("/bobIA", bobIARouter);
 
 app.listen(PORTA_APP, function () {

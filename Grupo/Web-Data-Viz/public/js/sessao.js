@@ -13,7 +13,7 @@ function validarSessao() {
 
         var idButton = document.getElementById('btn_cadastro')
 
-        if(acesso == 'Administrador'){
+        if(acesso == 'Admnistrador'){
 
             idButton.style.display = 'block'
 
