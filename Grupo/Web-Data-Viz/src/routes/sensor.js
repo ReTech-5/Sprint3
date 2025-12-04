@@ -18,4 +18,14 @@ router.get("/listar/lixeira/:codigoLixeira", function(req, res){
     sensorController.listarPorLixeira(req, res);
 });
 
+// Alertas Inativos
+router.get("/exibirInativos", function(req, res){
+    sensorController.exibirInativos(req, res);
+});
+
+// Alertas Críticos
+router.get("/exibirCriticos", function(req, res){
+    sensorController.exibirCriticos(req, res);
+});
+
 module.exports = router;

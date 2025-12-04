@@ -30,7 +30,7 @@ app.use(cors());
 app.use("/", indexRouter);
 app.use("/usuarios", usuarioRouter);
 app.use("/lixeiras", lixeirasRouter);
-app.use("/sensores", sensorRouter);
+app.use("/sensor", sensorRouter);
 app.use("/bobIA", bobIARouter);
 
 app.listen(PORTA_APP, function () {
