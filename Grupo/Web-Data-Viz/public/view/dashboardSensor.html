@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="../style/navbar.css" />
     <link rel="stylesheet" href="../style/dashboardSensor.css" />
   </head>
-  <body>
+  <body onload="MaioPreenchimento(), horarioPicoPreenchimento(), dadosBruto(), detalhesSensor()">
     <header class="navbar">
       <div class="container_nav">
         <div id="logo_nav">
@@ -49,7 +49,6 @@
               <span id="span_lixeira">Lixeira: </span>
               <span id="span_status">Status: </span>
               <span id="span_categoria">Categoria: </span>
-              <span id="span_data">Data de instalação: </span>
             </div>
           </div>
 
@@ -57,27 +56,31 @@
             <div class="container_kpis">
               <div class="container kpi">
                 <div class="card_title">
-                  Faixa de Pico de Preenchimento <br />
+                  Horario de Pico de Preenchimento <br />
                   (Ultimos 90 dias)
                 </div>
+                <div id="dado1"></div>
               </div>
               <div class="container kpi">
                 <div class="card_title">
                   Padrão de Esvaziamento <br />
                   (Ultimos 30 dias)
                 </div>
+                <div id="dado2"></div>
               </div>
               <div class="container kpi">
                 <div class="card_title">
                   Tempo até Condição Crítica <br />
                   (Ultimos 30 dias)
                 </div>
+                <div id="dado3"></div>
               </div>
               <div class="container kpi">
                 <div class="card_title">
                   Maior Preenchimento <br />
                   (Ultimos 7 dias)
                 </div>
+                <div id="dado4"></div>
               </div>
             </div>
 

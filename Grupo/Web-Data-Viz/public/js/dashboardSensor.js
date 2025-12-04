@@ -189,3 +189,187 @@ function plotarGrafico(medidas) {
         plugins: [centerTextPlugin],
     });
 }
+
+// Daqui para baixo eu que fiz quevedo !!!!!!!!!
+
+function detalhesSensor(idSensor){
+
+    idSensor = 1
+
+    fetch(`/especifica/detalhes/${idSensor}`).then (function (resposta) {
+
+    if (resposta.ok) {
+      if (resposta.status == 204) {
+
+        console.log('Nenhum dado encontrada')
+        throw 'Nenhum resultado encontrado'
+
+      }
+
+      resposta.json().then(function (resposta) {
+
+        console.log("Dados recebidos: ", JSON.stringify(resposta));
+        var kpi = resposta
+        var mensagem = ''
+
+        console.log(resposta)
+
+        document.getElementById('span_sensor').innerHTML += kpi.codigoSensor[0] 
+        document.getElementById('span_lixeira').innerHTML += kpi.codigoLixeira[0]
+        document.getElementById('span_status').innerHTML += kpi.categoria[0]
+        document.getElementById('span_categoria').innerHTML += kpi.status[0]
+        
+      });
+
+    }else {
+
+      throw ('Houve um erro na API!');
+
+    }
+            
+  })
+
+  .catch(function (resposta) {
+
+    console.error(resposta);
+    
+  });
+
+
+}
+
+function MaioPreenchimento (idSensor){
+
+    idSensor = 1
+
+    fetch(`/especifica/MaioPreenchimento/${idSensor}`).then (function (resposta) {
+
+    if (resposta.ok) {
+      if (resposta.status == 204) {
+
+        console.log('Nenhum dado encontrada')
+        throw 'Nenhum resultado encontrado'
+
+      }
+
+      resposta.json().then(function (resposta) {
+
+        console.log("Dados recebidos: ", JSON.stringify(resposta));
+        var kpi = resposta[0]
+        var mensagem = ''
+
+        console.log(resposta)
+
+        mensagem = `${kpi.MaioPreenchimento}%`
+
+        document.getElementById('dado4').innerHTML = mensagem
+        
+      });
+
+    }else {
+
+      throw ('Houve um erro na API!');
+
+    }
+            
+  })
+
+  .catch(function (resposta) {
+
+    console.error(resposta);
+    
+  });
+
+
+}
+
+function horarioPicoPreenchimento (idSensor){
+
+    idSensor = 1
+
+    fetch(`/especifica/horarioPicoPreenchimento/${idSensor}`).then (function (resposta) {
+
+    if (resposta.ok) {
+      if (resposta.status == 204) {
+
+        console.log('Nenhum dado encontrada')
+        throw 'Nenhum resultado encontrado'
+
+      }
+
+      resposta.json().then(function (resposta) {
+
+        console.log("Dados recebidos: ", JSON.stringify(resposta));
+        var mensagem = ''
+            
+            var data1 = resposta[0]
+            var data2 = resposta[1]
+
+            mensagem += `${data1.horaColeta.replace(':00:00','')}h as ${data2.horaColeta.replace(':00:00','')}h`
+            
+        
+       
+
+        document.getElementById('dado1').innerHTML = mensagem
+        
+
+
+      });
+
+    }else {
+
+      throw ('Houve um erro na API!');
+
+    }
+            
+  })
+
+  .catch(function (resposta) {
+
+    console.error(resposta);
+    
+  });
+
+
+}
+
+function dadosBruto (idSensor){
+
+    idSensor = 1
+
+    fetch(`/especifica/dadosBruto/${idSensor}`).then (function (resposta) {
+
+    if (resposta.ok) {
+      if (resposta.status == 204) {
+
+        console.log('Nenhum dado encontrada')
+        throw 'Nenhum resultado encontrado'
+
+      }
+
+      resposta.json().then(function (resposta) {
+
+        console.log("Dados recebidos: ", JSON.stringify(resposta));
+        var kpi = resposta
+
+        console.log(resposta[0])
+        
+
+      });
+
+    }else {
+
+      throw ('Houve um erro na API!');
+
+    }
+            
+  })
+
+  .catch(function (resposta) {
+
+    console.error(resposta);
+    
+  });
+
+
+}

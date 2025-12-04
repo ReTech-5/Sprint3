@@ -20,6 +20,8 @@ var usuarioRouter = require("./src/routes/usuarios");
 var lixeirasRouter = require("./src/routes/lixeiras");
 var sensorRouter = require("./src/routes/sensor");
 var bobIARouter = require("./src/routes/bobIA");
+var geralRouter = require("./src/routes/geral");
+var especificaRouter = require("./src/routes/especifica");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -32,6 +34,8 @@ app.use("/usuarios", usuarioRouter);
 app.use("/lixeiras", lixeirasRouter);
 app.use("/sensor", sensorRouter);
 app.use("/bobIA", bobIARouter);
+app.use("/geral", geralRouter);
+app.use("/especifica", especificaRouter);
 
 app.listen(PORTA_APP, function () {
     console.log(`
