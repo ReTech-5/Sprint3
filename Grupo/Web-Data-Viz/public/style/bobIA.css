@@ -86,3 +86,8 @@ button:hover {
     display: none;
     white-space: pre-wrap;
 }
+
+button{
+
+    margin: 0;
+}
