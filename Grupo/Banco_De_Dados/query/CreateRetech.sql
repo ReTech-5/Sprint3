@@ -44,7 +44,6 @@ CREATE TABLE Sensor(
 idSensor INT PRIMARY KEY AUTO_INCREMENT,    -- Identificador Único do Sensor
 codigoSensor VARCHAR(45),				    -- Código/Identificador do Sensor
 codigoLixeira VARCHAR(45),                  -- Código/Identificador da Lixeira
-categoria VARCHAR(45),                      -- Categoria da Lixeira (Orgânica ou Reciclável)
 CONSTRAINT chkCategoria
     CHECK (categoria IN ('orgânica', 'reciclável')),
 `status` TINYINT,                           -- Status da Lixeira (1 = Ativada, 0 = Desativado)
@@ -94,6 +93,9 @@ CONSTRAINT pkComposta
     PRIMARY KEY (idColeta, fkSensor),               -- Identificador das Coleta Realizadas por Sensor
 distancia DECIMAL(5,2),								-- Distância Medida (Preenchimento da Lixeira)
 horaColeta TIME DEFAULT (CURRENT_TIME),				-- Hora da Leitura
-dataColeta DATE DEFAULT (CURRENT_DATE)   			-- Data da Leitura				
+dataColeta DATE DEFAULT (CURRENT_DATE),             -- Data da Leitura			
+lixeira VARCHAR(50),
+tipoLixeira VARCHAR(10)
+    CONSTRAINT chkTipo CHECK (tipoLixeira in ('Orgânico', 'Reciclável'))
 );
 
