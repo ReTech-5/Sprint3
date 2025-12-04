@@ -27,7 +27,7 @@ CREATE TABLE Endereco (
 idEndereco INT PRIMARY KEY AUTO_INCREMENT, 	-- Identificador Único do Endereço
 logradouro VARCHAR(45),						-- Rua, Avenida, Alameda, etc
 numero INT,									-- Número do Local 
-cep CHAR(9),
+cep CHAR(9)
 );
 
 /*
