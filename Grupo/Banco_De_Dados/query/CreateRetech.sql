@@ -91,8 +91,5 @@ CONSTRAINT pkComposta
     PRIMARY KEY (idColeta, fkSensor),               -- Identificador das Coleta Realizadas por Sensor
 distancia DECIMAL(5,2),								-- Distância Medida (Preenchimento da Lixeira)
 horaColeta TIME DEFAULT (CURRENT_TIME),				-- Hora da Leitura
-dataColeta DATE DEFAULT (CURRENT_DATE),             -- Data da Leitura			
-lixeira VARCHAR(50),
-tipoLixeira VARCHAR(10)
-    CONSTRAINT chkTipo CHECK (tipoLixeira in ('Orgânico', 'Reciclável'))
+dataColeta DATE DEFAULT (CURRENT_DATE)             -- Data da Leitura
 );
