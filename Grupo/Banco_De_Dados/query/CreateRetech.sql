@@ -11,7 +11,7 @@ Tabela Empresa
 - Armazena os dados das empresas que contratam o sistema ReTech
 - Cada empresa tem sensores, usúarios e contatos associados 
 */
-CREATE TABLE Empresa( 
+CREATE TABLE Empresa ( 
 idEmpresa INT PRIMARY KEY AUTO_INCREMENT, 	-- Identificador Único da Empresa
 nome VARCHAR(100),					        -- Nome da Empresa
 inicioContrato DATE,						-- Data de Início do Contato
@@ -23,14 +23,11 @@ Tabela Endereco
 - Armazena os locais onde os sensores estão instalados
 - No diagrama de solução representa o ponto físico das lixeiras
 */
-CREATE TABLE Endereco(
+CREATE TABLE Endereco (
 idEndereco INT PRIMARY KEY AUTO_INCREMENT, 	-- Identificador Único do Endereço
 logradouro VARCHAR(45),						-- Rua, Avenida, Alameda, etc
 numero INT,									-- Número do Local 
-cep CHAR(9),								-- Código Postal (CEP)	
-lixeira VARCHAR(20),						-- Identificador da lixeira
-tipoLixeira VARCHAR(10)
-	CONSTRAINT TipoLixeira CHECK (tipoLixeira in ('Organico', 'Reciclável'))
+cep CHAR(9),
 );
 
 /*
@@ -40,12 +37,13 @@ Tabela Sensor
 - Cada sensor coleta dados de distância (nível do lixo) e envia
 via API para o banco de dados
 */
-CREATE TABLE Sensor(
+CREATE TABLE Sensor (
 idSensor INT PRIMARY KEY AUTO_INCREMENT,    -- Identificador Único do Sensor
 codigoSensor VARCHAR(45),				    -- Código/Identificador do Sensor
-codigoLixeira VARCHAR(45),                  -- Código/Identificador da Lixeira
+codigoLixeira VARCHAR(45) UNIQUE,                  -- Código/Identificador da Lixeira
+categoria VARCHAR(10),
 CONSTRAINT chkCategoria
-    CHECK (categoria IN ('orgânica', 'reciclável')),
+    CHECK (categoria IN ('Orgânica', 'Reciclável')),
 `status` TINYINT,                           -- Status da Lixeira (1 = Ativada, 0 = Desativado)
 fkEmpresa INT,								-- Empresa Responsável
 	CONSTRAINT fkSensorEmpresa
@@ -62,10 +60,10 @@ Tabela Usúario
 Representam os operadores das empresas
 e seus respectivos níveis de acesso
 */
-CREATE TABLE Usuario(
+CREATE TABLE Usuario (
 idUsuario INT PRIMARY KEY AUTO_INCREMENT, 		-- Identificador Único do Usúario
-nome VARCHAR(100),						-- Nome do Usuário
-email VARCHAR(100) UNIQUE,								-- E-mail de Login
+nome VARCHAR(100),						        -- Nome do Usuário
+email VARCHAR(100) UNIQUE,						-- E-mail de Login
 senha VARCHAR(100),								-- Senha de Login
 acesso VARCHAR(13),                             -- Nível de Acesso do Usuário (Padrão, Admnistrador e Suporte)
 CONSTRAINT chkAcesso
@@ -83,7 +81,7 @@ Registra todas as leituras feitas pelos sensores
 No diagrama, corresponde à comunicação entre
 sistema de coleta de dados (Arduino) e o Banco de Dados.
 */
-CREATE TABLE Coleta(
+CREATE TABLE Coleta (
 idColeta INT AUTO_INCREMENT UNIQUE NOT NULL,        -- Identificador da Coleta
 fkSensor INT,                                       -- Sensor que Realizou as Coletas
 CONSTRAINT fkColetaDadosSensor
@@ -98,4 +96,3 @@ lixeira VARCHAR(50),
 tipoLixeira VARCHAR(10)
     CONSTRAINT chkTipo CHECK (tipoLixeira in ('Orgânico', 'Reciclável'))
 );
-
