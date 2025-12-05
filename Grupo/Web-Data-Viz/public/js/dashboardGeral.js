@@ -1,4 +1,4 @@
-// dashboardGeral.js - DESIGN ORIGINAL COM DADOS DO BANCO
+// dashboardGeral.js - DADOS REAIS DO BANCO + GRÁFICOS + LISTA FUNCIONANDO
 
 const BarrasReciclavel = document.getElementById("cvs_grafico_reciclavel");
 const BarrasOrganico = document.getElementById("cvs_grafico_organico");
@@ -12,50 +12,46 @@ window.onload = function () {
   alertasInativos();
 };
 
-// FUNÇÃO PRINCIPAL — BUSCA DO BANCO
+/* ------------------ BUSCA NO BANCO ------------------ */
+
 function atualizarFeed() {
   fetch("/sensor/listarEnderecos")
     .then(function (resposta) {
       if (resposta.ok) {
-        if (resposta.status == 204) {
-          var feed = document.getElementById("div_ListaEndereco");
-          feed.innerHTML = "Nenhum resultado encontrado.";
-          throw "Nenhum resultado encontrado!!";
-        }
-
-        resposta.json().then(function (respostaJSON) {
-          // Processa os dados vindos do banco
-          listaEndereco = respostaJSON.map((item) => {
-            let statusVisual = "Estável";
-
-            // STATUS REAL DO BANCO
-            if (item.status == 0) statusVisual = "Inativo";
-            else if (item.status == 1) statusVisual = "Estável";
-            else if (item.status == 2) statusVisual = "Moderado";
-            else if (item.status == 3) statusVisual = "Alerta";
-            else if (item.status == 4) statusVisual = "Crítico";
-
-            return {
-              idSensor: item.idSensor,
-              nome: `${item.logradouro}, ${item.numero}`,
-              status: statusVisual,
-              categoria: item.categoria || "reciclável",
-            };
-          });
-
-          mostrarLista();
-          atualizarGraficosComDadosReais();
-        });
-      } else {
-        throw "Houve um erro na API!";
+        return resposta.json();
       }
+      throw "Erro ao buscar sensores";
+    })
+    .then(function (respostaJSON) {
+      console.log("📦 DADOS RECEBIDOS -> ", respostaJSON);
+
+      listaEndereco = respostaJSON.map((item) => {
+        let statusVisual = "Estável";
+
+        if (item.status == 0) statusVisual = "Inativo";
+        else if (item.status == 1) statusVisual = "Estável";
+        else if (item.status == 2) statusVisual = "Moderado";
+        else if (item.status == 3) statusVisual = "Alerta";
+        else if (item.status == 4) statusVisual = "Crítico";
+
+        return {
+          idSensor: item.idSensor,
+          nome: `${item.logradouro}, ${item.numero}`,
+          status: statusVisual,
+          categoria: item.categoria || "Reciclável",
+        };
+      });
+
+      mostrarLista();
+      atualizarGraficosComDadosReais();
     })
     .catch(function (resposta) {
-      console.error(resposta);
+      console.error("❌ ERRO:", resposta);
     });
 }
 
-// GRÁFICOS (REAL DO BD)
+/* ------------------ GRÁFICOS ------------------ */
+
 function atualizarGraficosComDadosReais() {
   let rec_estavel = 0,
     rec_moderado = 0,
@@ -91,6 +87,7 @@ function atualizarGraficosComDadosReais() {
   document.getElementById("inativo").innerHTML = totalInativos;
   document.getElementById("ativo").innerHTML = totalAtivos;
 
+  // --------- GRÁFICO RECICLÁVEL ---------
   new Chart(BarrasReciclavel, {
     type: "bar",
     data: {
@@ -99,25 +96,21 @@ function atualizarGraficosComDadosReais() {
         {
           label: "Estável",
           data: [rec_estavel],
-          borderWidth: 0.5,
           backgroundColor: ["rgb(186, 255, 201)"],
         },
         {
           label: "Moderado",
           data: [rec_moderado],
-          borderWidth: 0.5,
           backgroundColor: ["rgb(255, 255, 186)"],
         },
         {
           label: "Alerta",
           data: [rec_alerta],
-          borderWidth: 0.5,
           backgroundColor: ["rgb(255, 223, 186)"],
         },
         {
           label: "Crítico",
           data: [rec_critico],
-          borderWidth: 0.5,
           backgroundColor: ["rgb(255, 179, 186)"],
         },
       ],
@@ -128,6 +121,7 @@ function atualizarGraficosComDadosReais() {
     },
   });
 
+  // --------- GRÁFICO ORGÂNICO ---------
   new Chart(BarrasOrganico, {
     type: "bar",
     data: {
@@ -136,25 +130,21 @@ function atualizarGraficosComDadosReais() {
         {
           label: "Estável",
           data: [org_estavel],
-          borderWidth: 0.5,
           backgroundColor: ["rgb(186, 255, 201)"],
         },
         {
           label: "Moderado",
           data: [org_moderado],
-          borderWidth: 0.5,
           backgroundColor: ["rgb(255, 255, 186)"],
         },
         {
           label: "Alerta",
           data: [org_alerta],
-          borderWidth: 0.5,
           backgroundColor: ["rgb(255, 223, 186)"],
         },
         {
           label: "Crítico",
           data: [org_critico],
-          borderWidth: 0.5,
           backgroundColor: ["rgb(255, 179, 186)"],
         },
       ],
@@ -166,21 +156,20 @@ function atualizarGraficosComDadosReais() {
   });
 }
 
-// LISTA NA TELA
+/* ------------------ LISTA NA TELA ------------------ */
+
 function mostrarLista() {
   var div_ListaEndereco = document.getElementById("div_ListaEndereco");
   var listaDivConteudo = "<ul>";
 
   for (let i = 0; i < listaEndereco.length; i++) {
     var endereco = listaEndereco[i];
-    var mostrar = false;
 
+    var mostrar = false;
     if (filtro == "Todos") mostrar = true;
     else if (endereco.status == filtro) mostrar = true;
 
     if (mostrar) {
-      listaDivConteudo += "<li>";
-
       let icone = "../assets/LixeiraEstavelIcon.svg";
       if (endereco.status == "Crítico") icone = "../assets/LixeiraCriticaIcon.svg";
       else if (endereco.status == "Alerta") icone = "../assets/LixeiraAlertaIcon.svg";
@@ -193,16 +182,20 @@ function mostrarLista() {
           : "dashboardSensor.html";
 
       listaDivConteudo += `
-        <img src='${icone}'>
-        <a href='${linkPagina}?id=${endereco.idSensor}'>${endereco.nome}</a>
-      </li>`;
+        <li>
+            <img src='${icone}'>
+            <a href='${linkPagina}?id=${endereco.idSensor}'>${endereco.nome}</a>
+        </li>
+      `;
     }
   }
+
   listaDivConteudo += "</ul>";
   div_ListaEndereco.innerHTML = listaDivConteudo;
 }
 
-// FILTROS
+/* ------------------ FILTROS ------------------ */
+
 function filtrarTodos() {
   filtro = "Todos";
   mostrarLista();
@@ -224,7 +217,8 @@ function filtrarEstavel() {
   mostrarLista();
 }
 
-// ALERTAS
+/* ------------------ ALERTAS ------------------ */
+
 function alertasInativos() {
   var mensagem = "";
   fetch(`/sensor/exibirInativos?fkEmpresa=${sessionStorage.FK_EMPRESA}`)

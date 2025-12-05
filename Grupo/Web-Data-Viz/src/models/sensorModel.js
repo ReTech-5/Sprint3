@@ -48,20 +48,21 @@ function exibirCriticos(fkEmpresa) {
             WHERE TIMESTAMP(dataColeta, horaColeta) >= NOW() - INTERVAL 3 HOUR
             AND distancia >= 76.00 AND fkEmpresa = ${fkEmpresa}
             GROUP BY fkSensor
-        ) filtro ON filtro.fkSensor = c.fkSensor AND filtro.maiorDistancia = c.distancia;
+        ) filtro 
+        ON filtro.fkSensor = c.fkSensor 
+        AND filtro.maiorDistancia = c.distancia;
     `;
-  console.log("Executando a instrução SQL: \n" + instrucaoSql);
   return database.executar(instrucaoSql);
 }
 
 function exibirInativos(fkEmpresa) {
   var instrucaoSql = `
-        SELECT codigoSensor, logradouro FROM sensor 
+        SELECT codigoSensor, logradouro 
+        FROM sensor 
         JOIN endereco
         ON fkEndereco = idEndereco
         WHERE status = 0 AND fkEmpresa = ${fkEmpresa};
     `;
-  console.log("Executando a instrução SQL: \n" + instrucaoSql);
   return database.executar(instrucaoSql);
 }
 
