@@ -8,6 +8,7 @@ body, html {
 body {
 
     background: linear-gradient(248deg, var(--bg-cinza) 0%, #FFF 100% );
+    overflow: hidden;
 
 }
 
@@ -17,7 +18,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 2% 0;
+    margin: 1% 0;
     width: 100%;
     height: 80%;
 
@@ -49,7 +50,7 @@ body {
     display: flex;
     justify-content: center;
     width: 100%;
-    height: 100%;
+    height: 95%;
 
 }
 
@@ -233,3 +234,34 @@ body {
     font-size: x-large;
 
 }
+
+#lista{
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 75%;
+    overflow: auto;
+    gap: 2%;
+
+}
+
+#lista li{
+
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+    margin-bottom: 5px;
+
+}
+
+
+#lista img{
+    
+    width: 30px;
+
+}
+
+ 

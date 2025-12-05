@@ -36,6 +36,7 @@ function atualizarFeed() {
 
         return {
           idSensor: item.idSensor,
+          idEndereco: item.idEndereco,
           nome: `${item.logradouro}, ${item.numero}`,
           status: statusVisual,
           categoria: item.categoria || "Reciclável",
@@ -90,6 +91,7 @@ function atualizarGraficosComDadosReais() {
   // --------- GRÁFICO RECICLÁVEL ---------
   new Chart(BarrasReciclavel, {
     type: "bar",
+    title:'teste',
     data: {
       labels: [""],
       datasets: [
@@ -117,6 +119,18 @@ function atualizarGraficosComDadosReais() {
     },
     options: {
       responsive: true,
+      plugins: {
+    title: {
+      display: true,
+      text: "Lixeira recicláveis por nivel de preenchimento",
+      color: "black",
+      font: {
+        size: 16,
+        weight: "bold",
+        family: "Arial"
+      }
+    }
+  },
       scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } },
     },
   });
@@ -151,6 +165,18 @@ function atualizarGraficosComDadosReais() {
     },
     options: {
       responsive: true,
+      plugins: {
+    title: {
+      display: true,
+      text: "Lixeira orgânicas por nivel de preenchimento",
+      color: "black",
+      font: {
+        size: 16,
+        weight: "bold",
+        family: "Arial"
+      }
+    }
+  },
       scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } },
     },
   });
@@ -158,12 +184,30 @@ function atualizarGraficosComDadosReais() {
 
 /* ------------------ LISTA NA TELA ------------------ */
 
+var listaUnique = []
+
 function mostrarLista() {
   var div_ListaEndereco = document.getElementById("div_ListaEndereco");
   var listaDivConteudo = "<ul>";
 
   for (let i = 0; i < listaEndereco.length; i++) {
-    var endereco = listaEndereco[i];
+  let itemAtual = listaEndereco[i];
+  let existe = false;
+
+  for (let j = 0; j < listaUnique.length; j++) {
+    if (listaUnique[j].nome === itemAtual.nome) {
+      existe = true;
+      break;
+    }
+  }
+
+  if (!existe) {
+    listaUnique.push(itemAtual);
+  }
+  }
+
+  for (let i = 0; i < listaUnique.length; i++) {
+    var endereco = listaUnique[i];
 
     var mostrar = false;
     if (filtro == "Todos") mostrar = true;
@@ -176,15 +220,10 @@ function mostrarLista() {
       else if (endereco.status == "Moderado") icone = "../assets/LixeiraModeradaIcon.svg";
       else if (endereco.status == "Inativo") icone = "../assets/InativoIcon.svg";
 
-      let linkPagina =
-        endereco.status == "Inativo"
-          ? "dashboardSensorInativo.html"
-          : "dashboardSensor.html";
-
       listaDivConteudo += `
         <li>
             <img src='${icone}'>
-            <a href='${linkPagina}?id=${endereco.idSensor}'>${endereco.nome}</a>
+            <span class='ListaSensor' onclick="Especifica(${endereco.idEndereco}, ${endereco.idSensor})" >${endereco.nome}</span>
         </li>
       `;
     }
@@ -251,4 +290,12 @@ function alertasCriticos() {
         div_alertas.innerHTML += mensagem;
       });
     });
+}
+
+function Especifica(idEndereco, idSensor){
+
+  sessionStorage.ID_ENDERECO = idEndereco
+  sessionStorage.ID_SENSOR = idSensor
+  window.location = '../view/dashboardSensor.html'
+
 }

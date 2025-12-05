@@ -3,8 +3,9 @@ var database = require("../database/config");
 function listar() {
     // (Mantém a função listar que já criamos)
     var instrucaoSql = `
-        SELECT idSensor, status, logradouro, numero 
-        FROM Sensor JOIN Endereco ON fkEndereco = idEndereco;
+        select distinct logradouro, idEndereco from endereco
+        join sensor
+        on idEndereco = fkEndereco;
     `;
     return database.executar(instrucaoSql);
 }

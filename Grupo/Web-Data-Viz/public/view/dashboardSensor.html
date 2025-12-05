@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="../style/navbar.css" />
     <link rel="stylesheet" href="../style/dashboardSensor.css" />
   </head>
-  <body onload="MaioPreenchimento(), horarioPicoPreenchimento(), dadosBruto(), detalhesSensor()">
+  <body onload="MaioPreenchimento(), horarioPicoPreenchimento(), dadosBruto(), detalhesSensor(), obterDadosGrafico(), atualizarFeed()">
     <header class="navbar">
       <div class="container_nav">
         <div id="logo_nav">
@@ -41,6 +41,7 @@
           <div class="container_flexSide">
             <div class="container card_lista">
               <div class="card_title lista">Lista de sensor</div>
+              <div id="lista"></div>
             </div>
             <div class="container card_detalhes">
               <div class="card_title detalhes">Detalhes</div>
@@ -94,3 +95,4 @@
     <script src="../js/dashboardSensor.js"></script>
   </body>
 </html>
+

@@ -9,12 +9,6 @@ const tituloPagina = document.getElementById("titulo_pagina");
 const LinhaReciclavel = document.getElementById("cvs_linhaReciclavel");
 const RoscaReciclavel = document.getElementById("cvs_roscaReciclavel");
 
-if (idSensor) {
-    obterDadosSensor();
-    obterDadosGrafico();
-} else {
-    tituloPagina.innerHTML = "Sensor não selecionado";
-}
 
 function obterDadosSensor() {
     fetch(`/lixeiras/${idSensor}`).then(res => {
@@ -28,6 +22,8 @@ function obterDadosSensor() {
 }
 
 function obterDadosGrafico() {
+     var idSensor = sessionStorage.ID_SENSOR
+
     fetch(`/lixeiras/medidas/${idSensor}`).then(res => {
         if (res.ok) {
             res.json().then(medidas => {
@@ -194,9 +190,9 @@ function plotarGrafico(medidas) {
 
 
 
-function detalhesSensor(idSensor){
+function detalhesSensor(){
 
-    idSensor = 1
+    var idSensor = sessionStorage.ID_SENSOR
 
     fetch(`/especifica/detalhes/${idSensor}`).then (function (resposta) {
 
@@ -218,8 +214,11 @@ function detalhesSensor(idSensor){
 
         document.getElementById('span_sensor').innerHTML += kpi.codigoSensor
         document.getElementById('span_lixeira').innerHTML += kpi.codigoLixeira
-        document.getElementById('span_status').innerHTML += kpi.categoria
-        document.getElementById('span_categoria').innerHTML += kpi.status
+        document.getElementById('span_status').innerHTML += kpi.status
+        document.getElementById('span_categoria').innerHTML += kpi.categoria
+        document.getElementById('titulo_pagina').innerHTML =  kpi.codigoSensor
+
+
         
       });
 
@@ -240,9 +239,9 @@ function detalhesSensor(idSensor){
 
 }
 
-function MaioPreenchimento (idSensor){
+function MaioPreenchimento (){
 
-    idSensor = 1
+    var idSensor = sessionStorage.ID_SENSOR
 
     fetch(`/especifica/MaioPreenchimento/${idSensor}`).then (function (resposta) {
 
@@ -285,9 +284,9 @@ function MaioPreenchimento (idSensor){
 
 }
 
-function horarioPicoPreenchimento (idSensor){
+function horarioPicoPreenchimento (){
 
-    idSensor = 1
+    var idSensor = sessionStorage.ID_SENSOR
 
     fetch(`/especifica/horarioPicoPreenchimento/${idSensor}`).then (function (resposta) {
 
@@ -338,9 +337,9 @@ function horarioPicoPreenchimento (idSensor){
 var listaColetas = [];
 var kpi = []
 
-function dadosBruto (idSensor){
-
-    idSensor = 1
+function dadosBruto (){
+    
+    var idSensor = sessionStorage.ID_SENSOR
 
     fetch(`/especifica/dadosBruto/${idSensor}`).then (function (resposta) {
 
@@ -369,7 +368,6 @@ function dadosBruto (idSensor){
 
                 var dadoBruto = kpi[index].distancia
                 var dado = Number(dadoBruto).toFixed(0)
-                console.log('Esse é o dado: ' + dado)
 
                 if(listaColetas.length == 0){
 
@@ -417,20 +415,16 @@ function dadosBruto (idSensor){
 
         for(var i = 1; i < listaColetas.length; i++){
 
-            if (listaColetas[i].Quantidade > Maior){
+            if (listaColetas[i].Quantidade >= Maior){
 
                 var padrao = listaColetas[i].Dado
                 Maior = listaColetas[i].Quantidade
-
             }
 
         }
 
+        console.log ( 'teste1 ' + padrao)
         document.getElementById('dado2').innerHTML = `${padrao}%`
-
-
-
-        
         
 
       });
@@ -450,4 +444,85 @@ function dadosBruto (idSensor){
   });
 
 
+}
+
+function atualizarFeed() {
+  fetch("/sensor/listarEnderecos")
+    .then(function (resposta) {
+      if (resposta.ok) {
+        return resposta.json();
+      }
+      throw "Erro ao buscar sensores";
+    })
+    .then(function (respostaJSON) {
+      console.log("📦 DADOS RECEBIDOS -> ", respostaJSON);
+
+      listaEndereco = respostaJSON.map((item) => {
+        let statusVisual = "Estável";
+
+        if (item.status == 0) statusVisual = "Inativo";
+        else if (item.status == 1) statusVisual = "Estável";
+        else if (item.status == 2) statusVisual = "Moderado";
+        else if (item.status == 3) statusVisual = "Alerta";
+        else if (item.status == 4) statusVisual = "Crítico";
+
+        return {
+          idSensor: item.idSensor,
+          idEndereco: item.idEndereco,
+          nome: `${item.codigoSensor}`,
+          status: statusVisual,
+          categoria: item.categoria || "Reciclável",
+        };
+      });
+
+      mostrarListaSensores();
+    })
+    .catch(function (resposta) {
+      console.error("❌ ERRO:", resposta);
+    });
+}
+
+var listaEndereco = [];
+
+function mostrarListaSensores() {
+  var div_ListaEndereco = document.getElementById("div_ListaEndereco");
+  var listaDivConteudo = "<ul>";
+  var id = sessionStorage.ID_ENDERECO; // ex: 1
+
+  // percorre todos os sensores
+  for (let i = 0; i < listaEndereco.length; i++) {
+
+    // pega SOMENTE sensores com o idEndereco desejado
+    if (listaEndereco[i].idEndereco == id) {
+      var endereco = listaEndereco[i];
+
+      // ícones correspondentes ao status
+      let icone = "../assets/LixeiraEstavelIcon.svg";
+      if (endereco.status == "Crítico") icone = "../assets/LixeiraCriticaIcon.svg";
+      else if (endereco.status == "Alerta") icone = "../assets/LixeiraAlertaIcon.svg";
+      else if (endereco.status == "Moderado") icone = "../assets/LixeiraModeradaIcon.svg";
+      else if (endereco.status == "Inativo") icone = "../assets/InativoIcon.svg";
+
+      // adiciona na lista SEM REPETIR
+      listaDivConteudo += `
+        <li>
+            <img src='${icone}'>
+            <span class='ListaSensor' onclick='Exibir(${endereco.idSensor})'>${endereco.nome}</span>
+        </li>
+      `;
+    }
+  }
+
+  listaDivConteudo += "</ul>";
+  lista.innerHTML = listaDivConteudo;
+
+}
+
+function Exibir(idSensor) {
+
+
+    sessionStorage.ID_SENSOR = idSensor
+    location.reload()
+
+    
 }

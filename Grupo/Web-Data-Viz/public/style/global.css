@@ -100,3 +100,9 @@ body {
 }
 
 /* Fim das configurações padrão do nosso site*/
+
+.ListaSensor{
+
+    cursor: pointer;
+
+}  

@@ -8,6 +8,7 @@ function listarEnderecos() {
             s.codigoLixeira,
             s.categoria,
             s.status,
+            e.idEndereco,
             e.logradouro,
             e.numero,
             e.cep
