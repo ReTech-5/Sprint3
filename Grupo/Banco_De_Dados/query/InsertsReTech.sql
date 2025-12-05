@@ -1,54 +1,71 @@
--- INSERÇÃO DE DADOS
+USE ReTech;
 
-INSERT INTO Empresa (nome, inicioContrato, fimContrato) VALUES
-('EcoTech Gestão Ambiental', '2023-01-01', '2025-01-01'),
-('GreenCity Coleta Urbana', '2022-06-15', '2026-06-15'),
-('Sustenta Brasil Serviços', '2024-03-10', '2027-03-10');
+INSERT INTO Empresa (idEmpresa, nome, inicioContrato, fimContrato) VALUES
+(1, 'EcoCity Soluções', '2025-01-01', '2026-01-01');
 
-INSERT INTO Endereco (logradouro, numero, cep) VALUES
-('Av. Paulista', 1200, '01310-000'),
-('Rua XV de Novembro', 532, '80020-310'),
-('Av. Francisco Matarazzo', 987, '05001-200'),
-('Av. Lins de Vasconcelos', 221, '01537-000'),
-('Rua dos Andradas', 450, '90020-005'),
-('Rua da Consolação', 755, '01302-001');
+INSERT INTO Endereco (idEndereco, logradouro, numero, cep) VALUES
+(1, 'Rua das Palmeiras', 123, '12345-678');
 
-INSERT INTO Sensor (codigoSensor, codigoLixeira, categoria, status, fkEmpresa, fkEndereco)
-VALUES
-('SEN001', 'LX001', 'Orgânica', 1, 1, 1),
-('SEN002', 'LX002', 'Reciclável', 1, 1, 2),
-('SEN003', 'LX003', 'Orgânica', 0, 2, 3),
-('SEN004', 'LX004', 'Reciclável', 1, 2, 1),
-('SEN005', 'LX005', 'Orgânica', 1, 1, 4),
-('SEN006', 'LX006', 'Reciclável', 0, 3, 2),
-('SEN007', 'LX007', 'Reciclável', 1, 3, 3),
-('SEN008', 'LX008', 'Orgânica', 1, 2, 4),
-('SEN009', 'LX009', 'Reciclável', 0, 1, 5),
-('SEN010', 'LX010', 'Orgânica', 1, 3, 1);
+INSERT INTO Sensor (idSensor, codigoSensor, codigoLixeira, categoria, `status`, fkEmpresa, fkEndereco) VALUES
+(1, 'SEN-ECO-001', 'LIX-001', 'Orgânica', 1, 1, 1),
+(2, 'SEN-ECO-002', 'LIX-002', 'Reciclável', 1, 1, 1),
+(3, 'SEN-ECO-003', 'LIX-003', 'Orgânica', 1, 1, 1),
+(4, 'SEN-ECO-004', 'LIX-004', 'Reciclável', 1, 1, 1);
+
+INSERT INTO Usuario (idUsuario, nome, email, senha, acesso, fkEmpresa) VALUES
+(1, 'Carlos Silva', 'carlos.silva@ecocity.com', 'senha123', 'Administrador', 1),
+(2, 'Mariana Rocha', 'mariana.rocha@ecocity.com', 'senha123', 'Padrão', 1),
+(3, 'Paulo Souza', 'paulo.souza@ecocity.com', 'senha123', 'Suporte', 1);
+
+DELIMITER $$
+CREATE PROCEDURE gerar_coletas_4sensores()
+BEGIN
+  DECLARE sensor_id INT DEFAULT 1;
+  DECLARE dia INT;
+  DECLARE data_base DATE DEFAULT '2025-11-01';
+  DECLARE data_atual DATE;
+  DECLARE hora1 TIME DEFAULT '08:00:00';
+  DECLARE hora2 TIME DEFAULT '12:00:00';
+  DECLARE hora3 TIME DEFAULT '16:00:00';
+  DECLARE hora4 TIME DEFAULT '20:00:00';
+  DECLARE d1 DECIMAL(5,2);
+  DECLARE d2 DECIMAL(5,2);
+  DECLARE d3 DECIMAL(5,2);
+
+  WHILE sensor_id <= 4 DO
+    SET dia = 0;
+    WHILE dia < 30 DO
+      SET data_atual = DATE_ADD(data_base, INTERVAL dia DAY);
+
+      SET d1 = ROUND( (10 + sensor_id*2) + (dia * 0.25) + (RAND() * 3), 2);
+      SET d2 = ROUND( d1 + (8 + RAND()*5), 2);
+      SET d3 = ROUND( d2 + (12 + RAND()*8), 2);
+
+      INSERT INTO Coleta (fkSensor, distancia, horaColeta, dataColeta)
+        VALUES (sensor_id, d1, hora1, data_atual);
+
+      INSERT INTO Coleta (fkSensor, distancia, horaColeta, dataColeta)
+        VALUES (sensor_id, d2, hora2, data_atual);
+
+      INSERT INTO Coleta (fkSensor, distancia, horaColeta, dataColeta)
+        VALUES (sensor_id, d3, hora3, data_atual);
+
+      INSERT INTO Coleta (fkSensor, distancia, horaColeta, dataColeta)
+        VALUES (sensor_id, 0.00, hora4, data_atual);
+
+      SET dia = dia + 1;
+    END WHILE;
+
+    SET sensor_id = sensor_id + 1;
+  END WHILE;
+END $$
+DELIMITER ;
+
+CALL gerar_coletas_4sensores();
+
+-- 7) (Opcional) remover a procedure se desejar
+DROP PROCEDURE IF EXISTS gerar_coletas_4sensores;
+
+SELECT fkSensor, COUNT(*) AS total_coletas FROM Coleta WHERE fkSensor BETWEEN 1 AND 4 GROUP BY fkSensor;
 
 
-INSERT INTO Usuario (nome, email, senha, acesso, fkEmpresa) VALUES
-('Gestor EcoLog', 'gestor@ecolog.com', 'eco123', "Padrão", 1);
-
-INSERT INTO Usuario (nome, email, senha, acesso, fkEmpresa) VALUES
-('Fiscal Parque', 'fiscal@ecolog.com', 'eco456', "Administrador", 1);
-
-INSERT INTO Coleta (fkSensor, distancia, horaColeta, dataColeta) VALUES
-(1, 12.50, '08:10:00', CURRENT_DATE - INTERVAL 1 DAY),
-(1, 20.75, '09:00:00', CURRENT_DATE - INTERVAL 1 DAY),
-(1, 35.20, '10:15:00', CURRENT_DATE - INTERVAL 1 DAY),
-(1, 47.80, '10:50:00', CURRENT_DATE - INTERVAL 1 DAY),
-(1, 55.10, '11:05:00', CURRENT_DATE - INTERVAL 1 DAY),
-(1, 68.40, '11:45:00', CURRENT_DATE - INTERVAL 1 DAY),
-(1, 75.90, '12:20:00', CURRENT_DATE - INTERVAL 1 DAY),
-(1, 82.30, '12:55:00', CURRENT_DATE - INTERVAL 1 DAY),
-(1, 94.75, '13:30:00', CURRENT_DATE - INTERVAL 1 DAY),
-(1, 15.20, '22:00:00', CURRENT_DATE - INTERVAL 1 DAY),
-(1, 22.45, '22:30:00', CURRENT_DATE - INTERVAL 1 DAY),
-(1, 35.10, '23:00:00', CURRENT_DATE - INTERVAL 1 DAY),
-(1, 48.70, '23:30:00', CURRENT_DATE - INTERVAL 1 DAY),
-(1, 50.80, '00:00:00', CURRENT_DATE),
-(1, 60.30, '00:30:00', CURRENT_DATE),
-(1, 72.90, '00:40:00', CURRENT_DATE);
-
-SELECT * FROM sensor;
