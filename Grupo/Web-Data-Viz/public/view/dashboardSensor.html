@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="../style/navbar.css" />
     <link rel="stylesheet" href="../style/dashboardSensor.css" />
   </head>
-  <body onload="MaioPreenchimento(), horarioPicoPreenchimento(), dadosBruto(), detalhesSensor(), obterDadosGrafico(), atualizarFeed()">
+  <body onload="MaioPreenchimento(), horarioPicoPreenchimento(), dadosBruto(), detalhesSensor(), obterDadosGrafico(), atualizarFeed(), validarSessao()">
     <header class="navbar">
       <div class="container_nav">
         <div id="logo_nav">
@@ -24,7 +24,7 @@
         <nav class="nav">
           <ul class="ul_nav">
             <li><a id="page_atual" href="dashboardGeral.html">Dashboard</a></li>
-            <li><a href="cadastro.html">Cadastro</a></li>
+            <li><a id="bt_navEspecifica" href="cadastro.html">Cadastro</a></li>
           </ul>
           <div class="user">
             <a href="perfil.html"><img src="../assets/Avatar.svg" alt="" /></a>
@@ -93,6 +93,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../js/dashboardSensor.js"></script>
+    <script src="../js/sessao.js"></script>
   </body>
 </html>
 

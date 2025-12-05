@@ -11,15 +11,22 @@ function validarSessao() {
         usuarioNome.innerHTML = nome;
         usuarioEmail.innerHTML = email;
 
-        var idButton = document.getElementById('btn_cadastro')
+        var idButton = document.getElementById('btn_cadastroPage')
+        var idNavGeral = document.getElementById('bt_navGeral')
+        var idNavEspecifica = document.getElementById('bt_navEspecifica')
+        
 
         if(acesso == 'Administrador'){
 
             idButton.style.display = 'block'
+            bt_navGeral.innerHTML = 'Cadastrar'
+            idNavEspecifica.innerHTML = 'Cadastrar'
 
         }else {
 
             idButton.style.display = 'none'
+            idNavGeral.style.display = 'none'
+            idNavEspecifica.style.display = 'none'
 
         }
         

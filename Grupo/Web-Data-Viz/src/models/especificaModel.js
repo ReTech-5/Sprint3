@@ -16,8 +16,8 @@ function ObterMaioPreenchimento(Sensor) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function dadosKPI():");
 
     var instrucaoSql = `
-    select max(distancia) as MaioPreenchimento from coleta
-    join sensor
+    select max(distancia) as MaioPreenchimento from Coleta
+    join Sensor
         on fkSensor = idSensor
     where dataColeta >= date_sub(curdate(), interval 7 day)
         and dataColeta < curdate()
@@ -34,10 +34,10 @@ function ObterhorarioPicoPreenchimento(Sensor) {
 
     var instrucaoSql = `
     select distinct time_format(horaColeta, '%H') as horaColeta , count(horaColeta) as vezesPico 
-    from coleta
+    from Coleta
     where dataColeta >= date_sub(curdate(), interval 90 day)
         and dataColeta < curdate() 
-        and distancia > (select avg(distancia) from coleta where fkSensor = 1)
+        and distancia > (select avg(distancia) from Coleta where fkSensor = 1)
         and fkSensor = ${Sensor}
     group by horaColeta
         order by vezesPico asc;
@@ -51,7 +51,7 @@ function ObterdadosBruto(Sensor) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function dadosKPI():");
 
     var instrucaoSql = `
-    select dataColeta, horaColeta, distancia from coleta
+    select dataColeta, horaColeta, distancia from Coleta
 	where dataColeta >= date_sub(curdate(), interval 30 day)
         and dataColeta < curdate()
         and fkSensor = ${Sensor}

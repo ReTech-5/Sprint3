@@ -22,7 +22,7 @@ function cadastrar(nome, email, senha, acesso, fkEmpresa) {
 function listarUsuarios(fkEmpresa) {
 
     var instrucaoSql = `
-        select nome, email, senha, acesso from usuario
+        select nome, email, senha, acesso from Usuario
 	    where fkEmpresa = ${fkEmpresa};
     
     `;

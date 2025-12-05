@@ -359,14 +359,23 @@ function dadosBruto (){
         kpi = resposta 
 
         for(var i = 0; i < kpi.length; i++){
+          
+          let dadoBruto
+          var index
 
             if (kpi[i].distancia == 0){
+              
+              if (i > 0){
+                
+                index = i - 1
 
-                if (i > 0){
-                    var index = i - 1
-                }
+              }else {
 
-                var dadoBruto = kpi[index].distancia
+                index = i
+
+              }
+
+                dadoBruto = kpi[index].distancia
                 var dado = Number(dadoBruto).toFixed(0)
 
                 if(listaColetas.length == 0){
@@ -414,19 +423,20 @@ function dadosBruto (){
         var Maior = listaColetas[0].Quantidade
 
         for(var i = 1; i < listaColetas.length; i++){
-
+          
+          var padrao = listaColetas[i].Dado
+          
             if (listaColetas[i].Quantidade >= Maior){
-
-                var padrao = listaColetas[i].Dado
-                Maior = listaColetas[i].Quantidade
+              Maior = listaColetas[i].Quantidade
             }
-
+                
         }
-
-        console.log ( 'teste1 ' + padrao)
-        document.getElementById('dado2').innerHTML = `${padrao}%`
-        
-
+          
+          
+          console.log(padrao)
+          document.getElementById('dado2').innerHTML = `${padrao}%`
+          
+          
       });
 
     }else {
