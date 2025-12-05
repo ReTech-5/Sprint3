@@ -4,7 +4,7 @@ var router = express.Router();
 var especificaController = require("../controllers/especificaController");
 
 router.get("/detalhes/:idSensor", function (req, res) {
-    especificaController.dadosBruto(req, res)
+    especificaController.detalhes(req, res)
 
 });
 

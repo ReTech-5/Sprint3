@@ -33,7 +33,7 @@ function ObterhorarioPicoPreenchimento() {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function dadosKPI():");
 
     var instrucaoSql = `
-    select distinct horaColeta , count(horaColeta) as vezesPico 
+    select distinct time_format(horaColeta, '%H') as horaColeta , count(horaColeta) as vezesPico 
     from coleta
     where dataColeta >= date_sub(curdate(), interval 90 day)
         and dataColeta < curdate() 
@@ -47,14 +47,14 @@ function ObterhorarioPicoPreenchimento() {
 
 }
 
-function ObterdadosBruto() {
+function ObterdadosBruto(Sensor) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function dadosKPI():");
 
     var instrucaoSql = `
-    select * from coleta
+    select dataColeta, horaColeta, distancia from coleta
 	where dataColeta >= date_sub(curdate(), interval 30 day)
         and dataColeta < curdate()
-        and fkSensor = 1
+        and fkSensor = ${Sensor}
     order by dataColeta desc;
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);

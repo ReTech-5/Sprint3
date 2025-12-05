@@ -192,6 +192,8 @@ function plotarGrafico(medidas) {
 
 // Daqui para baixo eu que fiz quevedo !!!!!!!!!
 
+
+
 function detalhesSensor(idSensor){
 
     idSensor = 1
@@ -209,15 +211,15 @@ function detalhesSensor(idSensor){
       resposta.json().then(function (resposta) {
 
         console.log("Dados recebidos: ", JSON.stringify(resposta));
-        var kpi = resposta
+        var kpi = resposta[0]
         var mensagem = ''
 
         console.log(resposta)
 
-        document.getElementById('span_sensor').innerHTML += kpi.codigoSensor[0] 
-        document.getElementById('span_lixeira').innerHTML += kpi.codigoLixeira[0]
-        document.getElementById('span_status').innerHTML += kpi.categoria[0]
-        document.getElementById('span_categoria').innerHTML += kpi.status[0]
+        document.getElementById('span_sensor').innerHTML += kpi.codigoSensor
+        document.getElementById('span_lixeira').innerHTML += kpi.codigoLixeira
+        document.getElementById('span_status').innerHTML += kpi.categoria
+        document.getElementById('span_categoria').innerHTML += kpi.status
         
       });
 
@@ -305,7 +307,7 @@ function horarioPicoPreenchimento (idSensor){
             var data1 = resposta[0]
             var data2 = resposta[1]
 
-            mensagem += `${data1.horaColeta.replace(':00:00','')}h as ${data2.horaColeta.replace(':00:00','')}h`
+            mensagem += `${data1.horaColeta}h as ${data2.horaColeta}h`
             
         
        
@@ -333,6 +335,9 @@ function horarioPicoPreenchimento (idSensor){
 
 }
 
+var listaColetas = [];
+var kpi = []
+
 function dadosBruto (idSensor){
 
     idSensor = 1
@@ -350,9 +355,82 @@ function dadosBruto (idSensor){
       resposta.json().then(function (resposta) {
 
         console.log("Dados recebidos: ", JSON.stringify(resposta));
-        var kpi = resposta
-
         console.log(resposta[0])
+
+        kpi = resposta 
+
+        for(var i = 0; i < kpi.length; i++){
+
+            if (kpi[i].distancia == 0){
+
+                if (i > 0){
+                    var index = i - 1
+                }
+
+                var dadoBruto = kpi[index].distancia
+                var dado = Number(dadoBruto).toFixed(0)
+                console.log('Esse é o dado: ' + dado)
+
+                if(listaColetas.length == 0){
+
+                    listaColetas.push({
+                        Dado: dado,
+                        Quantidade: 1
+                    })
+
+                }else {
+                    
+                    var sucesso = 0
+                    for (var j = 0; j < listaColetas.length; j++){
+
+                        if(listaColetas[j].Dado.includes(dado)){
+                            
+                            var index = j
+            
+                            listaColetas[index].Quantidade = listaColetas[index].Quantidade + 1
+
+                            sucesso++
+            
+                        }  
+
+                    } 
+                    
+                    if (sucesso == 0 ){
+
+                        listaColetas.push({
+                            Dado: dado,
+                            Quantidade: 1
+                        })
+
+                        j = listaColetas.length
+                    }
+
+                }
+
+            }
+       
+        }
+
+            
+        
+        var Maior = listaColetas[0].Quantidade
+
+        for(var i = 1; i < listaColetas.length; i++){
+
+            if (listaColetas[i].Quantidade > Maior){
+
+                var padrao = listaColetas[i].Dado
+                Maior = listaColetas[i].Quantidade
+
+            }
+
+        }
+
+        document.getElementById('dado2').innerHTML = `${padrao}%`
+
+
+
+        
         
 
       });
