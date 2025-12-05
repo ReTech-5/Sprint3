@@ -1,5 +1,8 @@
 var sensorModel = require("../models/sensorModel");
 
+// (OPCIONAL / LEGADO) – essas funções só vão funcionar se você criar
+// os métodos correspondentes no model. Como não são usadas nas rotas
+// que você me mostrou, vou deixar aqui, mas o foco são as novas.
 function listar(req, res) {
   sensorModel
     .listar()
@@ -48,8 +51,66 @@ function listarPorCategoria(req, res) {
     });
 }
 
-function exibirInativos(req, res) {
+/*  NOVAS FUNÇÕES USADAS NA DASHBOARD / ROTAS  */
 
+// Lista sensores + endereço (dashboard geral)
+function listarEnderecos(req, res) {
+  sensorModel
+    .listarEnderecos()
+    .then((resultado) => {
+      if (resultado.length > 0) {
+        res.status(200).json(resultado);
+      } else {
+        res.status(204).send("Nenhum endereço de sensor encontrado");
+      }
+    })
+    .catch((erro) => {
+      console.error("Erro ao listar endereços:", erro.sqlMessage || erro);
+      res.status(500).json(erro.sqlMessage || erro);
+    });
+}
+
+// Lista todos os sensores (sem join de endereço)
+function listarTodos(req, res) {
+  sensorModel
+    .listarTodos()
+    .then((resultado) => {
+      if (resultado.length > 0) {
+        res.status(200).json(resultado);
+      } else {
+        res.status(204).send("Nenhum sensor encontrado");
+      }
+    })
+    .catch((erro) => {
+      console.error("Erro ao listar sensores:", erro.sqlMessage || erro);
+      res.status(500).json(erro.sqlMessage || erro);
+    });
+}
+
+// Lista dados de uma lixeira específica
+function listarPorLixeira(req, res) {
+  var codigoLixeira = req.params.codigoLixeira;
+
+  sensorModel
+    .listarPorLixeira(codigoLixeira)
+    .then((resultado) => {
+      if (resultado.length > 0) {
+        res.status(200).json(resultado);
+      } else {
+        res
+          .status(204)
+          .send(`Nenhum sensor encontrado para a lixeira ${codigoLixeira}`);
+      }
+    })
+    .catch((erro) => {
+      console.error("Erro ao listar por lixeira:", erro.sqlMessage || erro);
+      res.status(500).json(erro.sqlMessage || erro);
+    });
+}
+
+/* ALERTAS (JÁ ESTAVAM CERTOS) */
+
+function exibirInativos(req, res) {
   const fkEmpresa = req.query.fkEmpresa;
 
   sensorModel
@@ -65,7 +126,6 @@ function exibirInativos(req, res) {
 }
 
 function exibirCriticos(req, res) {
-
   const fkEmpresa = req.query.fkEmpresa;
 
   sensorModel
@@ -81,10 +141,16 @@ function exibirCriticos(req, res) {
 }
 
 module.exports = {
+  // legado
   listar,
   listarPorEmpresa,
   listarPorStatus,
   listarPorCategoria,
+
+  // usadas pela dashboard/rotas
+  listarEnderecos,
+  listarTodos,
+  listarPorLixeira,
   exibirInativos,
   exibirCriticos,
 };

@@ -8,10 +8,13 @@ var filtro = "Todos";
 
 window.onload = function () {
   atualizarFeed();
+  alertasCriticos();
+  alertasInativos();
 };
 
+// FUNÇÃO PRINCIPAL — BUSCA DO BANCO
 function atualizarFeed() {
-  fetch("/lixeiras/listar")
+  fetch("/sensor/listarEnderecos")
     .then(function (resposta) {
       if (resposta.ok) {
         if (resposta.status == 204) {
@@ -25,11 +28,12 @@ function atualizarFeed() {
           listaEndereco = respostaJSON.map((item) => {
             let statusVisual = "Estável";
 
-            // Lógica visual baseada no ID
+            // STATUS REAL DO BANCO
             if (item.status == 0) statusVisual = "Inativo";
-            else if (item.idSensor % 4 == 0) statusVisual = "Crítico";
-            else if (item.idSensor % 3 == 0) statusVisual = "Alerta";
-            else if (item.idSensor % 2 == 0) statusVisual = "Moderado";
+            else if (item.status == 1) statusVisual = "Estável";
+            else if (item.status == 2) statusVisual = "Moderado";
+            else if (item.status == 3) statusVisual = "Alerta";
+            else if (item.status == 4) statusVisual = "Crítico";
 
             return {
               idSensor: item.idSensor,
@@ -40,7 +44,7 @@ function atualizarFeed() {
           });
 
           mostrarLista();
-          atualizarGraficosComDadosReais(); // Desenha os gráficos com o design original
+          atualizarGraficosComDadosReais();
         });
       } else {
         throw "Houve um erro na API!";
@@ -51,8 +55,8 @@ function atualizarFeed() {
     });
 }
 
+// GRÁFICOS (REAL DO BD)
 function atualizarGraficosComDadosReais() {
-  // Contadores
   let rec_estavel = 0,
     rec_moderado = 0,
     rec_alerta = 0,
@@ -62,19 +66,18 @@ function atualizarGraficosComDadosReais() {
     org_alerta = 0,
     org_critico = 0;
 
-  // Conta os dados reais
   for (let i = 0; i < listaEndereco.length; i++) {
     let item = listaEndereco[i];
     if (item.status == "Inativo") continue;
 
-    if (item.idSensor % 2 != 0) {
-      // Reciclável
+    const reciclavel = item.categoria && item.categoria.toLowerCase().includes("recicl");
+
+    if (reciclavel) {
       if (item.status == "Estável") rec_estavel++;
       else if (item.status == "Moderado") rec_moderado++;
       else if (item.status == "Alerta") rec_alerta++;
       else if (item.status == "Crítico") rec_critico++;
     } else {
-      // Orgânico
       if (item.status == "Estável") org_estavel++;
       else if (item.status == "Moderado") org_moderado++;
       else if (item.status == "Alerta") org_alerta++;
@@ -82,16 +85,12 @@ function atualizarGraficosComDadosReais() {
     }
   }
 
-  // Atualiza KPIs de texto
   let totalInativos = listaEndereco.filter((i) => i.status == "Inativo").length;
   let totalAtivos = listaEndereco.length - totalInativos;
 
-  if (document.getElementById("inativo"))
-    document.getElementById("inativo").innerHTML = totalInativos;
-  if (document.getElementById("ativo"))
-    document.getElementById("ativo").innerHTML = totalAtivos;
+  document.getElementById("inativo").innerHTML = totalInativos;
+  document.getElementById("ativo").innerHTML = totalAtivos;
 
-  // --- GRÁFICO RECICLÁVEL (DESIGN ORIGINAL + DADOS REAIS) ---
   new Chart(BarrasReciclavel, {
     type: "bar",
     data: {
@@ -99,29 +98,25 @@ function atualizarGraficosComDadosReais() {
       datasets: [
         {
           label: "Estável",
-          data: [rec_estavel], // Dado Real
-          borderColor: ["rgb(0, 128, 0)"],
+          data: [rec_estavel],
           borderWidth: 0.5,
           backgroundColor: ["rgb(186, 255, 201)"],
         },
         {
           label: "Moderado",
-          data: [rec_moderado], // Dado Real
-          borderColor: ["rgb(204, 204, 0)"],
+          data: [rec_moderado],
           borderWidth: 0.5,
           backgroundColor: ["rgb(255, 255, 186)"],
         },
         {
           label: "Alerta",
-          data: [rec_alerta], // Dado Real
-          borderColor: ["rgb(255, 140, 0)"],
+          data: [rec_alerta],
           borderWidth: 0.5,
           backgroundColor: ["rgb(255, 223, 186)"],
         },
         {
           label: "Crítico",
-          data: [rec_critico], // Dado Real
-          borderColor: ["rgb(255, 0, 0)"],
+          data: [rec_critico],
           borderWidth: 0.5,
           backgroundColor: ["rgb(255, 179, 186)"],
         },
@@ -129,44 +124,10 @@ function atualizarGraficosComDadosReais() {
     },
     options: {
       responsive: true,
-      plugins: {
-        legend: {
-          display: true,
-          labels: {
-            font: { weight: "semi-bold", size: 11 },
-            color: "black",
-          },
-        },
-        title: {
-          display: true,
-          text: "Lixeiras Recicláveis por Status de Preenchimento",
-          color: "black",
-          font: { size: 15, weight: "bold", family: "Arial" },
-        },
-        tooltip: {
-          callbacks: {
-            label: function (context) {
-              return context.dataset.label + ": " + context.parsed.y;
-            },
-          },
-        },
-      },
-      scales: {
-        y: {
-          title: {
-            display: true,
-            text: "Quantidade de Lixeiras",
-            color: "rgb(4, 32, 13)",
-            font: { size: 13, weight: "bold" },
-          },
-          beginAtZero: true,
-          ticks: { stepSize: 1 }, // Garante números inteiros
-        },
-      },
+      scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } },
     },
   });
 
-  // --- GRÁFICO ORGÂNICO (DESIGN ORIGINAL + DADOS REAIS) ---
   new Chart(BarrasOrganico, {
     type: "bar",
     data: {
@@ -174,29 +135,25 @@ function atualizarGraficosComDadosReais() {
       datasets: [
         {
           label: "Estável",
-          data: [org_estavel], // Dado Real
-          borderColor: ["rgb(0, 128, 0)"],
+          data: [org_estavel],
           borderWidth: 0.5,
           backgroundColor: ["rgb(186, 255, 201)"],
         },
         {
           label: "Moderado",
-          data: [org_moderado], // Dado Real
-          borderColor: ["rgb(204, 204, 0)"],
+          data: [org_moderado],
           borderWidth: 0.5,
           backgroundColor: ["rgb(255, 255, 186)"],
         },
         {
           label: "Alerta",
-          data: [org_alerta], // Dado Real
-          borderColor: ["rgb(255, 140, 0)"],
+          data: [org_alerta],
           borderWidth: 0.5,
           backgroundColor: ["rgb(255, 223, 186)"],
         },
         {
           label: "Crítico",
-          data: [org_critico], // Dado Real
-          borderColor: ["rgb(255, 0, 0)"],
+          data: [org_critico],
           borderWidth: 0.5,
           backgroundColor: ["rgb(255, 179, 186)"],
         },
@@ -204,44 +161,12 @@ function atualizarGraficosComDadosReais() {
     },
     options: {
       responsive: true,
-      plugins: {
-        legend: {
-          display: true,
-          labels: {
-            font: { weight: "semi-bold", size: 11 },
-            color: "black",
-          },
-        },
-        title: {
-          display: true,
-          text: "Lixeiras Orgânicas por Status de Preenchimento",
-          color: "black",
-          font: { size: 15, weight: "bold", family: "Arial" },
-        },
-        tooltip: {
-          callbacks: {
-            label: function (context) {
-              return context.dataset.label + ": " + context.parsed.y;
-            },
-          },
-        },
-      },
-      scales: {
-        y: {
-          title: {
-            display: true,
-            text: "Quantidade de Lixeiras",
-            color: "rgb(4, 32, 13)",
-            font: { size: 13, weight: "bold" },
-          },
-          beginAtZero: true,
-          ticks: { stepSize: 1 },
-        },
-      },
+      scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } },
     },
   });
 }
 
+// LISTA NA TELA
 function mostrarLista() {
   var div_ListaEndereco = document.getElementById("div_ListaEndereco");
   var listaDivConteudo = "<ul>";
@@ -252,19 +177,15 @@ function mostrarLista() {
 
     if (filtro == "Todos") mostrar = true;
     else if (endereco.status == filtro) mostrar = true;
-    if (filtro == "Todos" && endereco.status == "Inativo") mostrar = true;
 
     if (mostrar) {
       listaDivConteudo += "<li>";
+
       let icone = "../assets/LixeiraEstavelIcon.svg";
-      if (endereco.status == "Crítico")
-        icone = "../assets/LixeiraCriticaIcon.svg";
-      else if (endereco.status == "Alerta")
-        icone = "../assets/LixeiraAlertaIcon.svg";
-      else if (endereco.status == "Moderado")
-        icone = "../assets/LixeiraModeradaIcon.svg";
-      else if (endereco.status == "Inativo")
-        icone = "../assets/InativoIcon.svg";
+      if (endereco.status == "Crítico") icone = "../assets/LixeiraCriticaIcon.svg";
+      else if (endereco.status == "Alerta") icone = "../assets/LixeiraAlertaIcon.svg";
+      else if (endereco.status == "Moderado") icone = "../assets/LixeiraModeradaIcon.svg";
+      else if (endereco.status == "Inativo") icone = "../assets/InativoIcon.svg";
 
       let linkPagina =
         endereco.status == "Inativo"
@@ -281,6 +202,7 @@ function mostrarLista() {
   div_ListaEndereco.innerHTML = listaDivConteudo;
 }
 
+// FILTROS
 function filtrarTodos() {
   filtro = "Todos";
   mostrarLista();
@@ -302,29 +224,21 @@ function filtrarEstavel() {
   mostrarLista();
 }
 
+// ALERTAS
 function alertasInativos() {
   var mensagem = "";
   fetch(`/sensor/exibirInativos?fkEmpresa=${sessionStorage.FK_EMPRESA}`)
     .then((response) => response.json())
     .then((resultado) => {
       resultado.forEach((resultado) => {
-        var codigo = resultado.codigoSensor;
-        var endereco = resultado.logradouro;
-
         mensagem = `
-                <div class="notificacao container">
-
-                    <img src="../assets/ErroIcon.svg" alt="">
-                    <span>Sensor ${codigo} - <a href="dashboardSensorInativo.html">${endereco}</a> sem resposta </span>
-
-                </div>
-                `;
-
+          <div class="notificacao container">
+              <img src="../assets/ErroIcon.svg" alt="">
+              <span>Sensor ${resultado.codigoSensor} - ${resultado.logradouro} sem resposta</span>
+          </div>
+        `;
         div_alertas.innerHTML += mensagem;
       });
-    })
-    .catch((error) => {
-      console.error("Erro ao obter os dados das fichas: ", error);
     });
 }
 
@@ -334,25 +248,13 @@ function alertasCriticos() {
     .then((response) => response.json())
     .then((resultado) => {
       resultado.forEach((resultado) => {
-        var codigo = resultado.codigoLixeira;
-        var endereco = resultado.logradouro;
-
         mensagem = `
-                <div class="notificacao container">
-
-                    <img src="../assets/LixeiraCriticaIcon.svg" alt="">
-                    <span>Lixeira ${codigo} - ${endereco} se encontra em estado crítico</span>
-
-                </div>
-                `;
-
+          <div class="notificacao container">
+              <img src="../assets/LixeiraCriticaIcon.svg" alt="">
+              <span>Lixeira ${resultado.codigoLixeira} - ${resultado.logradouro} se encontra em estado crítico</span>
+          </div>
+        `;
         div_alertas.innerHTML += mensagem;
       });
-    })
-    .catch((error) => {
-      console.error("Erro ao obter os dados das fichas: ", error);
     });
 }
-
-alertasCriticos();
-alertasInativos();
