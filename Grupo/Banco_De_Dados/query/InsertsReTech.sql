@@ -48,56 +48,86 @@ INSERT INTO Usuario (idUsuario, nome, email, senha, acesso, fkEmpresa) VALUES
 
 DELIMITER $$
 
-CREATE PROCEDURE gerarColetas()
+DROP PROCEDURE IF EXISTS gerar_coletas_procedurais$$
+
+CREATE PROCEDURE gerar_coletas_procedurais()
 BEGIN
-    DECLARE s INT DEFAULT 1;
-    DECLARE c INT;
-    DECLARE faixaMin INT;
-    DECLARE faixaMax INT;
+    DECLARE s INT;               -- sensor id
+    DECLARE k INT;               -- coleta dentro do dia (1 ou 2)
+    DECLARE d DATE;              -- data corrente
+    DECLARE startDate DATE DEFAULT '2025-11-15';
+    DECLARE endDate DATE DEFAULT '2025-12-06';
+    DECLARE totalDays INT;
+    DECLARE totalReadsPerSensor INT;
+    DECLARE dayIndex INT DEFAULT 0;
+    DECLARE fraction DOUBLE;
+    DECLARE faixaMin DOUBLE;
+    DECLARE faixaMax DOUBLE;
     DECLARE distancia DECIMAL(5,2);
-    DECLARE dia INT;
-    DECLARE hora INT;
-    DECLARE minuto INT;
+    DECLARE hour_calc INT;
+    DECLARE minute_calc INT;
 
-    WHILE s <= 24 DO
+    SET totalDays = DATEDIFF(endDate, startDate) + 1; -- inclusive
+    SET totalReadsPerSensor = totalDays * 2; -- 2 leituras por dia
 
-        IF s IN (1,5,9,13,17,21) THEN
-            SET faixaMin = 1; SET faixaMax = 25;
-        ELSEIF s IN (2,6,10,14,18,22) THEN
-            SET faixaMin = 26; SET faixaMax = 50;
-        ELSEIF s IN (3,7,11,15,19,23) THEN
-            SET faixaMin = 51; SET faixaMax = 75;
-        ELSE
-            SET faixaMin = 76; SET faixaMax = 100;
-        END IF;
+    SET d = startDate;
+    SET dayIndex = 0;
 
-        SET c = 1;
-        WHILE c <= 20 DO
-            SET distancia = ROUND(faixaMin + RAND() * (faixaMax - faixaMin), 2);
+    WHILE d <= endDate DO
 
-            SET dia = FLOOR(1 + RAND() * 29);      -- dias variados novembro
-            SET hora = FLOOR(RAND() * 24);
-            SET minuto = FLOOR(RAND() * 60);
+        -- para cada sensor, cria duas coletas no dia 'd'
+        SET s = 1;
+        WHILE s <= 24 DO
 
-            INSERT INTO Coleta (fkSensor, distancia, horaColeta, dataColeta)
-            VALUES (
-                s,
-                distancia,
-                MAKETIME(hora, minuto, 0),
-                MAKEDATE(2025, 305) + INTERVAL (dia-1) DAY
-            );
+            -- define faixa do sensor (assumiu-se: 12,6,2,4)
+            IF s BETWEEN 1 AND 12 THEN
+                SET faixaMin = 0.00; SET faixaMax = 25.00;
+            ELSEIF s BETWEEN 13 AND 18 THEN
+                SET faixaMin = 26.00; SET faixaMax = 50.00;
+            ELSEIF s BETWEEN 19 AND 20 THEN
+                SET faixaMin = 51.00; SET faixaMax = 75.00;
+            ELSE
+                SET faixaMin = 76.00; SET faixaMax = 99.99;
+            END IF;
 
-            SET c = c + 1;
+            SET k = 1;
+            WHILE k <= 2 DO
+                -- fraction: posição entre 0 e 1 (linear, fase do sensor)
+                SET fraction = ( (dayIndex * 2) + (k - 1) ) / (totalReadsPerSensor - 1);
+
+                -- valor crescente determinístico (monótono)
+                SET distancia = ROUND( faixaMin + fraction * (faixaMax - faixaMin), 2);
+
+                -- horário "aleatório" determinístico (reprodutível)
+                -- formula simples para parecer aleatória sem usar RAND()
+                SET hour_calc = MOD( (s * 3 + dayIndex * 5 + k * 11), 24 );
+                SET minute_calc = MOD( (s * 7 + dayIndex * 13 + k * 17), 60 );
+
+                -- garantir que a segunda coleta do último dia seja 14:00
+                IF d = endDate AND k = 2 THEN
+                    SET hour_calc = 14;
+                    SET minute_calc = 0;
+                END IF;
+
+                INSERT INTO Coleta (fkSensor, distancia, horaColeta, dataColeta)
+                VALUES (s, distancia, MAKETIME(hour_calc, minute_calc, 0), d);
+
+                SET k = k + 1;
+            END WHILE;
+
+            SET s = s + 1;
         END WHILE;
 
-        SET s = s + 1;
+        SET d = DATE_ADD(d, INTERVAL 1 DAY);
+        SET dayIndex = dayIndex + 1;
     END WHILE;
 
-END $$
+END$$
 
 DELIMITER ;
 
-CALL gerarColetas();
-DROP PROCEDURE gerarColetas;
+-- Executa a geração
+CALL gerar_coletas_procedurais();
 
-select * from coleta;
+-- Opcional: remover a procedure se não quiser guardá-la
+DROP PROCEDURE IF EXISTS gerar_coletas_procedurais;

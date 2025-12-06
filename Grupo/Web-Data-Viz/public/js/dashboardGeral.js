@@ -168,7 +168,7 @@ const BarrasOrganico = document.getElementById("cvs_grafico_organico");
 //   mostrarLista();
 // }
 
-// /* ------------------ ALERTAS ------------------ */
+/* ------------------ ALERTAS ------------------ */
 
 function alertasInativos() {
   var mensagem = "";
@@ -179,7 +179,7 @@ function alertasInativos() {
         mensagem = `
           <div class="notificacao container">
               <img src="../assets/ErroIcon.svg" alt="">
-              <span>Sensor ${resultado.codigoSensor} - ${resultado.logradouro} sem resposta</span>
+              <span>${resultado.codigoSensor} - ${resultado.logradouro} sem resposta</span>
           </div>
         `;
         div_alertas.innerHTML += mensagem;
@@ -192,12 +192,11 @@ function alertasCriticos() {
   fetch(`/sensor/exibirCriticos?fkEmpresa=${sessionStorage.FK_EMPRESA}`)
     .then((response) => response.json())
     .then((resultado) => {
-      listaGeral.length = 0;
       resultado.forEach((resultado) => {
         mensagem = `
           <div class="notificacao container">
               <img src="../assets/LixeiraCriticaIcon.svg" alt="">
-              <span>Lixeira ${resultado.codigoLixeira} - ${resultado.logradouro} se encontra em estado crítico</span>
+              <span>${resultado.codigoLixeira} - ${resultado.logradouro} se encontra em estado crítico</span>
           </div>
         `;
         div_alertas.innerHTML += mensagem;
@@ -205,11 +204,7 @@ function alertasCriticos() {
     });
 }
 
-// function Especifica(idEndereco, idSensor) {
-//   sessionStorage.ID_ENDERECO = idEndereco;
-//   sessionStorage.ID_SENSOR = idSensor;
-//   window.location = "../view/dashboardSensor.html";
-// }
+/* ------------------ GRÁFICOS ------------------ */
 
 var metricasOrganico = [0, 0, 0, 0];
 var metricasReciclavel = [0, 0, 0, 0];
@@ -449,3 +444,5 @@ function atualizarReciclavel() {
 
 atualizarOrganico();
 atualizarReciclavel();
+// alertasInativos();
+alertasCriticos();
