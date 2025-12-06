@@ -145,28 +145,28 @@ const BarrasOrganico = document.getElementById("cvs_grafico_organico");
 //   div_ListaEndereco.innerHTML = listaDivConteudo;
 // }
 
-// /* ------------------ FILTROS ------------------ */
+/* ------------------ FILTROS ------------------ */
 
-// function filtrarTodos() {
-//   filtro = "Todos";
-//   mostrarLista();
-// }
-// function filtrarCritico() {
-//   filtro = "Crítico";
-//   mostrarLista();
-// }
-// function filtrarAlerta() {
-//   filtro = "Alerta";
-//   mostrarLista();
-// }
-// function filtrarModerado() {
-//   filtro = "Moderado";
-//   mostrarLista();
-// }
-// function filtrarEstavel() {
-//   filtro = "Estável";
-//   mostrarLista();
-// }
+function filtrarTodos() {
+  filtro = "Todos";
+  mostrarLista();
+}
+function filtrarCritico() {
+  filtro = "Crítico";
+  mostrarLista();
+}
+function filtrarAlerta() {
+  filtro = "Alerta";
+  mostrarLista();
+}
+function filtrarModerado() {
+  filtro = "Moderado";
+  mostrarLista();
+}
+function filtrarEstavel() {
+  filtro = "Estável";
+  mostrarLista();
+}
 
 /* ------------------ ALERTAS ------------------ */
 
@@ -442,7 +442,14 @@ function atualizarReciclavel() {
   setTimeout(atualizarReciclavel, 60000);
 }
 
+function atualizarAlertas() {
+  div_alertas.innerHTML = `<div class="title card_title"><h4>Alertas</h4></div>`;
+  alertasInativos();
+  alertasCriticos();
+
+  setTimeout(atualizarAlertas, 60000);
+}
+
 atualizarOrganico();
 atualizarReciclavel();
-// alertasInativos();
-alertasCriticos();
+atualizarAlertas();

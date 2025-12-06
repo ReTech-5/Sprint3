@@ -38,20 +38,21 @@ function listarPorLixeira(codigoLixeira) {
 
 function exibirCriticos(fkEmpresa) {
   var instrucaoSql = `
-        SELECT s.codigoLixeira, e.logradouro
-        FROM coleta c
-        JOIN sensor s ON c.fkSensor = s.idSensor
-        JOIN endereco e ON s.fkEndereco = e.idEndereco
-        JOIN (
-            SELECT fkSensor, MAX(distancia) AS maiorDistancia
-            FROM coleta
-            JOIN sensor ON fkSensor = idSensor
-            WHERE TIMESTAMP(dataColeta, horaColeta) >= NOW() - INTERVAL 3 HOUR
-            AND distancia >= 76.00 AND fkEmpresa = ${fkEmpresa}
-            GROUP BY fkSensor
-        ) filtro 
-        ON filtro.fkSensor = c.fkSensor 
-        AND filtro.maiorDistancia = c.distancia;
+        SELECT 
+            codigoLixeira,
+            logradouro
+        FROM Sensor
+        JOIN Coleta
+            ON fkSensor = idSensor
+        JOIN Endereco
+            ON idEndereco = fkEndereco
+        WHERE fkEmpresa = ${fkEmpresa}
+        AND idColeta = (
+                SELECT MAX(idColeta)
+                FROM Coleta
+                WHERE fkSensor = idSensor
+            )
+        AND distancia > 76;
     `;
   return database.executar(instrucaoSql);
 }
