@@ -42,9 +42,9 @@ INSERT INTO Sensor (codigoSensor, codigoLixeira, categoria, `status`, fkEmpresa,
 
 
 INSERT INTO Usuario (idUsuario, nome, email, senha, acesso, fkEmpresa) VALUES
-	(1, 'Gleison Almeida', 'gleison@gmail.com', 'senha123', 'Administrador', 1),
-	(2, 'Samara Silva', 'samara@gmail.com', 'senha123', 'Suporte', 1),
-	(3, 'Lucas Quevedo', 'lucas@gmail.com', 'senha123', 'Padrão', 1);
+	(1, 'Gleison Almeida', 'gleison@gmail.com', 'Senha123!', 'Administrador', 1),
+	(2, 'Samara Silva', 'samara@gmail.com', 'Senha123!', 'Suporte', 1),
+	(3, 'Lucas Quevedo', 'lucas@gmail.com', 'Senha123!', 'Padrão', 1);
 
 DELIMITER $$
 
