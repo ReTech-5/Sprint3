@@ -41,7 +41,7 @@ INSERT INTO Sensor (codigoSensor, codigoLixeira, categoria, `status`, fkEmpresa,
 	('Sensor-H3', 'Lixeira-H3', 'Orgânica', 0, 1, 8);
 
 
-INSERT INTO Usuario (idUsuario, nome, email, senha, acesso) VALUES
+INSERT INTO Usuario (idUsuario, nome, email, senha, acesso, fkEmpresa) VALUES
 	(1, 'Gleison Almeida', 'gleison@gmail.com', 'Senha123!', 'Administrador', 1),
 	(2, 'Samara Silva', 'samara@gmail.com', 'Senha123!', 'Suporte', null),
 	(3, 'Lucas Quevedo', 'lucas@gmail.com', 'Senha123!', 'Padrão', 1);
