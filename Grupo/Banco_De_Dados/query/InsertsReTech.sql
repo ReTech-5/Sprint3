@@ -1,71 +1,103 @@
 USE ReTech;
 
 INSERT INTO Empresa (idEmpresa, nome, inicioContrato, fimContrato) VALUES
-(1, 'EcoCity Soluções', '2025-01-01', '2026-01-01');
+	(1, 'SpTech City', '2025-01-01', '2026-01-01');
 
 INSERT INTO Endereco (idEndereco, logradouro, numero, cep) VALUES
-(1, 'Rua das Palmeiras', 123, '12345-678');
+	(1, 'Rua das Flores', 123, '01001-000'),
+	(2, 'Avenida Paulista', 1578, '01310-200'),
+	(3, 'Rua XV de Novembro', 45, '80020-310'),
+	(4, 'Praça da Sé', 10, '01001-001'),
+	(5, 'Rua das Acácias', 250, '04045-020'),
+	(6, 'Avenida Brasil', 5000, '22250-040'),
+	(7, 'Rua Bahia', 77, '30160-011'),
+	(8, 'Avenida Atlântica', 1702, '22021-001');
 
-INSERT INTO Sensor (idSensor, codigoSensor, codigoLixeira, categoria, `status`, fkEmpresa, fkEndereco) VALUES
-(1, 'SEN-ECO-001', 'LIX-001', 'Orgânica', 1, 1, 1),
-(2, 'SEN-ECO-002', 'LIX-002', 'Reciclável', 1, 1, 1),
-(3, 'SEN-ECO-003', 'LIX-003', 'Orgânica', 1, 1, 1),
-(4, 'SEN-ECO-004', 'LIX-004', 'Reciclável', 1, 1, 1);
+
+INSERT INTO Sensor (codigoSensor, codigoLixeira, categoria, `status`, fkEmpresa, fkEndereco) VALUES
+	('Sensor-A1', 'Lixeira-A1', 'Orgânica', 1, 1, 1),
+	('Sensor-A2', 'Lixeira-A2', 'Reciclável', 1, 1, 1),
+	('Sensor-A3', 'Lixeira-A3', 'Orgânica', 1, 1, 1),
+	('Sensor-B1', 'Lixeira-B1', 'Orgânica', 1, 1, 2),
+	('Sensor-B2', 'Lixeira-B2', 'Reciclável', 1, 1, 2),
+	('Sensor-B3', 'Lixeira-B3', 'Orgânica', 1, 1, 2),
+	('Sensor-C1', 'Lixeira-C1', 'Orgânica', 1, 1, 3),
+	('Sensor-C2', 'Lixeira-C2', 'Reciclável', 1, 1, 3),
+	('Sensor-C3', 'Lixeira-C3', 'Orgânica', 1, 1, 3),
+	('Sensor-D1', 'Lixeira-D1', 'Orgânica', 1, 1, 4),
+	('Sensor-D2', 'Lixeira-D2', 'Reciclável', 1, 1, 4),
+	('Sensor-D3', 'Lixeira-D3', 'Orgânica', 1, 1, 4),
+	('Sensor-E1', 'Lixeira-E1', 'Orgânica', 1, 1, 5),
+	('Sensor-E2', 'Lixeira-E2', 'Reciclável', 1, 1, 5),
+	('Sensor-E3', 'Lixeira-E3', 'Orgânica', 1, 1, 5),
+	('Sensor-F1', 'Lixeira-F1', 'Orgânica', 0, 1, 6),
+	('Sensor-F2', 'Lixeira-F2', 'Reciclável', 1, 1, 6),
+	('Sensor-F3', 'Lixeira-F3', 'Orgânica', 1, 1, 6),
+	('Sensor-G1', 'Lixeira-G1', 'Orgânica', 1, 1, 7),
+	('Sensor-G2', 'Lixeira-G2', 'Reciclável', 0, 1, 7),
+	('Sensor-G3', 'Lixeira-G3', 'Orgânica', 1, 1, 7),
+	('Sensor-H1', 'Lixeira-H1', 'Orgânica', 1, 1, 8),
+	('Sensor-H2', 'Lixeira-H2', 'Reciclável', 1, 1, 8),
+	('Sensor-H3', 'Lixeira-H3', 'Orgânica', 0, 1, 8);
+
 
 INSERT INTO Usuario (idUsuario, nome, email, senha, acesso, fkEmpresa) VALUES
-(1, 'Carlos Silva', 'carlos.silva@ecocity.com', 'senha123', 'Administrador', 1),
-(2, 'Mariana Rocha', 'mariana.rocha@ecocity.com', 'senha123', 'Padrão', 1),
-(3, 'Paulo Souza', 'paulo.souza@ecocity.com', 'senha123', 'Suporte', 1);
+	(1, 'Gleison Almeida', 'gleison@gmail.com', 'senha123', 'Administrador', 1),
+	(2, 'Samara Silva', 'samara@gmail.com', 'senha123', 'Suporte', 1),
+	(3, 'Lucas Quevedo', 'lucas@gmail.com', 'senha123', 'Padrão', 1);
 
 DELIMITER $$
-CREATE PROCEDURE gerar_coletas_4sensores()
+
+CREATE PROCEDURE gerarColetas()
 BEGIN
-  DECLARE sensor_id INT DEFAULT 1;
-  DECLARE dia INT;
-  DECLARE data_base DATE DEFAULT '2025-11-01';
-  DECLARE data_atual DATE;
-  DECLARE hora1 TIME DEFAULT '08:00:00';
-  DECLARE hora2 TIME DEFAULT '12:00:00';
-  DECLARE hora3 TIME DEFAULT '16:00:00';
-  DECLARE hora4 TIME DEFAULT '20:00:00';
-  DECLARE d1 DECIMAL(5,2);
-  DECLARE d2 DECIMAL(5,2);
-  DECLARE d3 DECIMAL(5,2);
+    DECLARE s INT DEFAULT 1;
+    DECLARE c INT;
+    DECLARE faixaMin INT;
+    DECLARE faixaMax INT;
+    DECLARE distancia DECIMAL(5,2);
+    DECLARE dia INT;
+    DECLARE hora INT;
+    DECLARE minuto INT;
 
-  WHILE sensor_id <= 4 DO
-    SET dia = 0;
-    WHILE dia < 30 DO
-      SET data_atual = DATE_ADD(data_base, INTERVAL dia DAY);
+    WHILE s <= 24 DO
 
-      SET d1 = ROUND( (10 + sensor_id*2) + (dia * 0.25) + (RAND() * 3), 2);
-      SET d2 = ROUND( d1 + (8 + RAND()*5), 2);
-      SET d3 = ROUND( d2 + (12 + RAND()*8), 2);
+        IF s IN (1,5,9,13,17,21) THEN
+            SET faixaMin = 1; SET faixaMax = 25;
+        ELSEIF s IN (2,6,10,14,18,22) THEN
+            SET faixaMin = 26; SET faixaMax = 50;
+        ELSEIF s IN (3,7,11,15,19,23) THEN
+            SET faixaMin = 51; SET faixaMax = 75;
+        ELSE
+            SET faixaMin = 76; SET faixaMax = 100;
+        END IF;
 
-      INSERT INTO Coleta (fkSensor, distancia, horaColeta, dataColeta)
-        VALUES (sensor_id, d1, hora1, data_atual);
+        SET c = 1;
+        WHILE c <= 20 DO
+            SET distancia = ROUND(faixaMin + RAND() * (faixaMax - faixaMin), 2);
 
-      INSERT INTO Coleta (fkSensor, distancia, horaColeta, dataColeta)
-        VALUES (sensor_id, d2, hora2, data_atual);
+            SET dia = FLOOR(1 + RAND() * 29);      -- dias variados novembro
+            SET hora = FLOOR(RAND() * 24);
+            SET minuto = FLOOR(RAND() * 60);
 
-      INSERT INTO Coleta (fkSensor, distancia, horaColeta, dataColeta)
-        VALUES (sensor_id, d3, hora3, data_atual);
+            INSERT INTO Coleta (fkSensor, distancia, horaColeta, dataColeta)
+            VALUES (
+                s,
+                distancia,
+                MAKETIME(hora, minuto, 0),
+                MAKEDATE(2025, 305) + INTERVAL (dia-1) DAY
+            );
 
-      INSERT INTO Coleta (fkSensor, distancia, horaColeta, dataColeta)
-        VALUES (sensor_id, 0.00, hora4, data_atual);
+            SET c = c + 1;
+        END WHILE;
 
-      SET dia = dia + 1;
+        SET s = s + 1;
     END WHILE;
 
-    SET sensor_id = sensor_id + 1;
-  END WHILE;
 END $$
+
 DELIMITER ;
 
-CALL gerar_coletas_4sensores();
+CALL gerarColetas();
+DROP PROCEDURE gerarColetas;
 
--- 7) (Opcional) remover a procedure se desejar
-DROP PROCEDURE IF EXISTS gerar_coletas_4sensores;
-
-SELECT fkSensor, COUNT(*) AS total_coletas FROM Coleta WHERE fkSensor BETWEEN 1 AND 4 GROUP BY fkSensor;
-
-
+select * from coleta;
