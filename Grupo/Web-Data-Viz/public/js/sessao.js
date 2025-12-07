@@ -1,38 +1,31 @@
 // sessão
-function validarSessao() {
+function validarSessao(page) {
     var email = sessionStorage.EMAIL_USUARIO;
     var nome = sessionStorage.NOME_USUARIO;
     var acesso = sessionStorage.ACESSO_USUARIO;
 
-    var usuarioNome = document.getElementById("usuario");
-    var usuarioEmail = document.getElementById("email");
 
     if (email != null && nome != null) {
-        usuarioNome.innerHTML = nome;
-        usuarioEmail.innerHTML = email;
 
         var idButton = document.getElementById('btn_cadastroPage')
         var idNavGeral = document.getElementById('bt_navGeral')
         var idNavEspecifica = document.getElementById('bt_navEspecifica')
         
-
-        if(acesso == 'Administrador'){
-
-            idButton.style.display = 'block'
-            bt_navGeral.innerHTML = 'Cadastrar'
-            idNavEspecifica.innerHTML = 'Cadastrar'
-
-        }else {
+        if(acesso != 'Administrador' && page == 1){
 
             idButton.style.display = 'none'
-            idNavGeral.style.display = 'none'
-            idNavEspecifica.style.display = 'none'
 
+        }else if (acesso != 'Administrador' && page == 2){
+
+            idNavGeral.style.display = 'none'
+
+        }else if (acesso != 'Administrador' && page == 3){
+
+            idNavEspecifica.style.display = 'none'
         }
-        
 
     } else {
-        window.location = "../login.html";
+        window.location = "login.html";
     }
 }
 

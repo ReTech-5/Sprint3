@@ -1,11 +1,29 @@
 var database = require("../database/config")
 
+function obterSensores(Endereco){
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function obterSensores():");
+    
+    var instrucaoSql = `
+    select idSensor as id, codigoSensor as Sensor,
+    (select distancia from Coleta
+	join Sensor on fkSensor = idSensor 
+    where fkEndereco = ${Endereco}
+    order by dataColeta desc limit 1) as preenchimentoAtual
+    from Sensor
+	where fkEndereco = ${Endereco}
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql)
+
+}
+
 function obterDetalhes(Sensor) {
-    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function dadosKPI():");
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function obterDetalhes():");
 
     var instrucaoSql = `
-    SELECT codigoSensor, codigoLixeira, categoria, status FROM Sensor
-        where idSensor = ${Sensor};
+    SELECT codigoSensor, codigoLixeira, categoria, status 
+    FROM Sensor
+    where idSensor = ${Sensor};
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql)
@@ -13,16 +31,16 @@ function obterDetalhes(Sensor) {
 }
 
 function ObterMaioPreenchimento(Sensor) {
-    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function dadosKPI():");
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function ObterMaioPreenchimento():");
 
     var instrucaoSql = `
-    select max(distancia) as MaioPreenchimento from Coleta
+    select max(distancia) as MaioPreenchimento 
+    from Coleta
     join Sensor
         on fkSensor = idSensor
     where dataColeta >= date_sub(curdate(), interval 7 day)
         and dataColeta < curdate()
         and fkSensor = ${Sensor};
-
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql)
@@ -30,7 +48,7 @@ function ObterMaioPreenchimento(Sensor) {
 }
 
 function ObterhorarioPicoPreenchimento(Sensor) {
-    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function dadosKPI():");
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function ObterhorarioPicoPreenchimento():");
 
     var instrucaoSql = `
     select distinct time_format(horaColeta, '%H') as horaColeta , count(horaColeta) as vezesPico 
@@ -48,7 +66,7 @@ function ObterhorarioPicoPreenchimento(Sensor) {
 }
 
 function ObterdadosBruto(Sensor) {
-    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function dadosKPI():");
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function ObterdadosBruto():");
 
     var instrucaoSql = `
     select dataColeta, horaColeta, distancia from Coleta
@@ -67,5 +85,6 @@ module.exports = {
     ObterMaioPreenchimento,
     ObterhorarioPicoPreenchimento,
     ObterdadosBruto,
-    obterDetalhes
+    obterDetalhes,
+    obterSensores
 };

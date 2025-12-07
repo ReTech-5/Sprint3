@@ -1,5 +1,22 @@
 var especificaModel = require("../models/especificaModel");
 
+function listarSensores(req, res){
+  var Endereco = req.params.idEndereco
+
+  especificaModel.obterSensores(Endereco).then(function (resultado){
+      res.json(resultado);
+
+    }).catch(function (erro) {
+      console.log(erro);
+      console.log(
+        `\nHouve um erro ao tentar coletar os sensores! Erro:`,
+        erro.sqlMessage
+      );
+      res.status(500).json(erro.sqlMessage);
+    });
+
+}
+
 function detalhes(req, res){
     var Sensor = req.params.idSensor
 
@@ -72,6 +89,7 @@ module.exports = {
     MaioPreenchimento,
     horarioPicoPreenchimento,
     dadosBruto,
-    detalhes
+    detalhes,
+    listarSensores
   
 };

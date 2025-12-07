@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
   </head>
-  <body onload="validarSessao()">
+  <body onload="validarSessao(1)">
 
     <div class="perfilContainer">
 
@@ -54,6 +54,18 @@
     </div>
     
     <script src="../js/sessao.js"></script>
+    <script>
+
+      var email = sessionStorage.EMAIL_USUARIO;
+      var nome = sessionStorage.NOME_USUARIO;
+
+      var usuarioNome = document.getElementById("usuario");
+      var usuarioEmail = document.getElementById("email");
+
+      usuarioNome.innerHTML = nome;
+      usuarioEmail.innerHTML = email;
+
+    </script>
   </body>
 
 </html>

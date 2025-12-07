@@ -3,6 +3,11 @@ var router = express.Router();
 
 var especificaController = require("../controllers/especificaController");
 
+router.get("/listarSensores/:idEndereco", function (req, res) {
+    especificaController.listarSensores(req, res)
+
+});
+
 router.get("/detalhes/:idSensor", function (req, res) {
     especificaController.detalhes(req, res)
 
