@@ -4,7 +4,7 @@ const BarrasReciclavel = document.getElementById("cvs_grafico_reciclavel");
 const BarrasOrganico = document.getElementById("cvs_grafico_organico");
 
 // var listaEndereco = [];
-// var filtro = "Todos";
+var filtro = "Critico";
 
 // window.onload = function () {
 //   atualizarFeed();
@@ -20,7 +20,7 @@ const BarrasOrganico = document.getElementById("cvs_grafico_organico");
 //       if (resposta.ok) {
 //         return resposta.json();
 //       }
-//       throw "Erro ao buscar sensores";
+//       throw "Erro ao buscar Endereco";
 //     })
 //     .then(function (respostaJSON) {
 //       console.log("📦 DADOS RECEBIDOS -> ", respostaJSON);
@@ -152,7 +152,7 @@ function filtrarTodos() {
   mostrarLista();
 }
 function filtrarCritico() {
-  filtro = "Crítico";
+  filtro = "Critico";
   mostrarLista();
 }
 function filtrarAlerta() {
@@ -164,7 +164,7 @@ function filtrarModerado() {
   mostrarLista();
 }
 function filtrarEstavel() {
-  filtro = "Estável";
+  filtro = "Estavel";
   mostrarLista();
 }
 
@@ -428,6 +428,187 @@ function criarGraficoReciclavel() {
       },
     },
   });
+}
+
+function listarEnderecos() {
+  Empresa = sessionStorage.FK_EMPRESA;
+
+  fetch(`/geral/listarEndereco/${Empresa}`)
+    .then(function (resposta) {
+      if (resposta.ok) {
+        if (resposta.status == 204) {
+          console.log("Nenhum sensor encontrada");
+          throw "Nenhum resultado encontrado";
+        }
+
+        resposta.json().then(function (resposta) {
+          console.log("Dados recebidos: ", JSON.stringify(resposta));
+          
+          var Endereco = resposta
+          var Card = document.getElementById("div_ListaEndereco");
+          var mensagem = "";
+
+          mensagem = `<ul id="listaEndereco">`;
+
+          console.log(Endereco.length)
+
+          for (var i = 0; i < Endereco.length; i++) {
+            var preenchimentoAtual = Endereco[i].preenchimentoAtual;
+
+            if (preenchimentoAtual <= 25) {
+              mensagem += `<li class="Endereco Estavel" onclick="limparDados(), abrir(${Endereco[i].idEndereco})" > 
+              <img src="../assets/LixeiraEstavelIcon.svg" alt="">
+              ${Endereco[i].logradouro}, ${Endereco[i].numero}</li>`;
+            } else if (preenchimentoAtual > 25 && preenchimentoAtual <= 50) {
+              mensagem += `<li class="Endereco Moderado" onclick="limparDados(), abrir(${Endereco[i].idEndereco})" > 
+              <img src="../assets/LixeiraModeradaIcon.svg" alt="">
+              ${Endereco[i].logradouro}, ${Endereco[i].numero}</li>`;
+            } else if (preenchimentoAtual > 50 && preenchimentoAtual <= 75) {
+              mensagem += `<li class="Endereco Alerta" onclick="limparDados(), abrir(${Endereco[i].idEndereco})" > 
+              <img src="../assets/LixeiraAlertaIcon.svg" alt="">
+              ${Endereco[i].logradouro}, ${Endereco[i].numero}</li>`;
+            } else {
+              mensagem += `<li class="Endereco Critico" onclick="limparDados(), abrir(${Endereco[i].idEndereco})" >
+              <img src="../assets/LixeiraCriticaIcon.svg" alt="">
+              ${Endereco[i].logradouro}, ${Endereco[i].numero}</li>`;
+            }
+          }
+
+          mensagem += `</ul>`;
+
+          Card.innerHTML = mensagem;
+          mostrarLista();
+          
+        });
+      } else {
+        throw "Houve um erro na API!";
+      }
+    })
+
+    .catch(function (resposta) {
+      console.error(resposta);
+    });
+}
+
+function abrir(idEndereco) {
+  sessionStorage.ID_ENDERECO = idEndereco
+  window.location = 'dashboardSensor.html'
+
+}
+
+function mostrarLista() {
+  if (filtro == "Todos") {
+    var classes = ['Estavel', 'Moderado', 'Alerta', 'Critico'];
+
+    // Itera sobre cada classe
+    classes.forEach(className => {
+
+      var enderecos = document.getElementsByClassName(className);
+
+      for (let i = 0; i < enderecos.length; i++) {
+        enderecos[i].style.display = 'flex';
+      }
+    });
+
+  }else if (filtro == "Estavel") {
+    var classesOcultas = ['Moderado', 'Alerta', 'Critico'];
+    var classesExpostas = ['Estavel'];
+
+    // Itera sobre cada classe
+    classesOcultas.forEach(className => {
+
+      var enderecos = document.getElementsByClassName(className);
+
+      for (let i = 0; i < enderecos.length; i++) {
+        enderecos[i].style.display = 'none';
+      }
+    });
+
+    classesExpostas.forEach(className => {
+
+      var enderecos = document.getElementsByClassName(className);
+
+      for (let i = 0; i < enderecos.length; i++) {
+        enderecos[i].style.display = 'flex';
+      }
+    });
+
+  }else if (filtro == "Moderado") {
+    var classesOcultas = ['Estavel', 'Alerta', 'Critico'];
+    var classesExpostas = ['Moderado'];
+
+    // Itera sobre cada classe
+    classesOcultas.forEach(className => {
+
+      var enderecos = document.getElementsByClassName(className);
+
+      for (let i = 0; i < enderecos.length; i++) {
+        enderecos[i].style.display = 'none';
+      }
+    });
+
+    classesExpostas.forEach(className => {
+
+      var enderecos = document.getElementsByClassName(className);
+
+      for (let i = 0; i < enderecos.length; i++) {
+        enderecos[i].style.display = 'flex';
+      }
+    });
+
+  }else if (filtro == "Alerta") {
+    var classesOcultas = ['Estavel', 'Moderado', 'Critico'];
+    var classesExpostas = ['Alerta'];
+
+    // Itera sobre cada classe
+    classesOcultas.forEach(className => {
+
+      var enderecos = document.getElementsByClassName(className);
+
+      for (let i = 0; i < enderecos.length; i++) {
+        enderecos[i].style.display = 'none';
+      }
+    });
+
+    classesExpostas.forEach(className => {
+
+      var enderecos = document.getElementsByClassName(className);
+
+      for (let i = 0; i < enderecos.length; i++) {
+        enderecos[i].style.display = 'flex';
+      }
+    });
+  }else if (filtro == "Critico") {
+    var classesOcultas = ['Estavel', 'Moderado', 'Alerta'];
+    var classesExpostas = ['Critico'];
+
+    // Itera sobre cada classe
+    classesOcultas.forEach(className => {
+
+      var enderecos = document.getElementsByClassName(className);
+
+      for (let i = 0; i < enderecos.length; i++) {
+        enderecos[i].style.display = 'none';
+      }
+    });
+
+    classesExpostas.forEach(className => {
+
+      var enderecos = document.getElementsByClassName(className);
+
+      for (let i = 0; i < enderecos.length; i++) {
+        enderecos[i].style.display = 'flex';
+      }
+    });
+  }
+
+}
+
+function limparDados() {
+
+  sessionStorage.removeItem('ID_ENDERECO')
+  sessionStorage.removeItem('ID_SENSOR')
+
 }
 
 function atualizarOrganico() {

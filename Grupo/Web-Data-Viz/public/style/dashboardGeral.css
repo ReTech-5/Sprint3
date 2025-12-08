@@ -133,13 +133,13 @@ canvas{
 }
 
 /* Itens da lista: alinham conteúdo em linha e adicionam espaçamento inferior */
-.container_endereco li {
+.Endereco {
 
     display: flex;
     flex-direction: row;
     align-items: center;
     margin-bottom: 10%;
-
+    cursor: pointer;
 }
 
 /* Container principal do conteúdo do dashboard — coluna com margens internas */

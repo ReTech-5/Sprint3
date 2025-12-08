@@ -60,8 +60,8 @@ function exibirCriticos(fkEmpresa) {
 function exibirInativos(fkEmpresa) {
   var instrucaoSql = `
         SELECT codigoSensor, logradouro 
-        FROM sensor 
-        JOIN endereco
+        FROM Sensor 
+        JOIN Endereco
         ON fkEndereco = idEndereco
         WHERE status = 0 AND fkEmpresa = ${fkEmpresa};
     `;

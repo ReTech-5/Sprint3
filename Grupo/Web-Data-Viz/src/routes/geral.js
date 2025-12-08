@@ -11,4 +11,9 @@ router.get("/dadosDashboardReciclavel", function (req, res) {
     geralController.dadosDashboardReciclavel(req, res)
 });
 
+router.get("/listarEndereco/:Empresa", function(req, res) {
+    geralController.listarEndereco(req, res)
+
+});
+
 module.exports = router;

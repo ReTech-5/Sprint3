@@ -32,7 +32,29 @@ function dadosDashboardReciclavel(req, res) {
     });
 }
 
+function listarEndereco (req, res){
+
+  var idEmpresa = req.params.Empresa
+  
+    geralModel.obterEndereco(idEmpresa).then(function (resultado){
+      res.json(resultado);
+  
+    }).catch(function (erro) {
+      console.log(erro);
+      console.log(
+        `\nHouve um erro ao tentar coletar os sensores! Erro:`,
+        erro.sqlMessage        
+      );
+
+      res.status(500).json(erro.sqlMessage);
+
+    });
+
+
+}
+
 module.exports = {
   dadosDashboardOrganica,
   dadosDashboardReciclavel,
+  listarEndereco,
 };

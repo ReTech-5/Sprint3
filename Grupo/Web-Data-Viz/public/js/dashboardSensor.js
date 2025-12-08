@@ -1,5 +1,3 @@
-sessionStorage.ID_ENDERECO = 4;
-
 function listarSensores(){
   idEndereco = sessionStorage.ID_ENDERECO
 
@@ -76,13 +74,6 @@ function listarSensores(){
       console.error(resposta);
     });
 
-
-}
-
-function limparDados() {
-
-  sessionStorage.removeItem('ID_ENDERECO')
-  sessionStorage.removeItem('ID_SENSOR')
 
 }
 
