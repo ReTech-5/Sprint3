@@ -85,11 +85,30 @@ function dadosBruto(req, res){
     
 }
 
+function graficos(req, res){
+  var Sensor = req.params.idSensor
+
+  especificaModel.ObterDadosGrafico(Sensor).then(function (resultado){
+      res.json(resultado);
+
+    }).catch(function (erro) {
+      console.log(erro);
+      console.log(
+        `\nHouve um erro ao tentar coletar os dados! Erro:`,
+        erro.sqlMessage
+      );
+      res.status(500).json(erro.sqlMessage);
+    });
+
+
+}
+
 module.exports = {
     MaioPreenchimento,
     horarioPicoPreenchimento,
     dadosBruto,
     detalhes,
-    listarSensores
+    listarSensores,
+    graficos
   
 };

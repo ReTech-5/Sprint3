@@ -39,7 +39,7 @@ function ObterMaioPreenchimento(Sensor) {
     join Sensor
         on fkSensor = idSensor
     where dataColeta >= date_sub(curdate(), interval 7 day)
-        and dataColeta < curdate()
+        and dataColeta <= curdate()
         and fkSensor = ${Sensor};
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
@@ -81,10 +81,24 @@ function ObterdadosBruto(Sensor) {
 }
 
 
+function ObterDadosGrafico(Sensor) {
+
+    var instrucaoSql = `
+    select time_format(horaColeta, "%H:%i") as horaColeta, distancia from Coleta
+    where fkSensor = ${Sensor}
+    order by dataColeta desc limit 20;
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql)
+
+
+}
+
 module.exports = {
     ObterMaioPreenchimento,
     ObterhorarioPicoPreenchimento,
     ObterdadosBruto,
     obterDetalhes,
-    obterSensores
+    obterSensores,
+    ObterDadosGrafico
 };

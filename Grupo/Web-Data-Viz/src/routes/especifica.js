@@ -28,6 +28,11 @@ router.get("/dadosBruto/:idSensor", function (req, res) {
 
 });
 
+router.get("/graficos/:idSensor", function (req, res) {
+    especificaController.graficos(req, res)
+
+})
+
 module.exports = router;
 
 
