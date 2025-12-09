@@ -10,40 +10,61 @@
     <link rel="stylesheet" href="../style/dashboardGeral.css">
 </head>
 <body onload="validarSessao(2), listarEnderecos()">
+
     <header class="navbar">
+
         <div class="container_nav">
+
             <div id="logo_nav">
                 <a href=""><img src="../assets/Logo.svg" alt=""></a>
             </div>
+
             <nav class="nav">
+
                 <ul class="ul_nav">
                     <li><a id="page_atual" href="#">Dashboard</a></li>
                     <li><a id="bt_navGeral" style="display: block;" href="cadastro.html">Cadastro</a></li>
                 </ul>
+
                 <div class="user">
                     <a href="perfil.html"><img src="../assets/Avatar.svg" alt=""></a>
                     <span id="msg_user"></span>
                 </div>
+
             </nav>
+
         </div>
+
     </header>
+
     <div class="dashboard_geral">
+
         <div class="flexBox_kpi">
+
             <div class="container_kpi">
+
                 <div class="container kpi">
+
                     <img src="../assets/InativoIcon.svg" alt="">
-                    <span>Inativos: <span id="inativo">6</span></span>
+                    <span>Inativos: <span id="inativo"></span></span>
+
                 </div>
+
                 <div class="container kpi">
+
                     <img src="../assets/AtivoIcon.svg" alt="">
-                    <span>Ativos: <span id="ativo">44</span></span>
+                    <span>Ativos: <span id="ativo"></span></span>
+
                 </div>
+
             </div>
 
             <div class="container container_endereco">
+
                 <div class="title card_title">
                     <h4>Lista de Endereços</h4>
                 </div>
+
                 <div class="div_button">
                     <button class="btn_filtro" onclick="filtrarTodos()">Todos</button>
                     <button class="btn_filtro" onclick="filtrarCritico()">Crítico</button>
@@ -51,35 +72,48 @@
                     <button class="btn_filtro" onclick="filtrarModerado()">Moderado</button>
                     <button class="btn_filtro" onclick="filtrarEstavel()">Estavel</button>
                 </div>
+
                 <br>
+
                 <div id="div_ListaEndereco"></div>
+
             </div>
+
         </div>
 
         <div class="container_dash">
+
             <div class="container barras">
+
                 <div id="reciclavel">
                     <canvas id="cvs_grafico_reciclavel"></canvas>
                 </div>
+
                 <div id="organico">
                     <canvas id="cvs_grafico_organico"></canvas>
                 </div>
+
             </div>
+
         </div>
 
         <div class="container_metrica">
+
             <div class="container metricas">
                 <img src="../assets/LixeiraCriticaIcon.svg" alt="">
                 <span><span style="color: #bf4930;">Crítico:</span> 76% até 100%</span>
             </div>
+
             <div class="container metricas">
                 <img src="../assets/LixeiraAlertaIcon.svg" alt="">
                 <span><span style="color: #f29d38;">Alerta:</span> 51% até 75%</span>
             </div>
+
             <div class="container metricas">
                 <img src="../assets/LixeiraModeradaIcon.svg" alt="">
                 <span><span style="color: #f9d977;">Moderado:</span> 26% até 50%</span>
             </div>
+
             <div class="container metricas">
                 <img src="../assets/LixeiraEstavelIcon.svg" alt="">
                 <span><span style="color: #9DC284;">Estável:</span> 0% até 25%</span>
@@ -90,10 +124,14 @@
                     <h4>Alertas</h4>
                 </div>
             </div>
+
         </div>
+
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../js/dashboardGeral.js"></script>
     <script src="../js/sessao.js"></script>
+
 </body>
 </html>

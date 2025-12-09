@@ -33,7 +33,6 @@ function dadosDashboardReciclavel(req, res) {
 }
 
 function listarEndereco (req, res){
-
   var idEmpresa = req.params.Empresa
   
     geralModel.obterEndereco(idEmpresa).then(function (resultado){
@@ -49,12 +48,44 @@ function listarEndereco (req, res){
       res.status(500).json(erro.sqlMessage);
 
     });
+}
 
+function sensoresAtivos(req, res) {
+  const fkEmpresa = req.query.fkEmpresa;
+  console.log("FK RECEBIDO NO CONTROLLER:", fkEmpresa);
 
+  geralModel
+    .exibirAtivos(fkEmpresa)
+    .then((resultado) => {
+      res.status(200).json(resultado);
+      console.log("DADOS DO MODEL RECEBIDOS NO CONTROLLER:", resultado);
+    })
+    .catch((erro) => {
+      console.error(erro);
+      res.status(500).json({ error: erro.message });
+    });
+}
+
+function sensoresInativos(req, res) {
+  const fkEmpresa = req.query.fkEmpresa;
+  console.log("FK RECEBIDO NO CONTROLLER:", fkEmpresa);
+
+  geralModel
+    .exibirInativos(fkEmpresa)
+    .then((resultado) => {
+      res.status(200).json(resultado);
+      console.log("DADOS DO MODEL RECEBIDOS NO CONTROLLER:", resultado);
+    })
+    .catch((erro) => {
+      console.error(erro);
+      res.status(500).json({ error: erro.message });
+    });
 }
 
 module.exports = {
   dadosDashboardOrganica,
   dadosDashboardReciclavel,
   listarEndereco,
+  sensoresAtivos,
+  sensoresInativos,
 };

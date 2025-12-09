@@ -13,7 +13,14 @@ router.get("/dadosDashboardReciclavel", function (req, res) {
 
 router.get("/listarEndereco/:Empresa", function(req, res) {
     geralController.listarEndereco(req, res)
+});
 
+router.get("/sensoresAtivos", function (req, res) {
+    geralController.sensoresAtivos(req, res)
+});
+
+router.get("/sensoresInativos", function (req, res) {
+    geralController.sensoresInativos(req, res)
 });
 
 module.exports = router;

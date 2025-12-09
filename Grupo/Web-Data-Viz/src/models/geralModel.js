@@ -51,8 +51,30 @@ function obterEndereco (idEmpresa){
 
 }
 
+function exibirAtivos(fkEmpresa) {
+    var instrucaoSql = `
+        SELECT COUNT(status) AS ativos
+	        FROM sensor
+            WHERE fkEmpresa = ${fkEmpresa} AND status = 1;
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function exibirInativos(fkEmpresa) {
+    var instrucaoSql = `
+        SELECT COUNT(status) AS inativos
+	        FROM sensor
+            WHERE fkEmpresa = ${fkEmpresa} AND status = 0;
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     exibirOrganico,
     exibirReciclavel,
     obterEndereco,
+    exibirAtivos,
+    exibirInativos,
 };

@@ -2,148 +2,7 @@
 
 const BarrasReciclavel = document.getElementById("cvs_grafico_reciclavel");
 const BarrasOrganico = document.getElementById("cvs_grafico_organico");
-
-// var listaEndereco = [];
 var filtro = "Critico";
-
-// window.onload = function () {
-//   atualizarFeed();
-//   alertasCriticos();
-//   alertasInativos();
-// };
-
-// /* ------------------ BUSCA NO BANCO ------------------ */
-
-// function atualizarFeed() {
-//   fetch("/sensor/listarEnderecos")
-//     .then(function (resposta) {
-//       if (resposta.ok) {
-//         return resposta.json();
-//       }
-//       throw "Erro ao buscar Endereco";
-//     })
-//     .then(function (respostaJSON) {
-//       console.log("📦 DADOS RECEBIDOS -> ", respostaJSON);
-
-//       listaEndereco = respostaJSON.map((item) => {
-//         let statusVisual = "Estável";
-
-//         if (item.status == 0) statusVisual = "Inativo";
-//         else if (item.status == 1) statusVisual = "Estável";
-//         else if (item.status == 2) statusVisual = "Moderado";
-//         else if (item.status == 3) statusVisual = "Alerta";
-//         else if (item.status == 4) statusVisual = "Crítico";
-
-//         return {
-//           idSensor: item.idSensor,
-//           idEndereco: item.idEndereco,
-//           nome: `${item.logradouro}, ${item.numero}`,
-//           status: statusVisual,
-//           categoria: item.categoria || "Reciclável",
-//         };
-//       });
-
-//       mostrarLista();
-//       atualizarGraficosComDadosReais();
-//     })
-//     .catch(function (resposta) {
-//       console.error("❌ ERRO:", resposta);
-//     });
-// }
-
-// /* ------------------ GRÁFICOS ------------------ */
-
-// // function atualizarGraficosComDadosReais() {
-// //   let rec_estavel = 0,
-// //     rec_moderado = 0,
-// //     rec_alerta = 0,
-// //     rec_critico = 0;
-// //   let org_estavel = 0,
-// //     org_moderado = 0,
-// //     org_alerta = 0,
-// //     org_critico = 0;
-
-// //   for (let i = 0; i < listaEndereco.length; i++) {
-// //     let item = listaEndereco[i];
-// //     if (item.status == "Inativo") continue;
-
-// //     const reciclavel =
-// //       item.categoria && item.categoria.toLowerCase().includes("recicl");
-
-// //     if (reciclavel) {
-// //       if (item.status == "Estável") rec_estavel++;
-// //       else if (item.status == "Moderado") rec_moderado++;
-// //       else if (item.status == "Alerta") rec_alerta++;
-// //       else if (item.status == "Crítico") rec_critico++;
-// //     } else {
-// //       if (item.status == "Estável") org_estavel++;
-// //       else if (item.status == "Moderado") org_moderado++;
-// //       else if (item.status == "Alerta") org_alerta++;
-// //       else if (item.status == "Crítico") org_critico++;
-// //     }
-// //   }
-
-// //   let totalInativos = listaEndereco.filter((i) => i.status == "Inativo").length;
-// //   let totalAtivos = listaEndereco.length - totalInativos;
-
-// //   document.getElementById("inativo").innerHTML = totalInativos;
-// //   document.getElementById("ativo").innerHTML = totalAtivos;
-// // }
-
-// /* ------------------ LISTA NA TELA ------------------ */
-
-// var listaUnique = [];
-
-// function mostrarLista() {
-//   var div_ListaEndereco = document.getElementById("div_ListaEndereco");
-//   var listaDivConteudo = "<ul>";
-
-//   for (let i = 0; i < listaEndereco.length; i++) {
-//     let itemAtual = listaEndereco[i];
-//     let existe = false;
-
-//     for (let j = 0; j < listaUnique.length; j++) {
-//       if (listaUnique[j].nome === itemAtual.nome) {
-//         existe = true;
-//         break;
-//       }
-//     }
-
-//     if (!existe) {
-//       listaUnique.push(itemAtual);
-//     }
-//   }
-
-//   for (let i = 0; i < listaUnique.length; i++) {
-//     var endereco = listaUnique[i];
-
-//     var mostrar = false;
-//     if (filtro == "Todos") mostrar = true;
-//     else if (endereco.status == filtro) mostrar = true;
-
-//     if (mostrar) {
-//       let icone = "../assets/LixeiraEstavelIcon.svg";
-//       if (endereco.status == "Crítico")
-//         icone = "../assets/LixeiraCriticaIcon.svg";
-//       else if (endereco.status == "Alerta")
-//         icone = "../assets/LixeiraAlertaIcon.svg";
-//       else if (endereco.status == "Moderado")
-//         icone = "../assets/LixeiraModeradaIcon.svg";
-//       else if (endereco.status == "Inativo")
-//         icone = "../assets/InativoIcon.svg";
-
-//       listaDivConteudo += `
-//         <li>
-//             <img src='${icone}'>
-//             <span class='ListaSensor' onclick="Especifica(${endereco.idEndereco}, ${endereco.idSensor})" >${endereco.nome}</span>
-//         </li>
-//       `;
-//     }
-//   }
-
-//   listaDivConteudo += "</ul>";
-//   div_ListaEndereco.innerHTML = listaDivConteudo;
-// }
 
 /* ------------------ FILTROS ------------------ */
 
@@ -430,6 +289,28 @@ function criarGraficoReciclavel() {
   });
 }
 
+function atualizarOrganico() {
+  graficoOrganico();
+
+  setTimeout(atualizarOrganico, 60000);
+}
+
+function atualizarReciclavel() {
+  graficoReciclavel();
+
+  setTimeout(atualizarReciclavel, 60000);
+}
+
+function atualizarAlertas() {
+  div_alertas.innerHTML = `<div class="title card_title"><h4>Alertas</h4></div>`;
+  alertasInativos();
+  alertasCriticos();
+
+  setTimeout(atualizarAlertas, 60000);
+}
+
+/* ------------------ LISTA DE ENDEREÇOS ------------------ */
+
 function listarEnderecos() {
   Empresa = sessionStorage.FK_EMPRESA;
 
@@ -493,7 +374,6 @@ function listarEnderecos() {
 function abrir(idEndereco) {
   sessionStorage.ID_ENDERECO = idEndereco
   window.location = 'dashboardSensor.html'
-
 }
 
 function mostrarLista() {
@@ -605,32 +485,56 @@ function mostrarLista() {
 }
 
 function limparDados() {
-
   sessionStorage.removeItem('ID_ENDERECO')
   sessionStorage.removeItem('ID_SENSOR')
-
 }
 
-function atualizarOrganico() {
-  graficoOrganico();
+/* ------------------ KPI ------------------ */
 
-  setTimeout(atualizarOrganico, 60000);
+function sensoresAtivos() {
+  fetch(`/geral/sensoresAtivos?fkEmpresa=${sessionStorage.FK_EMPRESA}`)
+    .then((response) => response.json())
+    .then((resultado) => {
+      var ativos = Number(resultado[0].ativos);
+
+      if (isNaN(ativos)) {
+        ativos = 0;
+      }
+
+      ativo.innerHTML = ativos;
+    })
+    .catch((error) => {
+      console.error("Erro ao obter os dados das fichas: ", error);
+    });
 }
 
-function atualizarReciclavel() {
-  graficoReciclavel();
+function sensoresInativos() {
+  fetch(`/geral/sensoresInativos?fkEmpresa=${sessionStorage.FK_EMPRESA}`)
+    .then((response) => response.json())
+    .then((resultado) => {
 
-  setTimeout(atualizarReciclavel, 60000);
+      var inativos = Number(resultado[0].inativos);
+
+      if (isNaN(inativos)) {
+        inativos = 0;
+      }
+
+      inativo.innerHTML = inativos;
+      
+    })
+    .catch((error) => {
+      console.error("Erro ao obter os dados das fichas: ", error);
+    });
 }
 
-function atualizarAlertas() {
-  div_alertas.innerHTML = `<div class="title card_title"><h4>Alertas</h4></div>`;
-  alertasInativos();
-  alertasCriticos();
+function atualizarKPIs() {
+  sensoresAtivos()
+  sensoresInativos()
 
-  setTimeout(atualizarAlertas, 60000);
+  setTimeout(atualizarKPIs, 60000);
 }
 
 atualizarOrganico();
 atualizarReciclavel();
 atualizarAlertas();
+atualizarKPIs();
